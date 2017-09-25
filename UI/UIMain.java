@@ -86,7 +86,7 @@ public class UIMain {
         try {
             //Vorteile
             ObservableList<Vorteil> vorteile = FXCollections.observableArrayList();
-            Scanner scanner = new Scanner(new FileReader("rsrc_Vorteile.csv"));
+            Scanner scanner = new Scanner(new FileReader("src/rsrc/rsrc_Vorteile.csv"));
             while (scanner.hasNextLine()) {
                 String s = scanner.nextLine();
                 Scanner tokenscanner = new Scanner(s);
@@ -107,7 +107,7 @@ public class UIMain {
         try {
             //Nachteile
             ObservableList<Nachteil> nachteile = FXCollections.observableArrayList();
-            Scanner scanner = new Scanner(new FileReader("rsrc_Nachteile.csv"));
+            Scanner scanner = new Scanner(new FileReader("src/rsrc/rsrc_Nachteile.csv"));
             while (scanner.hasNextLine()) {
                 String s = scanner.nextLine();
                 Scanner tokenscanner = new Scanner(s);
@@ -132,7 +132,7 @@ public class UIMain {
         //Sprachen
         try {
             ObservableList<Sprache> sprachen = FXCollections.observableArrayList();
-            Scanner scanner = new Scanner(new FileReader("rsrc_Sprachen.csv"));
+            Scanner scanner = new Scanner(new FileReader("src/rsrc/rsrc_Sprachen.csv"));
             while (scanner.hasNextLine()) {
                 String s = scanner.nextLine();
                 Scanner tokenscanner = new Scanner(s);
@@ -154,7 +154,7 @@ public class UIMain {
         //Schriften
         try {
             ObservableList<Schrift> schriften = FXCollections.observableArrayList();
-            Scanner scanner = new Scanner(new FileReader("rsrc_Schriften.csv"));
+            Scanner scanner = new Scanner(new FileReader("src/rsrc/rsrc_Schriften.csv"));
             while (scanner.hasNextLine()) {
                 String s = scanner.nextLine();
                 Scanner tokenscanner = new Scanner(s);
@@ -179,7 +179,7 @@ public class UIMain {
         try{
             ObservableList<Kampftalent> kampftalente = c.getKampftalente();
             ObservableList<Kampftalent> kampftalenteSpezial = FXCollections.observableArrayList();
-            Scanner scanner = new Scanner(new FileReader("rsrc_Kampftalente.csv"));
+            Scanner scanner = new Scanner(new FileReader("src/rsrc/rsrc_Kampftalente.csv"));
             while (scanner.hasNextLine()) {
                 String s = scanner.nextLine();
                 Scanner tokenscanner = new Scanner(s);
@@ -228,7 +228,7 @@ public class UIMain {
             ObservableList<Talent> fertigkeitstalenteSpezial = FXCollections.observableArrayList();
             ObservableList<Talent> handwerkstalente = c.getHandwerksTalente();
             ObservableList<Talent> handwerkstalenteSpezial = FXCollections.observableArrayList();
-            Scanner scanner = new Scanner(new FileReader("rsrc_Talente.csv"));
+            Scanner scanner = new Scanner(new FileReader("src/rsrc/rsrc_Talente.csv"));
             while (scanner.hasNextLine()) {
                 String s = scanner.nextLine();
                 Scanner tokenscanner = new Scanner (s);
@@ -296,7 +296,7 @@ public class UIMain {
         try{
             ObservableList<EigenschaftsSF> eigenschaftsSFs = FXCollections.observableArrayList();
             ObservableList<EigenschaftsSF> gekaufteEigenschaftsSFs = c.getEigenschaftsSFs();
-            Scanner scanner = new Scanner(new FileReader("rsrc_Eigenschaftssonderfertigkeiten.csv"));
+            Scanner scanner = new Scanner(new FileReader("src/rsrc/rsrc_Eigenschaftssonderfertigkeiten.csv"));
             while (scanner.hasNextLine()) {
                 String s = scanner.nextLine();
                 Scanner tokenscanner = new Scanner(s);
