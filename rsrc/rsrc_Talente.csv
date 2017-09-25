@@ -1,0 +1,69 @@
+Athletik;D;GE/KO/KK;Basis;Koerper
+Fliegen;C;MU/IN/GE;Spezial;Koerper
+Gaukeleien;B;MU/CH/FF;Spezial;Koerper
+Klettern;D;MU/GE/KK;Basis;Koerper
+Körperbeherrschung;D;GE/KO/KK;Basis;Koerper
+Reiten;C;CH/GE/KO;Spezial;Koerper
+Schleichen;D;MU/IN/GE;Basis;Koerper
+Schwimmen;C;GE/KO/KK;Basis;Koerper
+Sich verstecken;C;MU/IN/GE;Basis;Koerper
+Singen;B;IN/CH/CH;Basis;Koerper
+Sinnesschärfe;E;KL/IN/IN;Basis;Koerper
+Tanzen;B;CH/GE/GE;Basis;Koerper
+Zechen;C;KO/KO/KK;Basis;Koerper
+Anführern;D;MU/IN/CH;Spezial;Interaktion
+Charme/Beruhigen;C;IN/CH/CH;Spezial;Interaktion
+Einschüchtern;C;MU/MU/CH;Basis;Interaktion
+Feilschen/Verhandeln;C;KL/IN/CH;Spezial;Interaktion
+Lügen;C;KL/IN/CH;Basis;Interaktion
+Menschenkenntnis;E;KL/IN/CH;Basis;Interaktion
+Argumentieren;D;KL/IN/CH;Spezial;Interaktion
+Selbstbeherrschung;E;MU/MU/IN;Basis;Interaktion
+Fährtensuchen;C;KL/IN/IN;Basis;Natur
+Fallenstellen;B;KL/IN/FF;Spezial;Natur
+Fischen/Angeln;B;IN/FF/KK;Spezial;Natur
+Orientierung;C;KL/IN/IN;Spezial;Natur
+Pflanzenkunde;C;KL/IN/FF;Spezial;Natur
+Tierkunde;C;KL/KL/IN;Spezial;Natur
+Wettervorhersage;B;KL/IN/IN;Basis;Natur
+Wildnisleben;C;IN/GE/KO;Basis;Natur
+Etikette;B;KL/IN/CH;Spezial;Stadt
+Stadtleben;B;KL/KL/IN;Spezial;Stadt
+Gassenwissen;B;KL/IN/CH;Spezial;Stadt
+(Groß)-Handel;D;KL/KL/IN;Spezial;Stadt
+Anatomie;C;MU/KL/FF;Spezial;Wissen
+Baukunst;B;KL/KL/FF;Spezial;Wissen
+Geographie;B;KL/KL/IN;Spezial;Wissen
+Geschichtswissen;C;KL/KL/IN;Spezial;Wissen
+Giftkunde;D;KL/KL/IN;Spezial;Wissen
+Goetter/Kulte;C;KL/KL/IN;Basis;Wissen
+Heraldik;B;KL/KL/IN;Spezial;Wissen
+Kriegskunst;D;KL/KL/IN;Spezial;Wissen
+Magiekunde;E;KL/KL/IN;Spezial;Wissen
+Rechnen;B;KL/KL/IN;Basis;Wissen
+Rechtskunde;B;KL/KL/IN;Spezial;Wissen
+Sagen/Legenden;B;KL/KL/CH;Basis;Wissen
+Staatskunde;C;KL/KL/IN;Spezial;Wissen
+Sternkunde;C;KL/KL/IN;Spezial;Wissen
+Waffenkunde;C;KL/IN/FF;Spezial;Wissen
+Abrichten;C;MU/IN/CH;Spezial;Fertigkeit
+Boote Fahren;C;IN/KO/KK;Spezial;Fertigkeit
+Brett-/Kartenspiel;A;KL/KL/IN;Basis;Fertigkeit
+Fahrzeuge lenken;C;CH/FF/KO;Spezial;Fertigkeit
+(Ent-)Fesseln;B;FF/FF/GE;Spezial;Fertigkeit
+(Fein-)Mechanik;C;KL/FF/FF;Spezial;Fertigkeit
+Hauswirtschaft;B;KL/KL/IN;Spezial;Fertigkeit
+Heilkunde Krankheiten;C;MU/KL/CH;Spezial;Fertigkeit
+Heilkunde Wunden;D;KL/CH/FF;Basis;Fertigkeit
+Kochen;B;KL/IN/FF;Basis;Fertigkeit
+Musizieren;C;IN/FF/FF;Spezial;Fertigkeit
+Schlösser knacken;C;IN/FF/FF;Spezial;Fertigkeit
+Taschendiebstahl;C;MU/FF/FF;Spezial;Fertigkeit
+Alchemie;G;MU/KL/FF;Spezial;Handwerk
+Holzbearbeitung;B;KL/FF/KK;Basis;Handwerk
+Lebensmittelverabeitung;A;KL/IN/FF;Basis;Handwerk
+Lederbearbeitung;B;KL/FF/FF;Basis;Handwerk
+Malen/Zeichnen;B;KL/IN/FF;Basis;Handwerk
+Metallbearbeitung;C;FF/KO/KK;Spezial;Handwerk
+Steinbearbeitung;B;FF/FF/KO;Spezial;Handwerk
+Stoffbearbeitung;B;KL/FF/FF;Basis;Handwerk
