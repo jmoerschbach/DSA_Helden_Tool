@@ -20,47 +20,48 @@ import static steigerrechner.Steigerrechner.getCost;
 /**
  * Created by Hauke on 24.08.2017.
  */
-public class Character extends Observable{
+public class Character {
 
     public String name;
-    public int AP;
+    private int AP;
 
-    public Rasse rasse;
-    public Kultur kultur;
+    private Rasse rasse;
+    private Kultur kultur;
 
-    public int[] eigenschaften;
-    public int[] maxEigenschaften;
+    private int[] eigenschaften;
+    private int[] maxEigenschaften;
+    public enum eigenschaftenAbkürzung { MU, KL, IN, CH, FF, GE, KO, KK }
 
-    public int lebenspunkte;
-    public int limitlessLeP;
-    public int astralenergie;
-    public int magieresistenz;
+    private int lebenspunkte;
+    private int limitlessLeP;
+    private int astralenergie;
+    private int magieresistenz;
     public int limitessMR;
 
-    public ObservableList<Vorteil> vorteile;
-    public ObservableList<Nachteil> nachteile;
+    private ObservableList<Vorteil> vorteile;
+    private ObservableList<Nachteil> nachteile;
 
-    public ObservableList<Sprache> sprachen;
-    public ObservableList<Schrift> schriften;
+    private ObservableList<Sprache> sprachen;
+    private ObservableList<Schrift> schriften;
     private int summeSprachen;
     private int summeSchriften;
     private boolean lesen;
 
-    public ObservableList<EigenschaftsSF> eigenschaftsSFs;
-    public ObservableList<ASonderfertigkeit> profaneSFs;
+    private ObservableList<EigenschaftsSF> eigenschaftsSFs;
+    private ObservableList<ASonderfertigkeit> profaneSFs;
 
-    public ObservableList<Kampftalent> kampftalente;
-    public ObservableList<Talent> körperTalente;
-    public ObservableList<Talent> interaktionsTalente;
-    public ObservableList<Talent> naturTalente;
-    public ObservableList<Talent> stadtTalente;
-    public ObservableList<Talent> wissensTalente;
-    public ObservableList<Talent> fertigkeitsTalente;
-    public ObservableList<Talent> handwerksTalente;
-    public ObservableList<Gabe> gaben;
-    public List<Gabe> möglicheGaben;
+    private ObservableList<ATalent> kampftalente;
+    private ObservableList<ATalent> körperTalente;
+    private ObservableList<ATalent> interaktionsTalente;
+    private ObservableList<ATalent> naturTalente;
+    private ObservableList<ATalent> stadtTalente;
+    private ObservableList<ATalent> wissensTalente;
+    private ObservableList<ATalent> fertigkeitsTalente;
+    private ObservableList<ATalent> handwerksTalente;
+    private ObservableList<Gabe> gaben;
+    private List<Gabe> möglicheGaben;
 
-    public List<Zauber> zauber;
+    private List<Zauber> zauber;
 
 //    public List<Liturgie> liturgien;
 
@@ -113,9 +114,19 @@ public class Character extends Observable{
 //        this.rituale = new ArrayList<Ritual>();
     }
 
+    //******************************************************************************************
+    // Utility Functions
+    //******************************************************************************************
+
     public int getAP() {
         return AP;
     }
+
+    public void payAP(int i) { AP -= i; }
+
+    public void gainAP(int i) { AP += i; }
+
+    public boolean canPayAP(int cost) { return AP >= cost; }
 
     public boolean isRasse(Rasse r) {
         return rasse.equals(r);
@@ -135,6 +146,20 @@ public class Character extends Observable{
     public boolean has(Nachteil n) {
         for (Nachteil nachteil : nachteile) {
             if (nachteil.equals(n)) return true;
+        }
+        return false;
+    }
+
+    public boolean has(Sprache s) {
+        for (Sprache sprache : sprachen) {
+            if (sprache.equals(s)) return true;
+        }
+        return false;
+    }
+
+    public boolean has(Schrift s) {
+        for (Schrift schrift : schriften) {
+            if (schrift.equals(s)) return true;
         }
         return false;
     }
@@ -263,6 +288,101 @@ public class Character extends Observable{
         return null;
     }
 
+    //******************************************************************************************
+    // UI
+    //******************************************************************************************
+
+
+
+    public int getAPinEigenschaften() {
+        return APinEigenschaften;
+    }
+
+    public void incrAPinEigenschaften(int i) { APinEigenschaften += i; }
+
+    public void decrAPinEigenschaften(int i) { APinEigenschaften -= i; }
+
+    public int getAPinVorteilen() {
+        return APinVorteilen;
+    }
+
+    public void incrAPinVorteilen(int i) { APinVorteilen += i; }
+
+    public void decrAPinVorteilen(int i) { APinVorteilen -= 1;}
+
+    public int getAPausNachteilen() {
+        return APausNachteilen;
+    }
+
+    public void incrAPausNachteilen(int i) { APausNachteilen += i; }
+
+    public void decrAPausNachteilen(int i) { APausNachteilen -= i; }
+
+    public int getAPinSprachen() {
+        return APinSprachen;
+    }
+
+    public void incrAPinSprachen(int i) { APinSprachen += i; }
+
+    public void decrAPinSprachen(int i) { APinSprachen -= i; }
+
+    public void incrSummeSprachen() { summeSprachen++; }
+
+    public void decrSummeSprachen() { summeSprachen--; }
+
+    public void incrSummeSchriften() { summeSchriften++; }
+
+    public void decrSummeSchriften() { summeSchriften--; }
+
+    public int getAPinTalenten() {
+        return APinTalenten;
+    }
+
+    public void incrAPinTalenten(int i) { APinTalenten += i; }
+
+    public void decrAPinTalenten(int i) { APinTalenten -= i; }
+
+    public int getAPinSonderfertigkeiten() {
+        return APinSonderfertigkeiten;
+    }
+
+    public void incrAPinSonderfertigkeiten(int i) { APinSonderfertigkeiten += i; }
+
+    public void decrAPinSonderfertigkeiten(int i) { APinSonderfertigkeiten -= i; }
+
+    public int getAPinZauber() {
+        return APinZauber;
+    }
+
+    public void incrAPinZauber(int i) { APinZauber += i; }
+
+    public void decrAPinZauber(int i) { APinZauber -= i; }
+
+    public int getAPinLiturgien() {
+        return APinLiturgien;
+    }
+
+    public void incrAPinLiturgien(int i) { APinLiturgien += i; }
+
+    public void decrAPinLiturgien(int i) { APinLiturgien -= i; }
+
+    public int getAPinRituale() {
+        return APinRituale;
+    }
+
+    public void incrAPinRituale(int i) { APinRituale += i; }
+
+    public void decrAPinRituale(int i) { APinRituale -= i; }
+
+    public int getPunkteInSchlechtenEigenschaften() {
+        return PunkteInSchlechtenEigenschaften;
+    }
+
+
+    public void incrPunkteInSchlechtenEigenschaften(int i) { PunkteInSchlechtenEigenschaften += i; }
+
+    public void decrPunkteInSchlechtenEigenschaften(int i) { PunkteInSchlechtenEigenschaften -= i; }
+
     //*******************************************************************************************
     //Rasse & Kultur
     //*******************************************************************************************
@@ -292,27 +412,11 @@ public class Character extends Observable{
     }
 
     public void levelUpEigenschaft(int i){
-        int cost = getCost(eigenschaften[i], eigenschaften[i]+1, 8);
-        if (eigenschaften[i] < maxEigenschaften[i] && AP > cost && getSummeEigenschaften() < 101) {
-            AP = AP - cost;
-            eigenschaften[i] = eigenschaften[i] + 1;
-            String args = "levelEigenschaft" + i;
-            APinEigenschaften += cost;
-            setChanged();
-            notifyObservers(args);
-        }
+        eigenschaften[i]++;
     }
 
     public void levelDownEigenschaft(int i){
-        if (eigenschaften[i] > 8) {
-            int cost = getCost(eigenschaften[i] - 1, eigenschaften[i], 8);
-            AP = AP + cost;
-            eigenschaften[i] = eigenschaften[i] - 1;
-            String args = "levelEigenschaft" + i;
-            APinEigenschaften -= cost;
-            setChanged();
-            notifyObservers(args);
-        }
+        eigenschaften[i]--;
     }
 
     public int getSummeEigenschaften() {
@@ -324,57 +428,34 @@ public class Character extends Observable{
     }
 
     public void levelUpLeP() {
-        if (lebenspunkte < eigenschaften[6]/2 && AP >= 50) {
-            AP -= 50;
-            lebenspunkte++;
-            setChanged();
-            notifyObservers("LeP");
-        }
+        lebenspunkte++;
     }
 
     public void levelDownLeP() {
         lebenspunkte--;
-        AP += 50;
-        setChanged();
-        notifyObservers("LeP");
     }
 
     public void levelUpAsP() {
-        if (astralenergie < eigenschaften[3]/2) {
-            levelUpAsPLimitless();
-        }
     }
 
     public void levelUpAsPLimitless() {
         if (AP > 50) {
             AP -= 50;
             astralenergie++;
-            setChanged();
-            notifyObservers("AsP");
         }
     }
 
     public void levelDownAsP() {
         AP += 50;
         astralenergie--;
-        setChanged();
-        notifyObservers("AsP");
     }
 
     public void levelUpMR() {
-        if (magieresistenz < eigenschaften[0]/2 && AP >= 100) {
-            AP -= 100;
-            magieresistenz++;
-            setChanged();
-            notifyObservers("MR");
-        }
+        magieresistenz++;
     }
 
     public void levelDownMR() {
-        AP += 100;
         magieresistenz--;
-        setChanged();
-        notifyObservers("MR");
     }
 
     public int getMU() {
@@ -413,6 +494,8 @@ public class Character extends Observable{
         return eigenschaften[i];
     }
 
+    public int getMaxEigenschaft(int i) { return maxEigenschaften[i]; }
+
     public int getLebenspunkte() {
         return lebenspunkte;
     }
@@ -423,46 +506,6 @@ public class Character extends Observable{
 
     public int getMagieresistenz() {
         return magieresistenz;
-    }
-
-    public int getAPinEigenschaften() {
-        return APinEigenschaften;
-    }
-
-    public int getAPinVorteilen() {
-        return APinVorteilen;
-    }
-
-    public int getAPausNachteilen() {
-        return APausNachteilen;
-    }
-
-    public int getAPinSprachen() {
-        return APinSprachen;
-    }
-
-    public int getAPinTalenten() {
-        return APinTalenten;
-    }
-
-    public int getAPinSonderfertigkeiten() {
-        return APinSonderfertigkeiten;
-    }
-
-    public int getAPinZauber() {
-        return APinZauber;
-    }
-
-    public int getAPinLiturgien() {
-        return APinLiturgien;
-    }
-
-    public int getAPinRituale() {
-        return APinRituale;
-    }
-
-    public int getPunkteInSchlechtenEigenschaften() {
-        return PunkteInSchlechtenEigenschaften;
     }
 
 
@@ -485,29 +528,14 @@ public class Character extends Observable{
     public void addVorteil (Vorteil v) {
         vorteile.add(v);
         FXCollections.sort(vorteile);
-        int cost = v.getKosten();
-        AP -= cost;
-        APinVorteilen += cost;
-        setChanged();
-        notifyObservers("Vorteil");
     }
 
     /***
      * Entfernt Vorteil v.
      * @param v
      */
-    public void loseVorteil (Vorteil v) {
-        try {
-            vorteile.remove(v);
-            int cost = v.getKosten();
-            AP += cost;
-            APinVorteilen -= cost;
-            setChanged();
-            notifyObservers("Vorteil");
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            System.out.println("Error occurred in removeVorteil().");
-        }
+    public void removeVorteil (Vorteil v) {
+        vorteile.remove(v);
     }
 
     /***
@@ -515,22 +543,7 @@ public class Character extends Observable{
      * @param n
      */
     public void addNachteil (Nachteil n) {
-        if (n.isSchlechteEigenschaft()) {
-            nachteile.add(n);
-            int cost = n.getBonus();
-            AP += cost * 5;
-            APausNachteilen -= cost * 5;
-            PunkteInSchlechtenEigenschaften += 5;
-            setChanged();
-            notifyObservers("Nachteil");
-        } else {
-            nachteile.add(n);
-            int cost = n.getBonus();
-            AP += cost;
-            APausNachteilen -= cost;
-            setChanged();
-            notifyObservers("Nachteil");
-        }
+        nachteile.add(n);
         FXCollections.sort(nachteile);
     }
 
@@ -538,51 +551,8 @@ public class Character extends Observable{
      * Entfernt Nachteil n.
      * @param n
      */
-    public void loseNachteil (Nachteil n) {
-        try {
-            nachteile.remove(n);
-            PunkteInSchlechtenEigenschaften -= n.getStufe();
-            int cost;
-            if (n.isSchlechteEigenschaft()) {
-                cost = n.getStufe() * n.getBonus();
-                n.setStufe(5);
-            } else {
-                cost = n.getBonus();
-            }
-            AP -= cost;
-            APausNachteilen += cost;
-            setChanged();
-            notifyObservers("Nachteil");
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            System.out.println("Error occurred in removeNachteil().");
-        }
-    }
-
-    /***
-     * Erhöht die Schlechte Eigenschaft n um 1.
-     * @param n
-     */
-    public void increaseSchlechteEigenschaft(Nachteil n) {
-        AP += n.getBonus();
-        APausNachteilen -= n.getBonus();
-        PunkteInSchlechtenEigenschaften++;
-        n.increaseStufe();
-        setChanged();
-        notifyObservers("Nachteil");
-    }
-
-    /***
-     * Verringert die Schlechte Eigenschaft n um 1.
-     * @param n
-     */
-    public void decreaseSchlechteEigenschaft (Nachteil n) {
-        AP -= n.getBonus();
-        APausNachteilen += n.getBonus();
-        PunkteInSchlechtenEigenschaften--;
-        n.decreaseStufe();
-        setChanged();
-        notifyObservers("Nachteil");
+    public void removeNachteil (Nachteil n) {
+        nachteile.remove(n);
     }
 
 
@@ -593,84 +563,27 @@ public class Character extends Observable{
     public void addSprache(Sprache s) {
         sprachen.add(s);
         FXCollections.sort(sprachen);
-        int cost = s.getCost();
-        AP -= cost;
-        APinSprachen += cost;
-        summeSprachen++;
-        setChanged();
-        notifyObservers("Sprache");
     }
 
     public void removeSprache(Sprache s) {
         sprachen.remove(s);
-        summeSprachen--;
-        for (int i = s.getStufe(); i >= 1; i--) {
-            int stufe = s.getStufe();
-            int cost = stufe * s.getCost();
-            AP += cost;
-            APinSprachen -= cost;
-            s.decreaseStufe();
-        }
-        setChanged();
-        notifyObservers("Sprache");
-    }
-
-    public void increaseSprache(Sprache s) {
-        s.increaseStufe();
-        int cost = s.getStufe() * s.getCost();
-        AP -= cost;
-        APinSprachen += cost;
-        summeSprachen++;
-        setChanged();
-        notifyObservers("Sprache");
-
-    }
-
-    public void decreaseSprache(Sprache s) {
-        int cost = s.getStufe() * s.getCost();
-        AP += cost;
-        APinSprachen -= cost;
-        summeSprachen--;
-        s.decreaseStufe();
-        setChanged();
-        notifyObservers("Sprache");
     }
 
     public void learnLesen() {
-        AP -= 150;
-        APinSprachen += 150;
         lesen = true;
-        setChanged();
-        notifyObservers("Sprache");
     }
 
     public void forgetLesen() {
-        AP += 150;
-        APinSprachen -= 150;
         lesen = false;
-        setChanged();
-        notifyObservers("Sprache");
     }
 
     public void addSchrift(Schrift s) {
         schriften.add(s);
         FXCollections.sort(schriften);
-        int cost = s.getCost();
-        AP -= cost;
-        APinSprachen += cost;
-        summeSchriften++;
-        setChanged();
-        notifyObservers("Sprache");
     }
 
-    public void loseSchrift(Schrift s) {
+    public void removeSchrift(Schrift s) {
         schriften.remove(s);
-        int cost = s.getCost();
-        AP += cost;
-        APinSprachen -= cost;
-        summeSchriften--;
-        setChanged();
-        notifyObservers("Sprache");
     }
 
     public ObservableList<Sprache> getSprachen() {
@@ -695,6 +608,12 @@ public class Character extends Observable{
         return maxSprachen;
     }
 
+    public int getMaxSchriften() {
+        int maxSchriften = 999;
+        //ToDo: Einrichten
+        return maxSchriften;
+    }
+
     public boolean canRead() {
         return lesen;
     }
@@ -712,22 +631,22 @@ public class Character extends Observable{
     }
 
     public void addEigSF(EigenschaftsSF sf) {
-        int cost = sf.getCost();
-        AP -= cost;
-        APinSonderfertigkeiten += cost;
-        eigenschaftsSFs.add(sf);
-        FXCollections.sort(eigenschaftsSFs);
-        setChanged();
-        notifyObservers("SF");
+//        int cost = sf.getCost();
+//        AP -= cost;
+//        APinSonderfertigkeiten += cost;
+//        eigenschaftsSFs.add(sf);
+//        FXCollections.sort(eigenschaftsSFs);
+//        setChanged();
+//        notifyObservers("SF");
     }
 
     public void removeEigSF(EigenschaftsSF sf) {
-        int cost = sf.getCost();
-        AP += cost;
-        APinSonderfertigkeiten -= cost;
-        eigenschaftsSFs.remove(sf);
-        setChanged();
-        notifyObservers("SF");
+//        int cost = sf.getCost();
+//        AP += cost;
+//        APinSonderfertigkeiten -= cost;
+//        eigenschaftsSFs.remove(sf);
+//        setChanged();
+//        notifyObservers("SF");
     }
 
 
@@ -766,51 +685,43 @@ public class Character extends Observable{
         return null;
     }
 
-    public ObservableList<Kampftalent> getKampftalente() {
+    public ObservableList<ATalent> getKampftalente() {
         return kampftalente;
     }
 
-    public void increaseTalent(ATalent t, int cost) {
-        AP -= cost;
-        APinTalenten += cost;
+    public void increaseTalent(ATalent t) {
         t.increaseTalentwert();
-        setChanged();
-        notifyObservers("Talent");
     }
 
-    public void decreaseTalent(ATalent t, int cost) {
-        AP += cost;
-        APinTalenten -= cost;
+    public void decreaseTalent(ATalent t) {
         t.decreaseTalentwert();
-        setChanged();
-        notifyObservers("Talent");
     }
 
-    public ObservableList<Talent> getKörperTalente() {
+    public ObservableList<ATalent> getKörperTalente() {
         return körperTalente;
     }
 
-    public ObservableList<Talent> getInteraktionsTalente() {
+    public ObservableList<ATalent> getInteraktionsTalente() {
         return interaktionsTalente;
     }
 
-    public ObservableList<Talent> getNaturTalente() {
+    public ObservableList<ATalent> getNaturTalente() {
         return naturTalente;
     }
 
-    public ObservableList<Talent> getStadtTalente() {
+    public ObservableList<ATalent> getStadtTalente() {
         return stadtTalente;
     }
 
-    public ObservableList<Talent> getWissensTalente() {
+    public ObservableList<ATalent> getWissensTalente() {
         return wissensTalente;
     }
 
-    public ObservableList<Talent> getFertigkeitsTalente() {
+    public ObservableList<ATalent> getFertigkeitsTalente() {
         return fertigkeitsTalente;
     }
 
-    public ObservableList<Talent> getHandwerksTalente() {
+    public ObservableList<ATalent> getHandwerksTalente() {
         return handwerksTalente;
     }
 

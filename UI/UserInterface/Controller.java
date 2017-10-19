@@ -1,10 +1,12 @@
 package UI.UserInterface;
 
 import character.Character;
+import character.CharacterManager;
 import character.sonderfertigkeiten.ASonderfertigkeit;
 import character.sonderfertigkeiten.EigenschaftsSF;
 import character.sprachen.Schrift;
 import character.sprachen.Sprache;
+import character.talente.ATalent;
 import character.talente.Gabe;
 import character.talente.Kampftalent;
 import character.talente.Talent;
@@ -26,6 +28,7 @@ import static steigerrechner.Steigerrechner.getCost;
 public class Controller implements Observer {
 
     private Character character;
+    private CharacterManager characterManager;
     public SplitPane splitpane;
 
     //Rasse & Kultur
@@ -77,36 +80,36 @@ public class Controller implements Observer {
     public CheckBox lesenUndSchreiben;
 
     //Talente
-    public TableView<Kampftalent> kampftalente;
-    public ChoiceBox<Kampftalent> kampftalenteSpezial;
+    public TableView<ATalent> kampftalente;
+    public ChoiceBox<ATalent> kampftalenteSpezial;
     public Label steigerungskostenKampf;
 
-    public TableView<Talent> körpertalente;
-    public ChoiceBox<Talent> körpertalenteSpezial;
+    public TableView<ATalent> körpertalente;
+    public ChoiceBox<ATalent> körpertalenteSpezial;
     public Label steigerungskostenKörper;
 
-    public TableView<Talent> interaktionstalente;
-    public ChoiceBox<Talent> interaktionstalenteSpezial;
+    public TableView<ATalent> interaktionstalente;
+    public ChoiceBox<ATalent> interaktionstalenteSpezial;
     public Label steigerungskostenInteraktion;
 
-    public TableView<Talent> naturtalente;
-    public ChoiceBox<Talent> naturtalenteSpezial;
+    public TableView<ATalent> naturtalente;
+    public ChoiceBox<ATalent> naturtalenteSpezial;
     public Label steigerungskostenNatur;
 
-    public TableView<Talent> stadttalente;
-    public ChoiceBox<Talent> stadttalenteSpezial;
+    public TableView<ATalent> stadttalente;
+    public ChoiceBox<ATalent> stadttalenteSpezial;
     public Label steigerungskostenStadt;
 
-    public TableView<Talent> wissenstalente;
-    public ChoiceBox<Talent> wissenstalenteSpezial;
+    public TableView<ATalent> wissenstalente;
+    public ChoiceBox<ATalent> wissenstalenteSpezial;
     public Label steigerungskostenWissen;
 
-    public TableView<Talent> fertigkeitstalente;
-    public ChoiceBox<Talent> fertigkeitstalenteSpezial;
+    public TableView<ATalent> fertigkeitstalente;
+    public ChoiceBox<ATalent> fertigkeitstalenteSpezial;
     public Label steigerungskostenFertigkeit;
 
-    public TableView<Talent> handwerkstalente;
-    public ChoiceBox<Talent> handwerkstalenteSpezial;
+    public TableView<ATalent> handwerkstalente;
+    public ChoiceBox<ATalent> handwerkstalenteSpezial;
     public Label steigerungskostenHandwerk;
 
     public TableView<Gabe> gaben;
@@ -352,6 +355,13 @@ public class Controller implements Observer {
         return character;
     }
 
+    /***
+     * Setzt den CharacterManager
+     *
+     * @param cm
+     */
+    public void setCharacterManager(CharacterManager cm) { this.characterManager = cm; }
+
     /**
      * Gibt das SplitPane zurück.
      *
@@ -367,85 +377,86 @@ public class Controller implements Observer {
     //*******************************************************************************************
 
     public void levelUpMU() {
-        character.levelUpEigenschaft(0);
+        characterManager.levelUpEigenschaft(0);
     }
 
     public void levelUpKL() {
-        character.levelUpEigenschaft(1);
+        characterManager.levelUpEigenschaft(1);
     }
 
     public void levelUpIN() {
-        character.levelUpEigenschaft(2);
+        characterManager.levelUpEigenschaft(2);
     }
 
     public void levelUpCH() {
-        character.levelUpEigenschaft(3);
+        characterManager.levelUpEigenschaft(3);
     }
 
     public void levelUpFF() {
-        character.levelUpEigenschaft(4);
+        characterManager.levelUpEigenschaft(4);
     }
 
     public void levelUpGE() {
-        character.levelUpEigenschaft(5);
+        characterManager.levelUpEigenschaft(5);
     }
 
     public void levelUpKO() {
-        character.levelUpEigenschaft(6);
+        characterManager.levelUpEigenschaft(6);
     }
 
     public void levelUpKK() {
-        character.levelUpEigenschaft(7);
+        characterManager.levelUpEigenschaft(7);
     }
 
     public void levelDownMU() {
-        character.levelDownEigenschaft(0);
+        characterManager.levelDownEigenschaft(0);
     }
 
     public void levelDownKL() {
-        character.levelDownEigenschaft(1);
-        if (isMaxNotSprachenInCap()) keepMaxSprachenCapped();
-        if (character.getKL() < 10 && character.canRead()) unselectLesenUndSchreiben();
+        characterManager.levelDownEigenschaft(1);
+        //ToDo: Sprachen
+//        if (isMaxNotSprachenInCap()) keepMaxSprachenCapped();
+//        if (character.getKL() < 10 && character.canRead()) unselectLesenUndSchreiben();
     }
 
     public void levelDownIN() {
-        character.levelDownEigenschaft(2);
+        characterManager.levelDownEigenschaft(2);
     }
 
     public void levelDownCH() {
-        character.levelDownEigenschaft(3);
+        characterManager.levelDownEigenschaft(3);
     }
 
     public void levelDownFF() {
-        character.levelDownEigenschaft(4);
+        characterManager.levelDownEigenschaft(4);
     }
 
     public void levelDownGE() {
-        character.levelDownEigenschaft(5);
+        characterManager.levelDownEigenschaft(5);
     }
 
     public void levelDownKO() {
-        character.levelDownEigenschaft(6);
+        characterManager.levelDownEigenschaft(6);
     }
 
     public void levelDownKK() {
-        character.levelDownEigenschaft(7);
+        characterManager.levelDownEigenschaft(7);
     }
 
     public void levelUpLeP() {
-        character.levelUpLeP();
+        characterManager.levelUpLeP();
     }
 
     public void levelDownLeP() {
-        character.levelDownLeP();
+        characterManager.levelDownLeP();
     }
 
     public void levelUpMR() {
-        character.levelUpMR();
+        characterManager.levelUpMR();
     }
 
     public void levelDownMR() {
-        character.levelDownMR();
+        characterManager.levelDownMR();
     }
 
     //*******************************************************************************************
@@ -485,8 +496,7 @@ public class Controller implements Observer {
     public void addVorteil() {
         if (!möglicheVorteile.getSelectionModel().isEmpty()) {
             Vorteil v = möglicheVorteile.getSelectionModel().getSelectedItem();
-            if (character.getAP() >= v.getKosten() && character.getAPinVorteilen() <= 2500 - v.getKosten()) {
-                character.addVorteil(v);
+            if (characterManager.addVorteil(v)) {
                 möglicheVorteile.getItems().remove(v);
             }
         }
@@ -498,10 +508,11 @@ public class Controller implements Observer {
     public void removeVorteil() {
         if (!gekaufteVorteile.getSelectionModel().isEmpty()) {
             Vorteil v = gekaufteVorteile.getSelectionModel().getSelectedItem();
-            ObservableList<Vorteil> ol = möglicheVorteile.getItems();
-            ol.add(v);
-            FXCollections.sort(ol);
-            character.loseVorteil(v);
+            if (characterManager.removeVorteil(v)) {
+                ObservableList<Vorteil> ol = möglicheVorteile.getItems();
+                ol.add(v);
+                FXCollections.sort(ol);
+            }
         }
     }
 
@@ -511,8 +522,7 @@ public class Controller implements Observer {
     public void addNachteil() {
         if (!möglicheNachteile.getSelectionModel().isEmpty()) {
             Nachteil n = möglicheNachteile.getSelectionModel().getSelectedItem();
-            if ((character.getPunkteInSchlechtenEigenschaften() <= 15 || !n.isSchlechteEigenschaft()) && character.getAPausNachteilen() >= -2500 + n.getBonus()) {
-                character.addNachteil(n);
+            if (characterManager.addNachteil(n)) {
                 möglicheNachteile.getItems().remove(n);
             }
         }
@@ -524,10 +534,11 @@ public class Controller implements Observer {
     public void removeNachteil() {
         if (!gekaufteNachteile.getSelectionModel().isEmpty()) {
             Nachteil n = gekaufteNachteile.getSelectionModel().getSelectedItem();
-            ObservableList<Nachteil> ol = möglicheNachteile.getItems();
-            ol.add(n);
-            FXCollections.sort(ol);
-            character.loseNachteil(n);
+            if (characterManager.removeNachteil(n)) {
+                ObservableList<Nachteil> ol = möglicheNachteile.getItems();
+                ol.add(n);
+                FXCollections.sort(ol);
+            }
         }
     }
 
@@ -537,8 +548,7 @@ public class Controller implements Observer {
     public void increaseSchlechteEigenschaft() {
         if (!gekaufteNachteile.getItems().isEmpty()) {
             Nachteil n = gekaufteNachteile.getSelectionModel().getSelectedItem();
-            if (n.isSchlechteEigenschaft() && character.getPunkteInSchlechtenEigenschaften() < 20 && n.getStufe() < 12) {
-                character.increaseSchlechteEigenschaft(n);
+            if (characterManager.increaseSchlechteEigenschaft(n)) {
                 gekaufteNachteile.refresh();
             }
         }
@@ -550,8 +560,7 @@ public class Controller implements Observer {
     public void decreaseSchlechteEigenschaft() {
         if (!gekaufteNachteile.getItems().isEmpty()) {
             Nachteil n = gekaufteNachteile.getSelectionModel().getSelectedItem();
-            if (n.isSchlechteEigenschaft() && n.getStufe() > 5) {
-                character.decreaseSchlechteEigenschaft(n);
+            if (characterManager.decreaseSchlechteEigenschaft(n)) {
                 gekaufteNachteile.refresh();
             }
         }
@@ -593,8 +602,7 @@ public class Controller implements Observer {
     public void addSprache() {
         if (!möglicheSprachen.getSelectionModel().isEmpty()) {
             Sprache s = möglicheSprachen.getSelectionModel().getSelectedItem();
-            if (character.getSummeSprachen() < character.getMaxSprachen() && s.getCost() <= character.getAP()) {
-                character.addSprache(s);
+            if (characterManager.addSprache(s)) {
                 möglicheSprachen.getItems().remove(s);
             }
         }
@@ -606,10 +614,11 @@ public class Controller implements Observer {
     public void removeSprache() {
         if(!gekaufteSprachen.getSelectionModel().isEmpty()) {
             Sprache s = gekaufteSprachen.getSelectionModel().getSelectedItem();
-            ObservableList<Sprache> ol = möglicheSprachen.getItems();
-            ol.add(s);
-            FXCollections.sort(ol);
-            character.removeSprache(s);
+            if (characterManager.removeSprache(s)) {
+                ObservableList<Sprache> ol = möglicheSprachen.getItems();
+                ol.add(s);
+                FXCollections.sort(ol);
+            }
         }
     }
 
@@ -619,10 +628,7 @@ public class Controller implements Observer {
     public void increaseSprache() {
         if (!gekaufteSprachen.getItems().isEmpty()) {
             Sprache s = gekaufteSprachen.getSelectionModel().getSelectedItem();
-            int finalCost = s.getCost() * (s.getStufe()+1);
-            if (character.getSummeSprachen() < character.getMaxSprachen() && finalCost <= character.getAP() && s.getStufe() < s.getMaxStufe()) {
-                if (s.getStufe() == 4 && character.getKL() < 13) return;
-                character.increaseSprache(s);
+            if (characterManager.increaseSprache(s)) {
                 gekaufteSprachen.refresh();
             }
         }
@@ -634,8 +640,7 @@ public class Controller implements Observer {
     public void decreaseSprache() {
         if (!gekaufteSprachen.getItems().isEmpty()) {
             Sprache s = gekaufteSprachen.getSelectionModel().getSelectedItem();
-            if (s.getStufe() > 1) {
-                character.decreaseSprache(s);
+            if (characterManager.decreaseSprache(s)) {
                 gekaufteSprachen.refresh();
             }
         }
@@ -647,8 +652,7 @@ public class Controller implements Observer {
     public void addSchrift() {
         if (!möglicheSchriften.getSelectionModel().isEmpty() && lesenUndSchreiben.isSelected()) {
             Schrift s = möglicheSchriften.getSelectionModel().getSelectedItem();
-            if (s.getCost() <= character.getAP()) {//ToDo: maximale Anzahl an Schriften!
-                character.addSchrift(s);
+            if (characterManager.addSchrift(s)) {
                 möglicheSchriften.getItems().remove(s);
             }
         }
@@ -660,10 +664,11 @@ public class Controller implements Observer {
     public void removeSchrift() {
         if(!gekaufteSchriften.getSelectionModel().isEmpty()) {
             Schrift s = gekaufteSchriften.getSelectionModel().getSelectedItem();
-            ObservableList<Schrift> ol = möglicheSchriften.getItems();
-            ol.add(s);
-            FXCollections.sort(ol);
-            character.loseSchrift(s);
+            if (characterManager.removeSchrift(s)) {
+                ObservableList<Schrift> ol = möglicheSchriften.getItems();
+                ol.add(s);
+                FXCollections.sort(ol);
+            }
         }
     }
 
@@ -672,47 +677,26 @@ public class Controller implements Observer {
      */
     public void lesenUndSchreiben() {
         if (!lesenUndSchreiben.isSelected()) {
-            unselectLesenUndSchreiben();
-        } else if(character.getKL() >= 10) {
-            character.learnLesen();
-        } else {
+            characterManager.forgetLesen(möglicheSchriften.getItems());
             lesenUndSchreiben.setSelected(false);
-        }
-    }
-
-    /***
-     * Entfernt die Fähigkeit zu lesen.
-     */
-    private void unselectLesenUndSchreiben() {
-        ObservableList<Schrift> ol = character.getSchriften();
-        if (!ol.isEmpty()) {
-            ObservableList<Schrift> mögSch = möglicheSchriften.getItems();
-            for (Schrift s : ol) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        character.loseSchrift(s);
-                        mögSch.add(s);
-                        FXCollections.sort(mögSch);
-                    }
-                });
+        } else {
+            if(!characterManager.learnLesen()) {
+                lesenUndSchreiben.setSelected(false);
             }
         }
-        character.forgetLesen();
-        lesenUndSchreiben.setSelected(false);
     }
 
     /***
      * Sorgt dafür, dass die Sprachen im Cap bleiben, auch wenn KL verringert wird.
      */
-    private void keepMaxSprachenCapped() {
-        ObservableList<Sprache> sprachen = character.getSprachen();
-        while (isMaxNotSprachenInCap()) {
-            Sprache s = sprachen.get(0);
-            character.decreaseSprache(s);
-            gekaufteSprachen.refresh();
-        }
-    }
+//    private void keepMaxSprachenCapped() {
+//        ObservableList<Sprache> sprachen = character.getSprachen();
+//        while (isMaxNotSprachenInCap()) {
+//            Sprache s = sprachen.get(0);
+//            character.decreaseSprache(s);
+//            gekaufteSprachen.refresh();
+//        }
+//    }
 
     /***
      * Fragt ab ob die Sprachen im Cap sind.
@@ -745,44 +729,30 @@ public class Controller implements Observer {
         }
     }
 
-    public TableView<Kampftalent> getKampftalente() {
+    public TableView<ATalent> getKampftalente() {
         return kampftalente;
     }
 
-    public ChoiceBox<Kampftalent> getKampftalenteSpezial() {
+    public ChoiceBox<ATalent> getKampftalenteSpezial() {
         return kampftalenteSpezial;
     }
 
     public void increaseKampftalent() {
-        Kampftalent kt = kampftalente.getSelectionModel().getSelectedItem();
-        if (kt == null) return;
-        int cost = getCost(kt.getTalentwert(), kt.getTalentwert()+1, kt.getSpalte());
-        if (character.getAP() >= cost && kt.fullfillVoraussetzung(character)) {
-            character.increaseTalent(kt, cost);
+        int cost = increaseTalent(kampftalente);
+        if (cost != 0) {
             steigerungskostenKampf.setText(Integer.toString(cost));
-            kampftalente.refresh();
         }
     }
 
     public void decreaseKampftalent() {
-        Kampftalent kt = kampftalente.getSelectionModel().getSelectedItem();
-        if (kt == null) return;
-        int TaW = kt.getTalentwert();
-        if (TaW > 0) {
-            int cost = getCost(TaW-1, TaW, kt.getSpalte());
-            character.decreaseTalent(kt, cost);
+        int cost = decreaseTalent(kampftalente);
+        if (cost != 0) {
             steigerungskostenKampf.setText(Integer.toString(-cost));
-            kampftalente.refresh();
         }
     }
 
     public void addKampftalent() {
-        Kampftalent t = kampftalenteSpezial.getSelectionModel().getSelectedItem();
-        if (t == null || kampftalente.getItems().contains(t)) return;
-        kampftalenteSpezial.getItems().remove(t);
-        kampftalente.getItems().add(t);
-        FXCollections.sort(kampftalente.getItems());
-        kampftalente.refresh();
+        addTalent(kampftalenteSpezial, kampftalente);
     }
 
     public void increaseKörpertalent() {
@@ -911,32 +881,26 @@ public class Controller implements Observer {
         addTalent(handwerkstalenteSpezial, handwerkstalente);
     }
 
-    public int increaseTalent(TableView<Talent> tv) {
-        Talent t = tv.getSelectionModel().getSelectedItem();
-        if (t == null) return 0;
-        int cost = getCost(t.getTalentwert(), t.getTalentwert()+1, t.getSpalte());
-        if (character.getAP() >= cost && t.fullfillVoraussetzung(character)) {
-            character.increaseTalent(t, cost);
+    private int increaseTalent(TableView<ATalent> tv) {
+        ATalent t = tv.getSelectionModel().getSelectedItem();
+        int cost = characterManager.increaseTalent(t);
+        if (cost != 0) {
             tv.refresh();
-            return cost;
         }
-        return 0;
+        return cost;
     }
 
-    public int decreaseTalent(TableView<Talent> tv) {
-        Talent t = tv.getSelectionModel().getSelectedItem();
-        if (t == null) return 0;
-        int cost = getCost(t.getTalentwert()-1, t.getTalentwert(), t.getSpalte());
-        if (t.getTalentwert() > 0) {
-            character.decreaseTalent(t, cost);
+    private int decreaseTalent(TableView<ATalent> tv) {
+        ATalent t = tv.getSelectionModel().getSelectedItem();
+        int cost = characterManager.decreaseTalent(t);
+        if (cost != 0) {
             tv.refresh();
-            return cost;
         }
-        return 0;
+        return cost;
     }
 
-    public void addTalent(ChoiceBox<Talent> box, TableView<Talent> tv) {
-        Talent t = box.getSelectionModel().getSelectedItem();
+    private void addTalent(ChoiceBox<ATalent> box, TableView<ATalent> tv) {
+        ATalent t = box.getSelectionModel().getSelectedItem();
         if (t == null || !(box.getItems().contains(t))) return;
         box.getItems().remove(t);
         tv.getItems().add(t);
@@ -944,59 +908,59 @@ public class Controller implements Observer {
         tv.refresh();
     }
 
-    public TableView<Talent> getKörpertalente() {
+    public TableView<ATalent> getKörpertalente() {
         return körpertalente;
     }
 
-    public ChoiceBox<Talent> getKörpertalenteSpezial() {
+    public ChoiceBox<ATalent> getKörpertalenteSpezial() {
         return körpertalenteSpezial;
     }
 
-    public TableView<Talent> getInteraktionstalente() {
+    public TableView<ATalent> getInteraktionstalente() {
         return interaktionstalente;
     }
 
-    public ChoiceBox<Talent> getInteraktionstalenteSpezial() {
+    public ChoiceBox<ATalent> getInteraktionstalenteSpezial() {
         return interaktionstalenteSpezial;
     }
 
-    public TableView<Talent> getNaturtalente() {
+    public TableView<ATalent> getNaturtalente() {
         return naturtalente;
     }
 
-    public ChoiceBox<Talent> getNaturtalenteSpezial() {
+    public ChoiceBox<ATalent> getNaturtalenteSpezial() {
         return naturtalenteSpezial;
     }
 
-    public TableView<Talent> getStadttalente() {
+    public TableView<ATalent> getStadttalente() {
         return stadttalente;
     }
 
-    public ChoiceBox<Talent> getStadttalenteSpezial() {
+    public ChoiceBox<ATalent> getStadttalenteSpezial() {
         return stadttalenteSpezial;
     }
 
-    public TableView<Talent> getWissenstalente() {
+    public TableView<ATalent> getWissenstalente() {
         return wissenstalente;
     }
 
-    public ChoiceBox<Talent> getWissenstalenteSpezial() {
+    public ChoiceBox<ATalent> getWissenstalenteSpezial() {
         return wissenstalenteSpezial;
     }
 
-    public TableView<Talent> getFertigkeitstalente() {
+    public TableView<ATalent> getFertigkeitstalente() {
         return fertigkeitstalente;
     }
 
-    public ChoiceBox<Talent> getFertigkeitstalenteSpezial() {
+    public ChoiceBox<ATalent> getFertigkeitstalenteSpezial() {
         return fertigkeitstalenteSpezial;
     }
 
-    public TableView<Talent> getHandwerkstalente() {
+    public TableView<ATalent> getHandwerkstalente() {
         return handwerkstalente;
     }
 
-    public ChoiceBox<Talent> getHandwerkstalenteSpezial() {
+    public ChoiceBox<ATalent> getHandwerkstalenteSpezial() {
         return handwerkstalenteSpezial;
     }
 

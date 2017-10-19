@@ -49,6 +49,7 @@ public class Talent extends ATalent {
         return proben;
     }
 
+    @Override
     public boolean fullfillVoraussetzung(Character c) {
         int[] eig = getProbeToIntArray();
         return talentwert.get()+1 <= (Math.max(Math.max(c.getEigenschaft(eig[0]), c.getEigenschaft(eig[1])), c.getEigenschaft(eig[2]))+3);

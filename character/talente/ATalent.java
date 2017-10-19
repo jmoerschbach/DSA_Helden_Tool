@@ -1,5 +1,7 @@
 package character.talente;
 
+import character.Character;
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -41,6 +43,8 @@ public abstract class ATalent implements Comparable<ATalent> {
     public String getSpalte() {
         return spalte.get();
     }
+
+    public abstract boolean fullfillVoraussetzung(Character c);
 
     @Override
     public int compareTo(ATalent t) {

@@ -1,5 +1,7 @@
 package character.vorundnachteile;
 
+import character.Voraussetzungen.IVoraussetzung;
+
 /**
  * Created by Hauke on 24.08.2017.
  */
@@ -7,7 +9,8 @@ public class Vorteil implements Comparable<Vorteil> {
 
     public String name;
     public String text;
-    public int kosten;
+    private int kosten;
+    private IVoraussetzung vor;
 
     public Vorteil(String name, int kosten, String text) {
         this.name = name;

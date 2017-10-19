@@ -7,7 +7,7 @@ import character.Voraussetzungen.EigVoraussetzung;
  */
 public class EigenschaftsSF extends ASonderfertigkeit {
 
-    public EigVoraussetzung vor;
+    private EigVoraussetzung vor;
 
     public EigenschaftsSF(String name,int cost, String text, EigVoraussetzung vor) {
         super(name, cost, text);

@@ -7,11 +7,11 @@ import character.Character;
  */
 public class EigVoraussetzung implements IVoraussetzung{
 
-    public String eigenschaft;
-    public int eigenschaftsWert;
-    public String sonderfertigkeit;
-    public String oderSonderfertigkeit;
-    public String nichtSonderfertigkeit;
+    private String eigenschaft;
+    private int eigenschaftsWert;
+    private String sonderfertigkeit;
+    private String oderSonderfertigkeit;
+    private String nichtSonderfertigkeit;
 
     public EigVoraussetzung(String eigenschaft, int eigenschaftsWert, String sonderfertigkeit, String oderSonderfertigkeit, String nichtSonderfertigkeit) {
         this.eigenschaft = eigenschaft;

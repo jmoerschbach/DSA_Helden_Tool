@@ -53,7 +53,7 @@ public class Steigerrechner {
         return getCost(von, auf, s);
     }
 
-    public static int getSum(int spalte, int zeile) {
+    private static int getSum(int spalte, int zeile) {
         int sum = 0;
         while (zeile >= 0) {
             sum += getValue(spalte, zeile);

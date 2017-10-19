@@ -1,7 +1,6 @@
 package character.sonderfertigkeiten;
 
 import character.Voraussetzungen.IVoraussetzung;
-import character.Voraussetzungen.Voraussetzung;
 
 /**
  * Created by Hauke on 24.08.2017.

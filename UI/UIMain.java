@@ -4,11 +4,12 @@ import UI.StartUIs.APAuswahlController;
 import UI.StartUIs.StartController;
 import UI.UserInterface.Controller;
 import character.Character;
+import character.CharacterManager;
 import character.Voraussetzungen.EigVoraussetzung;
-import character.sonderfertigkeiten.ASonderfertigkeit;
 import character.sonderfertigkeiten.EigenschaftsSF;
 import character.sprachen.Schrift;
 import character.sprachen.Sprache;
+import character.talente.ATalent;
 import character.talente.Kampftalent;
 import character.talente.Talent;
 import character.vorundnachteile.Nachteil;
@@ -78,8 +79,10 @@ public class UIMain {
         controller.getMaximaleAP().setText(Integer.toString(ap));
 
         Character c = new Character(name, ap);
-        c.addObserver(controller);
+        CharacterManager characterManager = new CharacterManager(c);
+        characterManager.addObserver(controller);
         controller.setCharacter(c);
+        controller.setCharacterManager(characterManager);
 
         //Vor- und Nachteile
 
@@ -177,8 +180,8 @@ public class UIMain {
 
         //Kampftalente
         try{
-            ObservableList<Kampftalent> kampftalente = c.getKampftalente();
-            ObservableList<Kampftalent> kampftalenteSpezial = FXCollections.observableArrayList();
+            ObservableList<ATalent> kampftalente = c.getKampftalente();
+            ObservableList<ATalent> kampftalenteSpezial = FXCollections.observableArrayList();
             Scanner scanner = new Scanner(new FileReader("src/rsrc/rsrc_Kampftalente.csv"));
             while (scanner.hasNextLine()) {
                 String s = scanner.nextLine();
@@ -214,19 +217,19 @@ public class UIMain {
 
         //Alle anderen Talente
         try {
-            ObservableList<Talent> körpertalente = c.getKörperTalente();
-            ObservableList<Talent> körpertalenteSpezial = FXCollections.observableArrayList();
-            ObservableList<Talent> interaktionstalente = c.getInteraktionsTalente();
-            ObservableList<Talent> interaktionstalenteSpezial = FXCollections.observableArrayList();
-            ObservableList<Talent> naturtalente = c.getNaturTalente();
-            ObservableList<Talent> naturtalenteSpezial = FXCollections.observableArrayList();
-            ObservableList<Talent> stadttalente = c.getStadtTalente();
-            ObservableList<Talent> stadttalenteSpezial = FXCollections.observableArrayList();
-            ObservableList<Talent> wissenstalente = c.getWissensTalente();
-            ObservableList<Talent> wissenstalenteSpezial = FXCollections.observableArrayList();
-            ObservableList<Talent> fertigkeitstalente = c.getFertigkeitsTalente();
-            ObservableList<Talent> fertigkeitstalenteSpezial = FXCollections.observableArrayList();
-            ObservableList<Talent> handwerkstalente = c.getHandwerksTalente();
+            ObservableList<ATalent> körpertalente = c.getKörperTalente();
+            ObservableList<ATalent> körpertalenteSpezial = FXCollections.observableArrayList();
+            ObservableList<ATalent> interaktionstalente = c.getInteraktionsTalente();
+            ObservableList<ATalent> interaktionstalenteSpezial = FXCollections.observableArrayList();
+            ObservableList<ATalent> naturtalente = c.getNaturTalente();
+            ObservableList<ATalent> naturtalenteSpezial = FXCollections.observableArrayList();
+            ObservableList<ATalent> stadttalente = c.getStadtTalente();
+            ObservableList<ATalent> stadttalenteSpezial = FXCollections.observableArrayList();
+            ObservableList<ATalent> wissenstalente = c.getWissensTalente();
+            ObservableList<ATalent> wissenstalenteSpezial = FXCollections.observableArrayList();
+            ObservableList<ATalent> fertigkeitstalente = c.getFertigkeitsTalente();
+            ObservableList<ATalent> fertigkeitstalenteSpezial = FXCollections.observableArrayList();
+            ObservableList<ATalent> handwerkstalente = c.getHandwerksTalente();
             ObservableList<Talent> handwerkstalenteSpezial = FXCollections.observableArrayList();
             Scanner scanner = new Scanner(new FileReader("src/rsrc/rsrc_Talente.csv"));
             while (scanner.hasNextLine()) {

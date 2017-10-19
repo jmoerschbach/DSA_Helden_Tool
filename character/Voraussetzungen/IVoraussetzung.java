@@ -7,5 +7,5 @@ import character.Character;
  */
 public interface IVoraussetzung {
 
-    public boolean fullfillVoraussetzung(Character c);
+    boolean fullfillVoraussetzung(Character c);
 }
