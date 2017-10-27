@@ -1,24 +1,19 @@
 package character;
 
-import skills.Disadvantage;
+import skills.Property;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Database {
 
-    private List<Disadvantage> disadvantages;
+    private List<Property> properties;
 
 
     public void initialize() {
-        disadvantages = new ArrayList<>();
+        properties = new ArrayList<>();
 
-        disadvantages.add(new Disadvantage("bla", "blub", 350, (Aventurian a) -> {
-            a.setName("tschacka");
-        }, (Aventurian a) -> {
-            a.setName("undo");
-        }, (Aventurian a) -> {
-            return true;
-        }));
+        properties.add(new Property("bla", "blub", 350, Optional.of((Aventurian a)-> a.setName("bla")), Optional.of((Aventurian a) -> a.setName("blub"))));
     }
 }
