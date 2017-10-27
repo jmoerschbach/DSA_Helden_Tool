@@ -324,8 +324,6 @@ public class CharacterManager extends Observable{
     }
 
 
-    //test test
-
 
     //*******************************************************************************************
     //Utility and abbreviation
