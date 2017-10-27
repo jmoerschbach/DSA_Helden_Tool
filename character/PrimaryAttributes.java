@@ -1,60 +1,72 @@
 package character;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static character.PrimaryAttributes.PRIMARY_ATTRIBUTE.*;
+
 class PrimaryAttributes {
 
-    private int courage;
-    private int intelligence;
-    private int intuition;
-    private int charisma;
-    private int dexterity;
-    private int finesse;
-    private int constitution;
-    private int strength;
+    private Map<PRIMARY_ATTRIBUTE, Integer> currentAttributes;
+    private Map<PRIMARY_ATTRIBUTE, Integer> maxAttributes;
+
+    public enum PRIMARY_ATTRIBUTE {
+        COURAGE,
+        INTELLIGENCE,
+        INTUITION,
+        CHARISMA,
+        DEXTERITY,
+        FINESSE,
+        CONSTITUTION,
+        STRENGTH
+    }
 
     PrimaryAttributes() {
-        courage = 8;
-        intelligence = 8;
-        intuition = 8;
-        charisma = 8;
-        dexterity = 8;
-        finesse = 8;
-        constitution = 8;
-        strength = 8;
+        this.currentAttributes = new HashMap<>();
+        currentAttributes.put(COURAGE, 8);
+        currentAttributes.put(INTELLIGENCE, 8);
+        currentAttributes.put(INTUITION, 8);
+        currentAttributes.put(CHARISMA, 8);
+        currentAttributes.put(DEXTERITY, 8);
+        currentAttributes.put(FINESSE, 8);
+        currentAttributes.put(CONSTITUTION, 8);
+        currentAttributes.put(STRENGTH, 8);
+        this.maxAttributes = new HashMap<>();
+        maxAttributes.put(COURAGE, 14);
+        maxAttributes.put(INTELLIGENCE, 14);
+        maxAttributes.put(INTUITION, 14);
+        maxAttributes.put(CHARISMA, 14);
+        maxAttributes.put(DEXTERITY, 14);
+        maxAttributes.put(FINESSE, 14);
+        maxAttributes.put(CONSTITUTION, 14);
+        maxAttributes.put(STRENGTH, 14);
     }
 
-    public int getSum() {
-        return courage + intelligence + intuition + charisma + dexterity + finesse + constitution + strength;
+    int getSum() {
+        return getPrimaryAttribute(COURAGE) + getPrimaryAttribute(INTELLIGENCE) + getPrimaryAttribute(INTUITION) + getPrimaryAttribute(CHARISMA) + getPrimaryAttribute(DEXTERITY) + getPrimaryAttribute(FINESSE) + getPrimaryAttribute(CONSTITUTION) + getPrimaryAttribute(STRENGTH);
     }
 
-    public int getCourage() {
-        return courage;
+    int getPrimaryAttribute(PRIMARY_ATTRIBUTE a) {
+        return currentAttributes.get(a);
     }
 
-    public int getIntelligence() {
-        return intelligence;
+    void increase(PRIMARY_ATTRIBUTE a) {
+        currentAttributes.put(a, currentAttributes.get(a)+1);
     }
 
-    public int getIntuition() {
-        return intuition;
+    void decrease(PRIMARY_ATTRIBUTE a) {
+        currentAttributes.put(a, currentAttributes.get(a)-1);
     }
 
-    public int getCharisma() {
-        return charisma;
+    void increaseMaximum(PRIMARY_ATTRIBUTE a) {
+        maxAttributes.put(a, maxAttributes.get(a)+1);
     }
 
-    public int getDexterity() {
-        return dexterity;
+    void decreaseMaximum(PRIMARY_ATTRIBUTE a) {
+        maxAttributes.put(a, maxAttributes.get(a)-1);
     }
 
-    public int getFinesse() {
-        return finesse;
-    }
-
-    public int getConstitution() {
-        return constitution;
-    }
-
-    public int getStrength() {
-        return strength;
+    int getMaximumOfPrimaryAttribute(PRIMARY_ATTRIBUTE a) {
+        return maxAttributes.get(a);
     }
 }

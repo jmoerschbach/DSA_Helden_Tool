@@ -14,7 +14,7 @@ public class Aventurian {
 
     private final List<Property> properties;
 
-    public Aventurian(String name, int ap) {
+    Aventurian(String name, int ap) {
         this.name = name;
         this.primaryAttributes = new PrimaryAttributes();
         this.secondaryAttributes = new SecondaryAttributes();
@@ -22,36 +22,65 @@ public class Aventurian {
         this.properties = new ArrayList<>();
     }
 
-    public Aventurian(int ap) {
+    Aventurian(int ap) {
         this("", ap);
     }
 
-    public void pay(int cost) {
+    void pay(int cost) {
         if (canPay(cost)) adventurePoints -= cost;
         else throw new IllegalArgumentException("Cannot pay: " + cost);
     }
 
-    public void refund(int refund) {
+    void refund(int refund) {
         adventurePoints += refund;
     }
 
-    public boolean canPay(int cost) {
+    boolean canPay(int cost) {
         return cost <= adventurePoints;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public void addProperty(Property p) {
+    void addProperty(Property p) {
         properties.add(p);
     }
 
-    public void removeProperty(Property p) {
+    void removeProperty(Property p) {
         properties.remove(p);
     }
 
-    public boolean hasProperty(Property p) {
+    boolean has(String nameOfSkill) {
+        for (Property p : properties) {
+            if (p.getName().equals(nameOfSkill)) return true;
+        }
+        return false;
+    }
+
+    boolean hasProperty(Property p) {
         return properties.contains(p);
+    }
+
+    int getSumOfPrimaryAttributes() {
+        return primaryAttributes.getSum();
+    }
+
+    int getPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
+        return primaryAttributes.getPrimaryAttribute(a);
+    }
+
+    int getMaxOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
+        return primaryAttributes.getMaximumOfPrimaryAttribute(a);
+    }
+
+    void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+        primaryAttributes.increase(attribute);
+        secondaryAttributes.updateValues(primaryAttributes);
+    }
+
+    void decrasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+        primaryAttributes.decrease(attribute);
+        secondaryAttributes.updateValues(primaryAttributes);
     }
 }

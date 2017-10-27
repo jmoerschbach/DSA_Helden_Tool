@@ -2,6 +2,8 @@ package character;
 
 import skills.Property;
 
+import static steigerrechner.Steigerrechner.getCost;
+
 public class AventurianManager {
 
     private Aventurian aventurian;
@@ -16,6 +18,22 @@ public class AventurianManager {
         this.aventurian = aventurian;
         this.pointsInAdvantages = 0;
         this.pointsOutDisadvantages = 0;
+    }
+
+    public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
+        int cost = getCost(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a)+1, 8);
+        if (canPay(cost) && aventurian.getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM && aventurian.getPrimaryAttribute(a) < aventurian.getMaxOfPrimaryAttribute(a)) {
+            pay(cost);
+            aventurian.increasePrimaryAttribute(a);
+        }
+    }
+
+    public void decreasePrimaryAttribut(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
+        int cost = getCost(aventurian.getPrimaryAttribute(a)-1, aventurian.getPrimaryAttribute(a), 8);
+        if (aventurian.getPrimaryAttribute(a) > 8) {
+            refund(cost);
+            aventurian.decrasePrimaryAttribute(a);
+        }
     }
 
     public void addProperty(Property p) {
