@@ -1,6 +1,6 @@
 package character;
 
-class Attributes {
+class PrimaryAttributes {
 
     private int courage;
     private int intelligence;
@@ -11,7 +11,7 @@ class Attributes {
     private int constitution;
     private int strength;
 
-    Attributes() {
+    PrimaryAttributes() {
         courage = 8;
         intelligence = 8;
         intuition = 8;
@@ -20,6 +20,10 @@ class Attributes {
         finesse = 8;
         constitution = 8;
         strength = 8;
+    }
+
+    public int getSum() {
+        return courage + intelligence + intuition + charisma + dexterity + finesse + constitution + strength;
     }
 
     public int getCourage() {

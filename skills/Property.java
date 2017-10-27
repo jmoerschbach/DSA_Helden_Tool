@@ -8,29 +8,29 @@ import java.util.function.Predicate;
 
 public class Property extends Skill {
 
-    private final int refund;
+    private final int cost;
     private final Optional<Consumer<Aventurian>> effectOnGain;
     private final Optional<Consumer<Aventurian>> effectOnLose;
     private final Optional<Predicate<Aventurian>> requirement;
 
-    public Property(String name, String description, int refund, Optional<Consumer<Aventurian>> effectOnGain, Optional<Consumer<Aventurian>> effectOnLose, Optional<Predicate<Aventurian>> requirement) {
+    public Property(String name, String description, int cost, Optional<Consumer<Aventurian>> effectOnGain, Optional<Consumer<Aventurian>> effectOnLose, Optional<Predicate<Aventurian>> requirement) {
         super(name, description);
-        this.refund = refund;
+        this.cost = cost;
         this.effectOnGain = effectOnGain;
         this.effectOnLose = effectOnLose;
         this.requirement = requirement;
     }
 
-    public Property(String name, String description, int refund, Optional<Consumer<Aventurian>> effectOnLose, Optional<Consumer<Aventurian>> effectOnGain) {
-        this(name, description, refund, effectOnGain, effectOnLose, Optional.empty());
+    public Property(String name, String description, int cost, Optional<Consumer<Aventurian>> effectOnLose, Optional<Consumer<Aventurian>> effectOnGain) {
+        this(name, description, cost, effectOnGain, effectOnLose, Optional.empty());
     }
 
-    public Property(String name, String description, int refund, Optional<Predicate<Aventurian>> requirement) {
-        this(name, description, refund, Optional.empty(), Optional.empty(), requirement);
+    public Property(String name, String description, int cost, Optional<Predicate<Aventurian>> requirement) {
+        this(name, description, cost, Optional.empty(), Optional.empty(), requirement);
     }
 
-    public Property(String name, String description, int refund) {
-        this(name, description, refund, Optional.empty(), Optional.empty(), Optional.empty());
+    public Property(String name, String description, int cost) {
+        this(name, description, cost, Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     public void gain(Aventurian t) {
@@ -43,5 +43,17 @@ public class Property extends Skill {
 
     public boolean isAllowed(Aventurian t) {
         return !requirement.isPresent() || requirement.get().test(t);
+    }
+
+    public boolean isAdvantage() {
+        return cost > 0;
+    }
+
+    public boolean isDisadvantage() {
+        return !isAdvantage();
+    }
+
+    public int getCost() {
+        return cost;
     }
 }
