@@ -45,6 +45,11 @@ public class PrimaryAttributesTest {
         assertEquals(expected, actual);
     }
 
+    @Test(expected = NullPointerException.class)
+    public void increaseWithNull() throws Exception {
+        toTest.increase(null);
+    }
+
     @Test(expected = IllegalStateException.class)
     public void increaseWithExcedingMaximum() throws Exception {
         toTest.increase(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
