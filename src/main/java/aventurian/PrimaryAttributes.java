@@ -9,6 +9,7 @@ class PrimaryAttributes {
 
     private Map<PRIMARY_ATTRIBUTE, Integer> currentAttributes;
     private Map<PRIMARY_ATTRIBUTE, Integer> maxAttributes;
+    private Map<PRIMARY_ATTRIBUTE, Integer> minAttributes;
 
     public enum PRIMARY_ATTRIBUTE {
         COURAGE,
@@ -40,6 +41,15 @@ class PrimaryAttributes {
         maxAttributes.put(FINESSE, 14);
         maxAttributes.put(CONSTITUTION, 14);
         maxAttributes.put(STRENGTH, 14);
+        this.minAttributes = new HashMap<>();
+        minAttributes.put(COURAGE, 8);
+        minAttributes.put(INTELLIGENCE, 8);
+        minAttributes.put(INTUITION, 8);
+        minAttributes.put(CHARISMA, 8);
+        minAttributes.put(DEXTERITY, 8);
+        minAttributes.put(FINESSE, 8);
+        minAttributes.put(CONSTITUTION, 8);
+        minAttributes.put(STRENGTH, 8);
     }
 
     int getSum() {
@@ -51,10 +61,14 @@ class PrimaryAttributes {
     }
 
     void increase(PRIMARY_ATTRIBUTE a) {
+        if (currentAttributes.get(a) >= maxAttributes.get(a))
+            throw new IllegalStateException("Maximum already reached!");
         currentAttributes.put(a, currentAttributes.get(a)+1);
     }
 
     void decrease(PRIMARY_ATTRIBUTE a) {
+        if (currentAttributes.get(a) <= minAttributes.get(a))
+            throw new IllegalStateException("Minimum already reached!");
         currentAttributes.put(a, currentAttributes.get(a)-1);
     }
 
@@ -63,6 +77,8 @@ class PrimaryAttributes {
     }
 
     void decreaseMaximum(PRIMARY_ATTRIBUTE a) {
+        if (maxAttributes.get(a) <= minAttributes.get(a))
+            throw new IllegalStateException("Maximum cannot be less than Minimum!");
         maxAttributes.put(a, maxAttributes.get(a)-1);
     }
 
