@@ -12,6 +12,7 @@ public class Aventurian {
     private SecondaryAttributes secondaryAttributes;
     private int adventurePoints;
 
+
     private final List<Property> properties;
 
     Aventurian(String name, int ap) {
