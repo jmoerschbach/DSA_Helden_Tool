@@ -1,6 +1,6 @@
 package aventurian;
 
-import skills.Property;
+import skills.*;
 
 public class AventurianManager {
 
@@ -39,20 +39,23 @@ public class AventurianManager {
     public void addProperty(Property p) {
         int cost = p.getCost();
         if (canPay(cost) && p.isAllowed(aventurian)) {
-            pay(cost);
-            aventurian.addProperty(p);
-            p.gain(aventurian);
             if (p.isAdvantage() && pointsInAdvantages + cost <= MAX_POINTS_IN_ADVANTAGES) {
                 pointsInAdvantages += cost;
+                pay(cost);
+                aventurian.addProperty(p);
+                p.gain(aventurian);
             } else if (p.isDisadvantage() && pointsOutDisadvantages + (cost * -1) <= MAX_POINTS_OUT_DISADVANTAGES) {
                 pointsOutDisadvantages += cost * -1;
+                pay(cost);
+                aventurian.addProperty(p);
+                p.gain(aventurian);
             }
         }
     }
 
     public void removeProperty(Property p) {
         int refund = p.getCost();
-        if (aventurian.hasProperty(p)) {
+        if (aventurian.hasSkill(p.getName())) {
             refund(refund);
             aventurian.removeProperty(p);
             p.lose(aventurian);
@@ -62,6 +65,40 @@ public class AventurianManager {
                 pointsOutDisadvantages -= refund * -1;
             }
         }
+    }
+
+    public void increaseLanguage(Language l) {
+        int cost = l.getUpgradeCost();
+        if (canPay(cost) && l.isAllowed(aventurian) && l.isIncreasable()) {
+            pay(cost);
+            l.increase();
+        }
+    }
+
+    public void decreaseLanguage(Language l) {
+        if (l.isDecreasable() && aventurian.hasSkill(l.getName())) {
+            int refund = l.getDowngradeCost();
+            refund(refund);
+            l.decrease();
+        }
+    }
+
+    public void addLanguage(Language l) {
+        int cost = l.getLearningCost();
+        if (canPay(cost) && l.isAllowed(aventurian)) {
+            pay(cost);
+            aventurian.addLanguage(l);
+            l.gain(aventurian);
+        }
+    }
+
+    public void removeLanguage(Language l) {
+        while (l.isDecreasable()) {
+            decreaseLanguage(l);
+        }
+        refund(l.getLearningCost());
+        aventurian.removeLanguage(l);
+        l.lose(aventurian);
     }
 
     private boolean canPay(int cost) {

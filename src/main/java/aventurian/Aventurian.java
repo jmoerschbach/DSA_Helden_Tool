@@ -1,6 +1,6 @@
 package aventurian;
 
-import skills.Property;
+import skills.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ public class Aventurian {
 
 
     private final List<Property> properties;
+    private final List<Language> languages;
 
     Aventurian(String name, int ap) {
         this.name = name;
@@ -21,6 +22,7 @@ public class Aventurian {
         this.secondaryAttributes = new SecondaryAttributes();
         this.adventurePoints = ap;
         this.properties = new ArrayList<>();
+        this.languages = new ArrayList<>();
     }
 
     Aventurian(int ap) {
@@ -52,15 +54,30 @@ public class Aventurian {
         properties.remove(p);
     }
 
-    boolean has(String nameOfSkill) {
+    void addLanguage(Language l) {
+        languages.add(l);
+    }
+
+    void removeLanguage(Language l) {
+        languages.remove(l);
+    }
+
+    boolean hasSkill(String nameOfSkill) {
         for (Property p : properties) {
             if (p.getName().equals(nameOfSkill)) return true;
+        }
+        for (Language l : languages) {
+            if (l.getName().equals(nameOfSkill)) return true;
         }
         return false;
     }
 
     boolean hasProperty(Property p) {
         return properties.contains(p);
+    }
+
+    boolean hasLanguage(Language l) {
+        return languages.contains(l);
     }
 
     int getSumOfPrimaryAttributes() {

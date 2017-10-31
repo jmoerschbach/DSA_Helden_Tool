@@ -1,13 +1,25 @@
 package skills;
 
+import aventurian.Aventurian;
+
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
 public abstract class Skill {
 
     private final String name;
     private final String description;
+    private final Consumer<Aventurian> effectOnGain;
+    private final Consumer<Aventurian> effectOnLose;
+    private final Predicate<Aventurian> requirement;
 
-    public Skill(String name, String description) {
+    public Skill(String name, String description, Consumer<Aventurian> effectOnGain, Consumer<Aventurian> effectOnLose, Predicate<Aventurian> requirement) {
         this.name = name;
         this.description = description;
+        this.effectOnGain = effectOnGain;
+        this.effectOnLose = effectOnLose;
+        this.requirement = requirement;
     }
 
     public String getName() {
@@ -16,6 +28,18 @@ public abstract class Skill {
 
     public String getDescription() {
         return description;
+    }
+
+    public void gain(Aventurian t) {
+        effectOnGain.accept(t);
+    }
+
+    public void lose(Aventurian t) {
+        effectOnLose.accept(t);
+    }
+
+    public boolean isAllowed(Aventurian t) {
+        return requirement.test(t);
     }
 
     @Override
