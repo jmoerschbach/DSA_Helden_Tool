@@ -1,10 +1,9 @@
 package skills;
 
-import aventurian.Aventurian;
-
-import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+
+import aventurian.Aventurian;
 
 public abstract class Skill {
 
