@@ -14,6 +14,7 @@ public class Aventurian {
 
 
     private final List<Property> properties;
+    private final List<BadProperty> badProperties;
     private final List<Language> languages;
 
     Aventurian(String name, int ap) {
@@ -22,6 +23,7 @@ public class Aventurian {
         this.secondaryAttributes = new SecondaryAttributes();
         this.adventurePoints = ap;
         this.properties = new ArrayList<>();
+        this.badProperties = new ArrayList<>();
         this.languages = new ArrayList<>();
     }
 
@@ -29,13 +31,18 @@ public class Aventurian {
         this("", ap);
     }
 
+    public int getAdventurePoints() {
+        return adventurePoints;
+    }
+
     void pay(int cost) {
-        if (canPay(cost)) adventurePoints -= cost;
+        if (canPay(cost) && cost >= 0) adventurePoints -= cost;
         else throw new IllegalArgumentException("Cannot pay: " + cost);
     }
 
     void refund(int refund) {
-        adventurePoints += refund;
+        if (refund >= 0) adventurePoints += refund;
+        else throw new IllegalArgumentException("Cannot refund negative amound: " + refund);
     }
 
     boolean canPay(int cost) {
@@ -52,6 +59,18 @@ public class Aventurian {
 
     void removeProperty(Property p) {
         properties.remove(p);
+    }
+
+    void addBadProperty(BadProperty p) {
+        badProperties.add(p);
+    }
+
+    void removeBadProperty(BadProperty p) {
+        badProperties.remove(p);
+    }
+
+    int getBadPropertySum() {
+        return badProperties.stream().mapToInt(BadProperty::getLevel).sum();
     }
 
     void addLanguage(Language l) {

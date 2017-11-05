@@ -3,13 +3,10 @@ package skills;
 
 import aventurian.Aventurian;
 
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class Language extends Skill {
 
-    private static final Consumer<Aventurian> EMPTY = (Aventurian a) -> {
-    };
     private int level;
     private final int maxLevel;
     private final int cost;

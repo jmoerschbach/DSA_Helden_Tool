@@ -7,6 +7,9 @@ import aventurian.Aventurian;
 
 public abstract class Skill {
 
+    protected static final Consumer<Aventurian> EMPTY = (Aventurian a) -> {
+    };
+
     private final String name;
     private final String description;
     private final Consumer<Aventurian> effectOnGain;

@@ -53,6 +53,39 @@ public class AventurianManager {
         }
     }
 
+    public void addBadProperty(BadProperty p) {
+        int cost = p.getCost();
+        if (aventurian.getBadPropertySum() + p.getLevel() <= 25 && p.isAllowed(aventurian) && pointsInAdvantages + (cost * 5 * -1) <= MAX_POINTS_OUT_DISADVANTAGES) {
+            pointsOutDisadvantages += cost * -1;
+            pay(cost * p.getLevel());
+            aventurian.addBadProperty(p);
+            p.gain(aventurian);
+        }
+    }
+
+    public void removeBadProperty(BadProperty p) {
+        while (p.isDecreasable()) {
+            decreaseBadProperty(p);
+        }
+        refund(p.getCost() * p.getLevel());
+        aventurian.removeBadProperty(p);
+        p.lose(aventurian);
+    }
+
+    public void increaseBadProperty(BadProperty p) {
+        if (p.isIncreasable() && aventurian.getBadPropertySum() + 1 <= 25) {
+            pay(p.getCost());
+            p.increase();
+        }
+    }
+
+    public void decreaseBadProperty(BadProperty p) {
+        if (p.isDecreasable() && aventurian.hasSkill(p.getName())) {
+            refund(p.getCost());
+            p.decrease();
+        }
+    }
+
     public void removeProperty(Property p) {
         int refund = p.getCost();
         if (aventurian.hasSkill(p.getName())) {
