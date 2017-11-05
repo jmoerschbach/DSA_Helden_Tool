@@ -81,12 +81,12 @@ public class Aventurian {
         languages.remove(l);
     }
 
-    boolean hasSkill(String nameOfSkill) {
+    boolean hasSkill(Skill skill) {
         for (Property p : properties) {
-            if (p.getName().equals(nameOfSkill)) return true;
+            if (p.equals(skill)) return true;
         }
         for (Language l : languages) {
-            if (l.getName().equals(nameOfSkill)) return true;
+            if (l.equals(skill)) return true;
         }
         return false;
     }

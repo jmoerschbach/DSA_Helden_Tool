@@ -80,7 +80,7 @@ public class AventurianManager {
     }
 
     public void decreaseBadProperty(BadProperty p) {
-        if (p.isDecreasable() && aventurian.hasSkill(p.getName())) {
+        if (p.isDecreasable() && aventurian.hasSkill(p)) {
             refund(p.getCost());
             p.decrease();
         }
@@ -88,7 +88,7 @@ public class AventurianManager {
 
     public void removeProperty(Property p) {
         int refund = p.getCost();
-        if (aventurian.hasSkill(p.getName())) {
+        if (aventurian.hasSkill(p)) {
             refund(refund);
             aventurian.removeProperty(p);
             p.lose(aventurian);
@@ -109,7 +109,7 @@ public class AventurianManager {
     }
 
     public void decreaseLanguage(Language l) {
-        if (l.isDecreasable() && aventurian.hasSkill(l.getName())) {
+        if (l.isDecreasable() && aventurian.hasSkill(l)) {
             int refund = l.getDowngradeCost();
             refund(refund);
             l.decrease();

@@ -3,6 +3,11 @@ package aventurian;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.mockito.Mockito.*;
+
+import skills.Property;
+
+
 import static org.junit.Assert.*;
 
 public class AventurianTest {
@@ -62,11 +67,20 @@ public class AventurianTest {
 
     @Test
     public void addProperty() throws Exception {
-
+        Property testProp = mock(Property.class);
+        when(testProp.getName()).thenReturn("test");
+        toTest.addProperty(testProp);
+        assertTrue(toTest.hasSkill(testProp));
     }
 
     @Test
     public void removeProperty() throws Exception {
+        Property testProp = mock(Property.class);
+        when(testProp.getName()).thenReturn("test");
+        toTest.addProperty(testProp);
+        assertTrue(toTest.hasSkill(testProp));
+        toTest.removeProperty(testProp);
+        assertFalse(toTest.hasSkill(testProp));
     }
 
     @Test
