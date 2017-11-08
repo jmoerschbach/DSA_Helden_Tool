@@ -19,10 +19,19 @@ public class Aventurian {
 	private final List<BadProperty> badProperties;
 	private final List<Language> languages;
 
-	Aventurian(String name, int ap) {
+	public Aventurian() {
+		this("", 100, new PrimaryAttributes(), new SecondaryAttributes());
+	}
+
+	public Aventurian(String name, int ap) {
+		this(name, ap, new PrimaryAttributes(), new SecondaryAttributes());
+	}
+
+	Aventurian(String name, int ap, PrimaryAttributes primary,
+			SecondaryAttributes secondary) {
 		this.name = name;
-		this.primaryAttributes = new PrimaryAttributes();
-		this.secondaryAttributes = new SecondaryAttributes();
+		this.primaryAttributes = primary;
+		this.secondaryAttributes = secondary;
 		this.adventurePoints = ap;
 		this.properties = new ArrayList<>();
 		this.badProperties = new ArrayList<>();
@@ -30,7 +39,7 @@ public class Aventurian {
 	}
 
 	Aventurian(int ap) {
-		this("", ap);
+		this("", ap, new PrimaryAttributes(), new SecondaryAttributes());
 	}
 
 	public int getAdventurePoints() {
@@ -92,7 +101,6 @@ public class Aventurian {
 		return Stream.of(badProperties, properties, languages)
 				.flatMap(Collection::stream).anyMatch((s) -> s.equals(skill));
 	}
-
 
 	int getSumOfPrimaryAttributes() {
 		return primaryAttributes.getSum();

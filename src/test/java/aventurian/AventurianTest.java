@@ -3,10 +3,11 @@ package aventurian;
 import org.junit.Before;
 import org.junit.Test;
 
-import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.*;
 import static org.mockito.Mockito.*;
+import skills.BadProperty;
+import skills.Language;
 import skills.Property;
-
 import static org.junit.Assert.*;
 
 public class AventurianTest {
@@ -91,6 +92,16 @@ public class AventurianTest {
 
 	@Test
 	public void getBadPropertySum() throws Exception {
+		assertEquals(0, toTest.getBadPropertySum());
+		BadProperty bP1 = mock(BadProperty.class);
+		when(bP1.getLevel()).thenReturn(7);
+		toTest.add(bP1);
+		assertEquals(7, toTest.getBadPropertySum());
+		
+		BadProperty bP2 = mock(BadProperty.class);
+		when(bP2.getLevel()).thenReturn(5);
+		toTest.add(bP2);
+		assertEquals(7+5, toTest.getBadPropertySum());
 	}
 
 	@Test
@@ -103,15 +114,22 @@ public class AventurianTest {
 
 	@Test
 	public void hasSkill() throws Exception {
+		Property p = mock(Property.class);		
+		assertFalse(toTest.hasSkill(p));
+		toTest.add(p);
+		assertTrue(toTest.hasSkill(p));
+		
+		BadProperty bP = mock(BadProperty.class);		
+		assertFalse(toTest.hasSkill(bP));
+		toTest.add(bP);
+		assertTrue(toTest.hasSkill(bP));
+		
+		Language l = mock(Language.class);		
+		assertFalse(toTest.hasSkill(l));
+		toTest.add(l);
+		assertTrue(toTest.hasSkill(l));
 	}
 
-	@Test
-	public void hasProperty() throws Exception {
-	}
-
-	@Test
-	public void hasLanguage() throws Exception {
-	}
 
 	@Test
 	public void getSumOfPrimaryAttributes() throws Exception {
@@ -119,7 +137,7 @@ public class AventurianTest {
 
 	@Test
 	public void getPrimaryAttribute() throws Exception {
-		assertEquals(8, toTest.getPrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE));
+		assertEquals(8, toTest.getPrimaryAttribute(COURAGE));
 	}
 
 	@Test
@@ -128,10 +146,24 @@ public class AventurianTest {
 
 	@Test
 	public void increasePrimaryAttribute() throws Exception {
+		PrimaryAttributes pri = mock(PrimaryAttributes.class);
+		SecondaryAttributes second = mock(SecondaryAttributes.class);
+		toTest = new Aventurian("", 100, pri, second);
+
+		toTest.increasePrimaryAttribute(COURAGE);
+		verify(pri).increase(COURAGE);
+		verify(second).updateValues(pri);
 	}
 
 	@Test
 	public void decrasePrimaryAttribute() throws Exception {
+		PrimaryAttributes pri = mock(PrimaryAttributes.class);
+		SecondaryAttributes second = mock(SecondaryAttributes.class);
+		toTest = new Aventurian("", 100, pri, second);
+
+		toTest.decrasePrimaryAttribute(COURAGE);
+		verify(pri).decrease(COURAGE);
+		verify(second).updateValues(pri);
 	}
 
 }
