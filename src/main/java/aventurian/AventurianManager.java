@@ -42,12 +42,12 @@ public class AventurianManager {
             if (p.isAdvantage() && pointsInAdvantages + cost <= MAX_POINTS_IN_ADVANTAGES) {
                 pointsInAdvantages += cost;
                 pay(cost);
-                aventurian.addProperty(p);
+                aventurian.add(p);
                 p.gain(aventurian);
             } else if (p.isDisadvantage() && pointsOutDisadvantages + (cost * -1) <= MAX_POINTS_OUT_DISADVANTAGES) {
                 pointsOutDisadvantages += cost * -1;
                 pay(cost);
-                aventurian.addProperty(p);
+                aventurian.add(p);
                 p.gain(aventurian);
             }
         }
@@ -58,7 +58,7 @@ public class AventurianManager {
         if (aventurian.getBadPropertySum() + p.getLevel() <= 25 && p.isAllowed(aventurian) && pointsInAdvantages + (cost * 5 * -1) <= MAX_POINTS_OUT_DISADVANTAGES) {
             pointsOutDisadvantages += cost * -1;
             pay(cost * p.getLevel());
-            aventurian.addBadProperty(p);
+            aventurian.add(p);
             p.gain(aventurian);
         }
     }
@@ -68,7 +68,7 @@ public class AventurianManager {
             decreaseBadProperty(p);
         }
         refund(p.getCost() * p.getLevel());
-        aventurian.removeBadProperty(p);
+        aventurian.remove(p);
         p.lose(aventurian);
     }
 
@@ -90,7 +90,7 @@ public class AventurianManager {
         int refund = p.getCost();
         if (aventurian.hasSkill(p)) {
             refund(refund);
-            aventurian.removeProperty(p);
+            aventurian.remove(p);
             p.lose(aventurian);
             if (p.isAdvantage()) {
                 pointsInAdvantages -= refund;
@@ -120,7 +120,7 @@ public class AventurianManager {
         int cost = l.getLearningCost();
         if (canPay(cost) && l.isAllowed(aventurian)) {
             pay(cost);
-            aventurian.addLanguage(l);
+            aventurian.add(l);
             l.gain(aventurian);
         }
     }
@@ -130,7 +130,7 @@ public class AventurianManager {
             decreaseLanguage(l);
         }
         refund(l.getLearningCost());
-        aventurian.removeLanguage(l);
+        aventurian.remove(l);
         l.lose(aventurian);
     }
 

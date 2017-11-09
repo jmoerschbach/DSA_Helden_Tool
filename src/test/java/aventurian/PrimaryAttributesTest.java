@@ -2,7 +2,6 @@ package aventurian;
 
 import org.junit.Before;
 import org.junit.Test;
-import sun.security.pkcs11.wrapper.CK_SSL3_KEY_MAT_OUT;
 
 import static org.junit.Assert.*;
 
