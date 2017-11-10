@@ -123,4 +123,12 @@ public class Aventurian {
 		primaryAttributes.decrease(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
 	}
+	
+	void increaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+		primaryAttributes.increaseMaximum(attribute);
+	}
+	
+	void decreaseMaximumOfPRimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+		primaryAttributes.decreaseMaximum(attribute);
+	}
 }

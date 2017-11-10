@@ -84,10 +84,20 @@ public class AventurianTest {
 
 	@Test
 	public void addBadProperty() throws Exception {
+		BadProperty testProp = mock(BadProperty.class);
+		when(testProp.getName()).thenReturn("test");
+		toTest.add(testProp);
+		assertTrue(toTest.hasSkill(testProp));
 	}
 
 	@Test
 	public void removeBadProperty() throws Exception {
+		BadProperty testProp = mock(BadProperty.class);
+		when(testProp.getName()).thenReturn("test");
+		toTest.add(testProp);
+		assertTrue(toTest.hasSkill(testProp));
+		toTest.remove(testProp);
+		assertFalse(toTest.hasSkill(testProp));
 	}
 
 	@Test
@@ -133,6 +143,11 @@ public class AventurianTest {
 
 	@Test
 	public void getSumOfPrimaryAttributes() throws Exception {
+		assertEquals(64, toTest.getSumOfPrimaryAttributes());
+		toTest.increasePrimaryAttribute(COURAGE);
+		toTest.increasePrimaryAttribute(COURAGE);
+		toTest.increasePrimaryAttribute(COURAGE);
+		assertEquals(67, toTest.getSumOfPrimaryAttributes());
 	}
 
 	@Test
@@ -142,6 +157,7 @@ public class AventurianTest {
 
 	@Test
 	public void getMaxOfPrimaryAttribute() throws Exception {
+		assertEquals(14, toTest.getMaxOfPrimaryAttribute(COURAGE));
 	}
 
 	@Test
