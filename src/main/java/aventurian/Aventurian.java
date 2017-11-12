@@ -20,7 +20,7 @@ public class Aventurian {
 	private final List<Language> languages;
 
 	public Aventurian() {
-		this("", 100, new PrimaryAttributes(), new SecondaryAttributes());
+		this("", 16500, new PrimaryAttributes(), new SecondaryAttributes());
 	}
 
 	public Aventurian(String name, int ap) {

@@ -116,10 +116,20 @@ public class AventurianTest {
 
 	@Test
 	public void addLanguage() throws Exception {
+		Language testLanguage = mock(Language.class);
+		when(testLanguage.getName()).thenReturn("test");
+		toTest.add(testLanguage);
+		assertTrue(toTest.hasSkill(testLanguage));
 	}
 
 	@Test
 	public void removeLanguage() throws Exception {
+		Language testLanguage = mock(Language.class);
+		when(testLanguage.getName()).thenReturn("test");
+		toTest.add(testLanguage);
+		assertTrue(toTest.hasSkill(testLanguage));
+		toTest.remove(testLanguage);
+		assertFalse(toTest.hasSkill(testLanguage));
 	}
 
 	@Test
@@ -180,6 +190,24 @@ public class AventurianTest {
 		toTest.decrasePrimaryAttribute(COURAGE);
 		verify(pri).decrease(COURAGE);
 		verify(second).updateValues(pri);
+	}
+	
+	@Test
+	public void increaseMaximumOfPrimaryAttribute() throws Exception {
+		PrimaryAttributes pri = mock(PrimaryAttributes.class);
+		toTest = new Aventurian("", 100, pri, null);
+		
+		toTest.increaseMaximumOfPrimaryAttribute(COURAGE);
+		verify(pri).increaseMaximum(COURAGE);
+	}
+	
+	@Test
+	public void decreaseMaximumOfPrimaryAttribute() throws Exception {
+		PrimaryAttributes pri = mock(PrimaryAttributes.class);
+		toTest = new Aventurian("", 100, pri, null);
+		
+		toTest.decreaseMaximumOfPrimaryAttribute(COURAGE);
+		verify(pri).decreaseMaximum(COURAGE);
 	}
 
 }

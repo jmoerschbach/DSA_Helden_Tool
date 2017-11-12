@@ -3,6 +3,7 @@ package aventurian;
 import org.junit.Before;
 import org.junit.Test;
 
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.*;
 import static org.junit.Assert.*;
 
 public class PrimaryAttributesTest {
@@ -15,14 +16,14 @@ public class PrimaryAttributesTest {
     }
 
     @Test
-    public void getSumDefault() throws Exception {
+    public void testGetSumDefault() throws Exception {
         int expected = 8 * 8;
         int actual = toTest.getSum();
         assertEquals(actual, expected);
     }
 
     @Test
-    public void getSum() throws Exception {
+    public void testGetSum() throws Exception {
         toTest.increase(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
         int expected = 8 * 8 + 1;
         int actual = toTest.getSum();
@@ -30,14 +31,14 @@ public class PrimaryAttributesTest {
     }
 
     @Test
-    public void getPrimaryAttribute() throws Exception {
+    public void testGetPrimaryAttribute() throws Exception {
         int expected = 8;
         int actual = toTest.getPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
         assertEquals(expected, actual);
     }
 
     @Test
-    public void increase() throws Exception {
+    public void testIncrease() throws Exception {
         int expected = toTest.getPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE) + 1;
         toTest.increase(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
         int actual = toTest.getPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
@@ -45,12 +46,12 @@ public class PrimaryAttributesTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void increaseWithNull() throws Exception {
+    public void testIncreaseWithNull() throws Exception {
         toTest.increase(null);
     }
 
     @Test(expected = IllegalStateException.class)
-    public void increaseWithExcedingMaximum() throws Exception {
+    public void testIncreaseWithExcedingMaximum() throws Exception {
         toTest.increase(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
         toTest.increase(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
         toTest.increase(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
@@ -64,7 +65,7 @@ public class PrimaryAttributesTest {
     }
 
     @Test
-    public void decrease() throws Exception {
+    public void testDecrease() throws Exception {
         // Attributes start on minimum. -> increase first in order to be able to decrease again.
         int expected = toTest.getPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
         toTest.increase(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
@@ -74,12 +75,12 @@ public class PrimaryAttributesTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void decreaseWhileAlreadyOnMinimum() throws Exception {
+    public void testDecreaseWhileAlreadyOnMinimum() throws Exception {
         toTest.decrease(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
     }
 
     @Test
-    public void increaseMaximum() throws Exception {
+    public void testIncreaseMaximum() throws Exception {
         int expected = toTest.getMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE) + 1;
         toTest.increaseMaximum(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
         int actual = toTest.getMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
@@ -87,7 +88,7 @@ public class PrimaryAttributesTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void decreaseMaximum() throws Exception {
+    public void testDecreaseMaximum() throws Exception {
         toTest.decreaseMaximum(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
         toTest.decreaseMaximum(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
         toTest.decreaseMaximum(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
@@ -100,10 +101,29 @@ public class PrimaryAttributesTest {
     }
 
     @Test
-    public void getMaximumOfPrimaryAttribute() throws Exception {
+    public void testGetMaximumOfPrimaryAttribute() throws Exception {
         int expected = 14;
         int actual = toTest.getMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE);
         assertEquals(expected, actual);
     }
+    
+//    @Test
+//    public void testIsIncreasable() throws Exception {
+//    	assertTrue(toTest.isIncreasable(COURAGE));
+//    	toTest.increase(COURAGE);
+//    	toTest.increase(COURAGE);
+//    	toTest.increase(COURAGE);
+//    	toTest.increase(COURAGE);
+//    	toTest.increase(COURAGE);
+//    	toTest.increase(COURAGE);
+//    	assertFalse(toTest.isIncreasable(COURAGE));
+//    }
+//    
+//    @Test
+//    public void testIsDecreasable() throws Exception{
+//    	assertFalse(toTest.isDecreasable(COURAGE));
+//    	toTest.increase(COURAGE);
+//    	assertTrue(toTest.isDecreasable(COURAGE));
+//    }
 
 }

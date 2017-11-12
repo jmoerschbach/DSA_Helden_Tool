@@ -1,6 +1,7 @@
 package aventurian;
 
 import skills.*;
+import static aventurian.LevelCostCalculator.COLUMN.*;
 
 public class AventurianManager {
 
@@ -21,7 +22,7 @@ public class AventurianManager {
     }
 
     public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-        int cost = calculator.getCost(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a)+1, 8);
+        int cost = calculator.getCost(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a)+1, H);
         if (canPay(cost) && aventurian.getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM && aventurian.getPrimaryAttribute(a) < aventurian.getMaxOfPrimaryAttribute(a)) {
             pay(cost);
             aventurian.increasePrimaryAttribute(a);
@@ -29,7 +30,7 @@ public class AventurianManager {
     }
 
     public void decreasePrimaryAttribut(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-        int cost = calculator.getCost(aventurian.getPrimaryAttribute(a)-1, aventurian.getPrimaryAttribute(a), 8);
+        int cost = calculator.getRefund(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a)-1, H);
         if (aventurian.getPrimaryAttribute(a) > 8) {
             refund(cost);
             aventurian.decrasePrimaryAttribute(a);
