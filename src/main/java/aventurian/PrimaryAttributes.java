@@ -85,4 +85,12 @@ class PrimaryAttributes {
     int getMaximumOfPrimaryAttribute(PRIMARY_ATTRIBUTE a) {
         return maxAttributes.get(a);
     }
+    
+    boolean isIncreasable(PRIMARY_ATTRIBUTE a) {
+    	return currentAttributes.get(a) < maxAttributes.get(a);
+    }
+    
+    boolean isDecreasable(PRIMARY_ATTRIBUTE a) {
+    	return currentAttributes.get(a) > minAttributes.get(a);
+    }
 }

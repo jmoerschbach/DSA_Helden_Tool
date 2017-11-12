@@ -107,23 +107,23 @@ public class PrimaryAttributesTest {
         assertEquals(expected, actual);
     }
     
-    @Test
-    public void testIsIncreasable() throws Exception {
-    	assertTrue(toTest.isIncreasable(COURAGE));
-    	toTest.increase(COURAGE);
-    	toTest.increase(COURAGE);
-    	toTest.increase(COURAGE);
-    	toTest.increase(COURAGE);
-    	toTest.increase(COURAGE);
-    	toTest.increase(COURAGE);
-    	assertFalse(toTest.isIncreasable(COURAGE));
-    }
-    
-    @Test
-    public void testIsDecreasable() throws Exception{
-    	assertFalse(toTest.isDecreasable(COURAGE));
-    	toTest.increase(COURAGE);
-    	assertTrue(toTest.isDecreasable(COURAGE));
-    }
+//    @Test
+//    public void testIsIncreasable() throws Exception {
+//    	assertTrue(toTest.isIncreasable(COURAGE));
+//    	toTest.increase(COURAGE);
+//    	toTest.increase(COURAGE);
+//    	toTest.increase(COURAGE);
+//    	toTest.increase(COURAGE);
+//    	toTest.increase(COURAGE);
+//    	toTest.increase(COURAGE);
+//    	assertFalse(toTest.isIncreasable(COURAGE));
+//    }
+//    
+//    @Test
+//    public void testIsDecreasable() throws Exception{
+//    	assertFalse(toTest.isDecreasable(COURAGE));
+//    	toTest.increase(COURAGE);
+//    	assertTrue(toTest.isDecreasable(COURAGE));
+//    }
 
 }
