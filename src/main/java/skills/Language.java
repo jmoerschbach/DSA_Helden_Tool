@@ -46,7 +46,7 @@ public class Language extends Skill {
         return cost;
     }
 
-    public int getTotalCOst() {
+    public int getTotalCost() {
         return (level * (level + 1) / 2) * cost;
     }
 

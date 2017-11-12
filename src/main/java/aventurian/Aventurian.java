@@ -106,29 +106,33 @@ public class Aventurian {
 		return primaryAttributes.getSum();
 	}
 
-	int getPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
+	public int getPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		return primaryAttributes.getPrimaryAttribute(a);
 	}
 
-	int getMaxOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
+	public int getMaxOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		return primaryAttributes.getMaximumOfPrimaryAttribute(a);
 	}
 
-	void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+	public void increasePrimaryAttribute(
+			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.increase(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
 	}
 
-	void decrasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+	public void decrasePrimaryAttribute(
+			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decrease(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
 	}
-	
-	void increaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+
+	void increaseMaximumOfPrimaryAttribute(
+			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.increaseMaximum(attribute);
 	}
-	
-	void decreaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+
+	void decreaseMaximumOfPrimaryAttribute(
+			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decreaseMaximum(attribute);
 	}
 }
