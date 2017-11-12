@@ -5,7 +5,7 @@ import java.util.Map;
 
 import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.*;
 
-class PrimaryAttributes {
+public class PrimaryAttributes {
 
     private Map<PRIMARY_ATTRIBUTE, Integer> currentAttributes;
     private Map<PRIMARY_ATTRIBUTE, Integer> maxAttributes;
