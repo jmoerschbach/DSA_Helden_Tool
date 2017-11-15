@@ -7,7 +7,9 @@ import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.*;
 
 public class PrimaryAttributes {
 
-    private Map<PRIMARY_ATTRIBUTE, Integer> currentAttributes;
+    static final int MAX = 14;
+	static final int DEFAULT = 8;
+	private Map<PRIMARY_ATTRIBUTE, Integer> currentAttributes;
     private Map<PRIMARY_ATTRIBUTE, Integer> maxAttributes;
     private Map<PRIMARY_ATTRIBUTE, Integer> minAttributes;
 
@@ -24,32 +26,32 @@ public class PrimaryAttributes {
 
     PrimaryAttributes() {
         this.currentAttributes = new HashMap<>();
-        currentAttributes.put(COURAGE, 8);
-        currentAttributes.put(INTELLIGENCE, 8);
-        currentAttributes.put(INTUITION, 8);
-        currentAttributes.put(CHARISMA, 8);
-        currentAttributes.put(DEXTERITY, 8);
-        currentAttributes.put(FINESSE, 8);
-        currentAttributes.put(CONSTITUTION, 8);
-        currentAttributes.put(STRENGTH, 8);
+        currentAttributes.put(COURAGE, DEFAULT);
+        currentAttributes.put(INTELLIGENCE, DEFAULT);
+        currentAttributes.put(INTUITION, DEFAULT);
+        currentAttributes.put(CHARISMA, DEFAULT);
+        currentAttributes.put(DEXTERITY, DEFAULT);
+        currentAttributes.put(FINESSE, DEFAULT);
+        currentAttributes.put(CONSTITUTION, DEFAULT);
+        currentAttributes.put(STRENGTH, DEFAULT);
         this.maxAttributes = new HashMap<>();
-        maxAttributes.put(COURAGE, 14);
-        maxAttributes.put(INTELLIGENCE, 14);
-        maxAttributes.put(INTUITION, 14);
-        maxAttributes.put(CHARISMA, 14);
-        maxAttributes.put(DEXTERITY, 14);
-        maxAttributes.put(FINESSE, 14);
-        maxAttributes.put(CONSTITUTION, 14);
-        maxAttributes.put(STRENGTH, 14);
+        maxAttributes.put(COURAGE, MAX);
+		maxAttributes.put(INTELLIGENCE, MAX);
+        maxAttributes.put(INTUITION, MAX);
+        maxAttributes.put(CHARISMA, MAX);
+        maxAttributes.put(DEXTERITY, MAX);
+        maxAttributes.put(FINESSE, MAX);
+        maxAttributes.put(CONSTITUTION, MAX);
+        maxAttributes.put(STRENGTH, MAX);
         this.minAttributes = new HashMap<>();
-        minAttributes.put(COURAGE, 8);
-        minAttributes.put(INTELLIGENCE, 8);
-        minAttributes.put(INTUITION, 8);
-        minAttributes.put(CHARISMA, 8);
-        minAttributes.put(DEXTERITY, 8);
-        minAttributes.put(FINESSE, 8);
-        minAttributes.put(CONSTITUTION, 8);
-        minAttributes.put(STRENGTH, 8);
+        minAttributes.put(COURAGE, DEFAULT);
+        minAttributes.put(INTELLIGENCE, DEFAULT);
+        minAttributes.put(INTUITION, DEFAULT);
+        minAttributes.put(CHARISMA, DEFAULT);
+        minAttributes.put(DEXTERITY, DEFAULT);
+        minAttributes.put(FINESSE, DEFAULT);
+        minAttributes.put(CONSTITUTION, DEFAULT);
+        minAttributes.put(STRENGTH, DEFAULT);
     }
 
     int getSum() {
