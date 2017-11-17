@@ -8,7 +8,7 @@ import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.*;
 public class PrimaryAttributes {
 
     static final int MAX = 14;
-	static final int DEFAULT = 8;
+	static final int MIN = 8;
 	private Map<PRIMARY_ATTRIBUTE, Integer> currentAttributes;
     private Map<PRIMARY_ATTRIBUTE, Integer> maxAttributes;
     private Map<PRIMARY_ATTRIBUTE, Integer> minAttributes;
@@ -26,14 +26,14 @@ public class PrimaryAttributes {
 
     PrimaryAttributes() {
         this.currentAttributes = new HashMap<>();
-        currentAttributes.put(COURAGE, DEFAULT);
-        currentAttributes.put(INTELLIGENCE, DEFAULT);
-        currentAttributes.put(INTUITION, DEFAULT);
-        currentAttributes.put(CHARISMA, DEFAULT);
-        currentAttributes.put(DEXTERITY, DEFAULT);
-        currentAttributes.put(FINESSE, DEFAULT);
-        currentAttributes.put(CONSTITUTION, DEFAULT);
-        currentAttributes.put(STRENGTH, DEFAULT);
+        currentAttributes.put(COURAGE, MIN);
+        currentAttributes.put(INTELLIGENCE, MIN);
+        currentAttributes.put(INTUITION, MIN);
+        currentAttributes.put(CHARISMA, MIN);
+        currentAttributes.put(DEXTERITY, MIN);
+        currentAttributes.put(FINESSE, MIN);
+        currentAttributes.put(CONSTITUTION, MIN);
+        currentAttributes.put(STRENGTH, MIN);
         this.maxAttributes = new HashMap<>();
         maxAttributes.put(COURAGE, MAX);
 		maxAttributes.put(INTELLIGENCE, MAX);
@@ -44,14 +44,14 @@ public class PrimaryAttributes {
         maxAttributes.put(CONSTITUTION, MAX);
         maxAttributes.put(STRENGTH, MAX);
         this.minAttributes = new HashMap<>();
-        minAttributes.put(COURAGE, DEFAULT);
-        minAttributes.put(INTELLIGENCE, DEFAULT);
-        minAttributes.put(INTUITION, DEFAULT);
-        minAttributes.put(CHARISMA, DEFAULT);
-        minAttributes.put(DEXTERITY, DEFAULT);
-        minAttributes.put(FINESSE, DEFAULT);
-        minAttributes.put(CONSTITUTION, DEFAULT);
-        minAttributes.put(STRENGTH, DEFAULT);
+        minAttributes.put(COURAGE, MIN);
+        minAttributes.put(INTELLIGENCE, MIN);
+        minAttributes.put(INTUITION, MIN);
+        minAttributes.put(CHARISMA, MIN);
+        minAttributes.put(DEXTERITY, MIN);
+        minAttributes.put(FINESSE, MIN);
+        minAttributes.put(CONSTITUTION, MIN);
+        minAttributes.put(STRENGTH, MIN);
     }
 
     int getSum() {

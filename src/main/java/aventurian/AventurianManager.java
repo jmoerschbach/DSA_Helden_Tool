@@ -36,7 +36,7 @@ public class AventurianManager {
 	public void decreasePrimaryAttribut(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		int cost = calculator.getRefund(aventurian.getPrimaryAttribute(a),
 				aventurian.getPrimaryAttribute(a) - 1, H);
-		if (aventurian.getPrimaryAttribute(a) > 8) {
+		if (aventurian.getPrimaryAttribute(a) > PrimaryAttributes.MIN) {
 			refund(cost);
 			aventurian.decrasePrimaryAttribute(a);
 		}
