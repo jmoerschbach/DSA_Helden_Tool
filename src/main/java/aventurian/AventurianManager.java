@@ -8,6 +8,7 @@ public class AventurianManager {
 	private Aventurian aventurian;
 	private LevelCostCalculator calculator;
 
+	static final int MAX_BAD_PROPERTIES_SUM = 25;
 	static final int MAX_POINTS_IN_ADVANTAGES = 2500;
 	static final int MAX_POINTS_OUT_DISADVANTAGES = 2500;
 	static final int MAX_ATTRIBUTES_SUM = 101;
@@ -43,6 +44,8 @@ public class AventurianManager {
 	}
 
 	public void addProperty(Property p) {
+		if (aventurian.hasSkill(p))
+			throw new IllegalStateException("has already skill " + p.getName());
 		int cost = p.getCost();
 		if (canPay(cost) && p.isAllowed(aventurian)) {
 			if (p.isAdvantage()
@@ -62,8 +65,10 @@ public class AventurianManager {
 	}
 
 	public void addBadProperty(BadProperty p) {
+		if (aventurian.hasSkill(p))
+			throw new IllegalStateException("has already skill " + p.getName());
 		int cost = p.getCost();
-		if (aventurian.getBadPropertySum() + p.getLevel() <= 25
+		if (aventurian.getBadPropertySum() + p.getLevel() <= MAX_BAD_PROPERTIES_SUM
 				&& p.isAllowed(aventurian)
 				&& pointsInAdvantages + (cost * 5 * -1) <= MAX_POINTS_OUT_DISADVANTAGES) {
 			pointsOutDisadvantages += cost * -1;
@@ -83,7 +88,8 @@ public class AventurianManager {
 	}
 
 	public void increaseBadProperty(BadProperty p) {
-		if (p.isIncreasable() && aventurian.getBadPropertySum() + 1 <= 25) {
+		if (p.isIncreasable()
+				&& aventurian.getBadPropertySum() + 1 <= MAX_BAD_PROPERTIES_SUM) {
 			pay(p.getCost());
 			p.increase();
 		}

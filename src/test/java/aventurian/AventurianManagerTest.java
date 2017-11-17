@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
+import skills.BadProperty;
 import skills.Property;
 
 public class AventurianManagerTest {
@@ -115,6 +116,7 @@ public class AventurianManagerTest {
 		when(p.isAllowed(a)).thenReturn(isAllowed);
 		when(p.isAdvantage()).thenReturn(isAdvantage);
 		when(p.isDisadvantage()).thenReturn(!isAdvantage);
+		when(p.getName()).thenReturn("testProperty");
 		return p;
 	}
 
@@ -140,5 +142,63 @@ public class AventurianManagerTest {
 		verify(a).pay(anyInt());
 		verify(p).gain(a);
 
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testAddPropertyAlreadyHasSkill() {
+		Property p = createPropertyMock(true, true);
+		when(a.hasSkill(p)).thenReturn(true);
+		toTest.addProperty(p);
+
+	}
+	
+	@Test
+	public void testAddBadPropertyAllConditionsMet() {
+		BadProperty p = createBadPropertyMock(true);
+		when(a.getBadPropertySum()).thenReturn(5);
+		
+		toTest.addBadProperty(p);
+		
+		verify(p).gain(a);
+		verify(a).pay(anyInt());
+		verify(a).add(p);
+	}
+
+	private BadProperty createBadPropertyMock(boolean isAllowed) {
+		BadProperty p = mock(BadProperty.class);
+		when(p.isAllowed(a)).thenReturn(isAllowed);
+		when(p.getLevel()).thenReturn(5);
+		return p;
+	}
+	
+	@Test
+	public void testAddBadPropertyNotAllowed() {
+		BadProperty p = createBadPropertyMock(false);
+		when(a.getBadPropertySum()).thenReturn(5);
+		
+		toTest.addBadProperty(p);
+		
+		verify(p, never()).gain(a);
+		verify(a, never()).pay(anyInt());
+		verify(a, never()).add(p);
+	}
+	
+	@Test
+	public void testAddBadPropertyBadPropertySumTooHigh() {
+		BadProperty p = createBadPropertyMock(false);
+		when(a.getBadPropertySum()).thenReturn(AventurianManager.MAX_BAD_PROPERTIES_SUM);
+		
+		toTest.addBadProperty(p);
+		
+		verify(p, never()).gain(a);
+		verify(a, never()).pay(anyInt());
+		verify(a, never()).add(p);
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void testAddBadPropertyAlreadyHasSkill() {
+		BadProperty p = createBadPropertyMock(true);
+		when(a.hasSkill(p)).thenReturn(true);
+		toTest.addBadProperty(p);
 	}
 }
