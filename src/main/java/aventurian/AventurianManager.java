@@ -23,20 +23,16 @@ public class AventurianManager {
 	}
 
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		int cost = calculator.getCost(aventurian.getPrimaryAttribute(a),
-				aventurian.getPrimaryAttribute(a) + 1, H);
-		if (canPay(cost)
-				&& aventurian.getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM
-				&& aventurian.getPrimaryAttribute(a) < aventurian
-						.getMaxOfPrimaryAttribute(a)) {
+		int cost = calculator.getCost(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a) + 1, H);
+		if (canPay(cost) && aventurian.getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM
+				&& aventurian.getPrimaryAttribute(a) < aventurian.getMaxOfPrimaryAttribute(a)) {
 			pay(cost);
 			aventurian.increasePrimaryAttribute(a);
 		}
 	}
 
 	public void decreasePrimaryAttribut(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		int cost = calculator.getRefund(aventurian.getPrimaryAttribute(a),
-				aventurian.getPrimaryAttribute(a) - 1, H);
+		int cost = calculator.getRefund(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a) - 1, H);
 		if (aventurian.getPrimaryAttribute(a) > PrimaryAttributes.MIN) {
 			refund(cost);
 			aventurian.decrasePrimaryAttribute(a);
@@ -47,17 +43,15 @@ public class AventurianManager {
 		if (aventurian.hasSkill(p))
 			throw new IllegalStateException("has already skill " + p.getName());
 		int cost = p.getCost();
-		if (canPay(cost) && p.isAllowed(aventurian)) {
-			if (p.isAdvantage()
-					&& pointsInAdvantages + cost <= MAX_POINTS_IN_ADVANTAGES) {
-				pointsInAdvantages += cost;
+		if (p.isAllowed(aventurian)) {
+			if (p.isAdvantage() && canPay(cost)
+					&& aventurian.getPointsInAdvantages() + cost <= MAX_POINTS_IN_ADVANTAGES) {
 				pay(cost);
 				aventurian.add(p);
 				p.gain(aventurian);
 			} else if (p.isDisadvantage()
-					&& pointsOutDisadvantages + (cost * -1) <= MAX_POINTS_OUT_DISADVANTAGES) {
-				pointsOutDisadvantages += cost * -1;
-				pay(cost);
+					&& aventurian.getPointsOutDisadvantages() + cost <= MAX_POINTS_OUT_DISADVANTAGES) {
+				refund(cost);
 				aventurian.add(p);
 				p.gain(aventurian);
 			}
@@ -68,11 +62,9 @@ public class AventurianManager {
 		if (aventurian.hasSkill(p))
 			throw new IllegalStateException("has already skill " + p.getName());
 		int cost = p.getCost();
-		if (aventurian.getBadPropertySum() + p.getLevel() <= MAX_BAD_PROPERTIES_SUM
-				&& p.isAllowed(aventurian)
-				&& pointsInAdvantages + (cost * 5 * -1) <= MAX_POINTS_OUT_DISADVANTAGES) {
-			pointsOutDisadvantages += cost * -1;
-			pay(cost * p.getLevel());
+		if (aventurian.getBadPropertySum() + p.getLevel() <= MAX_BAD_PROPERTIES_SUM && p.isAllowed(aventurian)
+				&& aventurian.getPointsOutDisadvantages() + (cost * p.getLevel()) <= MAX_POINTS_OUT_DISADVANTAGES) {
+			refund(cost * p.getLevel());
 			aventurian.add(p);
 			p.gain(aventurian);
 		}
@@ -88,8 +80,7 @@ public class AventurianManager {
 	}
 
 	public void increaseBadProperty(BadProperty p) {
-		if (p.isIncreasable()
-				&& aventurian.getBadPropertySum() + 1 <= MAX_BAD_PROPERTIES_SUM) {
+		if (p.isIncreasable() && aventurian.getBadPropertySum() + 1 <= MAX_BAD_PROPERTIES_SUM) {
 			pay(p.getCost());
 			p.increase();
 		}
@@ -126,7 +117,7 @@ public class AventurianManager {
 
 	public void decreaseLanguage(Language l) {
 		if (l.isDecreasable() && aventurian.hasSkill(l)) {
-			int refund = l.getDowngradeCost();
+			int refund = l.getDowngradeRefund();
 			refund(refund);
 			l.decrease();
 		}

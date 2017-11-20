@@ -110,6 +110,19 @@ public class AventurianManagerTest {
 		verify(a, never()).pay(anyInt());
 		verify(p, never()).gain(a);
 	}
+	
+	@Test
+	public void testAddPropertyAdvantageExceedsMaxPointsInAdvantages() {
+		Property p = createPropertyMock(true, true);
+		when(a.canPay(anyInt())).thenReturn(true);
+		when(a.getPointsInAdvantages()).thenReturn(AventurianManager.MAX_POINTS_IN_ADVANTAGES);
+		
+		toTest.addProperty(p);
+		
+		verify(a, never()).add(p);
+		verify(a, never()).pay(anyInt());
+		verify(p, never()).gain(a);
+	}
 
 	private Property createPropertyMock(boolean isAllowed, boolean isAdvantage) {
 		Property p = mock(Property.class);
@@ -117,6 +130,7 @@ public class AventurianManagerTest {
 		when(p.isAdvantage()).thenReturn(isAdvantage);
 		when(p.isDisadvantage()).thenReturn(!isAdvantage);
 		when(p.getName()).thenReturn("testProperty");
+		when(p.getCost()).thenReturn(200);
 		return p;
 	}
 
@@ -139,9 +153,21 @@ public class AventurianManagerTest {
 		toTest.addProperty(p);
 
 		verify(a).add(p);
-		verify(a).pay(anyInt());
+		verify(a).refund(anyInt());
 		verify(p).gain(a);
 
+	}
+	
+	@Test
+	public void testAddPropertyDisadvantageExceedMaxPointsOutDisadvantages() {
+		Property p = createPropertyMock(true, false);
+		when(a.getPointsOutDisadvantages()).thenReturn(AventurianManager.MAX_POINTS_OUT_DISADVANTAGES);
+		
+		toTest.addProperty(p);
+
+		verify(a, never()).add(p);
+		verify(a, never()).refund(anyInt());
+		verify(p, never()).gain(a);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -160,14 +186,27 @@ public class AventurianManagerTest {
 		toTest.addBadProperty(p);
 		
 		verify(p).gain(a);
-		verify(a).pay(anyInt());
+		verify(a).refund(anyInt());
 		verify(a).add(p);
+	}
+	
+	@Test
+	public void testAddBadPropertyExceedingMaxPointsOutDisadvantages() {
+		BadProperty p = createBadPropertyMock(true);
+		when(a.getPointsOutDisadvantages()).thenReturn(AventurianManager.MAX_POINTS_OUT_DISADVANTAGES);
+		
+		toTest.addBadProperty(p);
+		
+		verify(p, never()).gain(a);
+		verify(a, never()).refund(anyInt());
+		verify(a, never()).add(p);
 	}
 
 	private BadProperty createBadPropertyMock(boolean isAllowed) {
 		BadProperty p = mock(BadProperty.class);
 		when(p.isAllowed(a)).thenReturn(isAllowed);
 		when(p.getLevel()).thenReturn(5);
+		when(p.getCost()).thenReturn(50);
 		return p;
 	}
 	

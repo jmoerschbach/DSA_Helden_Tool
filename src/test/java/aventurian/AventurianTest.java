@@ -209,5 +209,30 @@ public class AventurianTest {
 		toTest.decreaseMaximumOfPrimaryAttribute(COURAGE);
 		verify(pri).decreaseMaximum(COURAGE);
 	}
+	
+	@Test
+	public void testGetPointsInAdvantagesValid() throws Exception {
+		assertEquals(0, toTest.getPointsInAdvantages());
+		Property p = mock(Property.class);
+		when(p.getCost()).thenReturn(200);
+		when(p.isAdvantage()).thenReturn(true);
+		toTest.add(p);
+		assertEquals(200, toTest.getPointsInAdvantages());
+		Property p2 = mock(Property.class);
+		when(p2.getCost()).thenReturn(300);
+		when(p2.isAdvantage()).thenReturn(true);
+		toTest.add(p2);
+		assertEquals(500, toTest.getPointsInAdvantages());
+	}
+	
+	@Test
+	public void testGetPointsOutDisadvantagesValig() throws Exception {
+		assertEquals(0, toTest.getPointsOutDisadvantages());
+		Property p = mock(Property.class);
+		when(p.getCost()).thenReturn(200);
+		when(p.isDisadvantage()).thenReturn(true);
+		toTest.add(p);
+		assertEquals(200, toTest.getPointsOutDisadvantages());
+	}
 
 }

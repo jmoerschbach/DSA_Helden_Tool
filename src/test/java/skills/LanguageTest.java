@@ -103,22 +103,19 @@ public class LanguageTest {
 			toTest.increase();
 
 		assertEquals(5, toTest.getLevel());
-		assertEquals(250, toTest.getDowngradeCost());
+		assertEquals(250, toTest.getDowngradeRefund());
 
 		toTest.decrease();
 		assertEquals(4, toTest.getLevel());
-		assertEquals(200, toTest.getDowngradeCost());
+		assertEquals(200, toTest.getDowngradeRefund());
 
 		toTest.decrease();
 		assertEquals(3, toTest.getLevel());
-		assertEquals(150, toTest.getDowngradeCost());
+		assertEquals(150, toTest.getDowngradeRefund());
 
 		toTest.decrease();
 		assertEquals(2, toTest.getLevel());
-		assertEquals(100, toTest.getDowngradeCost());
-
-		fail("method name??");
-		// should be getDowngradeRefund(), right?
+		assertEquals(100, toTest.getDowngradeRefund());
 	}
 
 	@Test

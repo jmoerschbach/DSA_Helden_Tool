@@ -88,6 +88,14 @@ public class Aventurian {
 	int getBadPropertySum() {
 		return badProperties.stream().mapToInt(BadProperty::getLevel).sum();
 	}
+	
+	int getPointsInAdvantages() {
+		return properties.stream().filter((p)->p.isAdvantage()).mapToInt(Property::getCost).sum();
+	}
+	
+	int getPointsOutDisadvantages() {
+		return properties.stream().filter((p)->p.isDisadvantage()).mapToInt(Property::getCost).sum() + badProperties.stream().mapToInt((p)->p.getCost()*p.getLevel()).sum();
+	}
 
 	void add(Language l) {
 		languages.add(l);

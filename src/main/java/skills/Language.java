@@ -38,7 +38,7 @@ public class Language extends Skill {
         return (level + 1) * cost;
     }
 
-    public int getDowngradeCost() {
+    public int getDowngradeRefund() {
         return level * cost;
     }
 
