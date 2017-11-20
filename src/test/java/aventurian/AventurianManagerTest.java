@@ -1,7 +1,8 @@
 package aventurian;
 
 import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE;
-import static org.mockito.Matchers.anyInt;
+import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -96,6 +97,8 @@ public class AventurianManagerTest {
 		verify(a).add(p);
 		verify(a).pay(anyInt());
 		verify(p).gain(a);
+		
+		fail("test for travis");
 
 	}
 
