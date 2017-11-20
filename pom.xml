@@ -22,7 +22,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>sample.Main</mainClass>
+							<mainClass>ui.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

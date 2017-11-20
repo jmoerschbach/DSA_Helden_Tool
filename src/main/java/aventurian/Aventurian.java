@@ -1,14 +1,17 @@
 package aventurian;
 
-import skills.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 import java.util.stream.Stream;
 
-public class Aventurian {
+import skills.BadProperty;
+import skills.Language;
+import skills.Property;
+import skills.Skill;
+
+public class Aventurian extends Observable{
 
 	private String name;
 	private PrimaryAttributes primaryAttributes;
@@ -18,10 +21,6 @@ public class Aventurian {
 	private final List<Property> properties;
 	private final List<BadProperty> badProperties;
 	private final List<Language> languages;
-
-	public Aventurian() {
-		this("", 16500, new PrimaryAttributes(), new SecondaryAttributes());
-	}
 
 	public Aventurian(String name, int ap) {
 		this(name, ap, new PrimaryAttributes(), new SecondaryAttributes());
@@ -126,12 +125,19 @@ public class Aventurian {
 			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.increase(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
+		notifyObserversAndSetChanged();
+	}
+
+	private void notifyObserversAndSetChanged() {
+		notifyObservers();
+		setChanged();
 	}
 
 	public void decrasePrimaryAttribute(
 			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decrease(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
+		notifyObserversAndSetChanged();
 	}
 
 	void increaseMaximumOfPrimaryAttribute(

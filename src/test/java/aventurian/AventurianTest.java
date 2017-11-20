@@ -226,13 +226,21 @@ public class AventurianTest {
 	}
 	
 	@Test
-	public void testGetPointsOutDisadvantagesValig() throws Exception {
+	public void testGetPointsOutDisadvantagesValid() throws Exception {
 		assertEquals(0, toTest.getPointsOutDisadvantages());
 		Property p = mock(Property.class);
 		when(p.getCost()).thenReturn(200);
 		when(p.isDisadvantage()).thenReturn(true);
 		toTest.add(p);
 		assertEquals(200, toTest.getPointsOutDisadvantages());
+		
+		BadProperty bp = mock(BadProperty.class);
+		when(bp.getCost()).thenReturn(50);
+		when(bp.getLevel()).thenReturn(5);
+		when(bp.isDisadvantage()).thenReturn(true);
+		
+		toTest.add(bp);
+		assertEquals(450, toTest.getPointsOutDisadvantages());
 	}
 
 }
