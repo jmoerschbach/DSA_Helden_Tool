@@ -97,9 +97,6 @@ public class AventurianManagerTest {
 		verify(a).add(p);
 		verify(a).pay(anyInt());
 		verify(p).gain(a);
-		
-		fail("test for travis");
-
 	}
 
 	@Test
