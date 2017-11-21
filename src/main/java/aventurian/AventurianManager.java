@@ -1,12 +1,15 @@
 package aventurian;
 
-import skills.*;
-import static aventurian.LevelCostCalculator.COLUMN.*;
+import static aventurian.LevelCostCalculator.COLUMN.H;
+
+import skills.BadProperty;
+import skills.Language;
+import skills.Property;
 
 public class AventurianManager {
 
-	private Aventurian aventurian;
-	private LevelCostCalculator calculator;
+	private final Aventurian aventurian;
+	private final LevelCostCalculator calculator;
 
 	static final int MAX_BAD_PROPERTIES_SUM = 25;
 	static final int MAX_POINTS_IN_ADVANTAGES = 2500;
@@ -23,7 +26,8 @@ public class AventurianManager {
 	}
 
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		int cost = calculator.getCost(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a) + 1, H);
+		final int cost = calculator.getCost(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a) + 1,
+				H);
 		if (canPay(cost) && aventurian.getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM
 				&& aventurian.getPrimaryAttribute(a) < aventurian.getMaxOfPrimaryAttribute(a)) {
 			pay(cost);
@@ -32,7 +36,8 @@ public class AventurianManager {
 	}
 
 	public void decreasePrimaryAttribut(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		int cost = calculator.getRefund(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a) - 1, H);
+		final int cost = calculator.getRefund(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a) - 1,
+				H);
 		if (aventurian.getPrimaryAttribute(a) > PrimaryAttributes.MIN) {
 			refund(cost);
 			aventurian.decrasePrimaryAttribute(a);
@@ -42,7 +47,7 @@ public class AventurianManager {
 	public void addProperty(Property p) {
 		if (aventurian.hasSkill(p))
 			throw new IllegalStateException("has already skill " + p.getName());
-		int cost = p.getCost();
+		final int cost = p.getCost();
 		if (p.isAllowed(aventurian)) {
 			if (p.isAdvantage() && canPay(cost)
 					&& aventurian.getPointsInAdvantages() + cost <= MAX_POINTS_IN_ADVANTAGES) {
@@ -61,7 +66,7 @@ public class AventurianManager {
 	public void addBadProperty(BadProperty p) {
 		if (aventurian.hasSkill(p))
 			throw new IllegalStateException("has already skill " + p.getName());
-		int cost = p.getCost();
+		final int cost = p.getCost();
 		if (aventurian.getBadPropertySum() + p.getLevel() <= MAX_BAD_PROPERTIES_SUM && p.isAllowed(aventurian)
 				&& aventurian.getPointsOutDisadvantages() + (cost * p.getLevel()) <= MAX_POINTS_OUT_DISADVANTAGES) {
 			refund(cost * p.getLevel());
@@ -71,6 +76,8 @@ public class AventurianManager {
 	}
 
 	public void removeBadProperty(BadProperty p) {
+		if (!aventurian.hasSkill(p))
+			throw new IllegalStateException("cannot remove skill " + p.getName());
 		while (p.isDecreasable()) {
 			decreaseBadProperty(p);
 		}
@@ -94,7 +101,7 @@ public class AventurianManager {
 	}
 
 	public void removeProperty(Property p) {
-		int refund = p.getCost();
+		final int refund = p.getCost();
 		if (aventurian.hasSkill(p)) {
 			refund(refund);
 			aventurian.remove(p);
@@ -108,7 +115,9 @@ public class AventurianManager {
 	}
 
 	public void increaseLanguage(Language l) {
-		int cost = l.getUpgradeCost();
+		if (!aventurian.hasSkill(l))
+			throw new IllegalStateException("cannot increase skill " + l.getName());
+		final int cost = l.getUpgradeCost();
 		if (canPay(cost) && l.isAllowed(aventurian) && l.isIncreasable()) {
 			pay(cost);
 			l.increase();
@@ -117,14 +126,14 @@ public class AventurianManager {
 
 	public void decreaseLanguage(Language l) {
 		if (l.isDecreasable() && aventurian.hasSkill(l)) {
-			int refund = l.getDowngradeRefund();
+			final int refund = l.getDowngradeRefund();
 			refund(refund);
 			l.decrease();
 		}
 	}
 
 	public void addLanguage(Language l) {
-		int cost = l.getLearningCost();
+		final int cost = l.getLearningCost();
 		if (canPay(cost) && l.isAllowed(aventurian)) {
 			pay(cost);
 			aventurian.add(l);
@@ -133,6 +142,8 @@ public class AventurianManager {
 	}
 
 	public void removeLanguage(Language l) {
+		if (!aventurian.hasSkill(l))
+			throw new IllegalStateException("cannot remove skill " + l.getName());
 		while (l.isDecreasable()) {
 			decreaseLanguage(l);
 		}
