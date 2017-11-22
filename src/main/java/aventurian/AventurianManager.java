@@ -94,10 +94,12 @@ public class AventurianManager {
 	}
 
 	public void decreaseBadProperty(BadProperty p) {
-		if (p.isDecreasable() && aventurian.hasSkill(p)) {
-			refund(p.getCost());
-			p.decrease();
-		}
+		if (!p.isDecreasable())
+			throw new IllegalStateException("cannot further decrease level of " + p.getName());
+		if (!aventurian.hasSkill(p))
+			throw new IllegalStateException("cannot decrease skill which is not owned: " + p.getName());
+		refund(p.getCost());
+		p.decrease();
 	}
 
 	public void removeProperty(Property p) {
@@ -125,14 +127,18 @@ public class AventurianManager {
 	}
 
 	public void decreaseLanguage(Language l) {
-		if (l.isDecreasable() && aventurian.hasSkill(l)) {
-			final int refund = l.getDowngradeRefund();
-			refund(refund);
-			l.decrease();
-		}
+		if (!l.isDecreasable())
+			throw new IllegalStateException("cannot further decrease level of " + l.getName());
+		if (!aventurian.hasSkill(l))
+			throw new IllegalStateException("cannot decrease skill which is not owned: " + l.getName());
+		final int refund = l.getDowngradeRefund();
+		refund(refund);
+		l.decrease();
 	}
 
 	public void addLanguage(Language l) {
+		if(aventurian.hasSkill(l))
+			throw new IllegalStateException("has already skill "+l.getName());
 		final int cost = l.getLearningCost();
 		if (canPay(cost) && l.isAllowed(aventurian)) {
 			pay(cost);

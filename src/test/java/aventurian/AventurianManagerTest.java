@@ -4,6 +4,7 @@ import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -247,6 +248,48 @@ public class AventurianManagerTest {
 	}
 
 	@Test
+	public void testLanguageAllConditionsMet() {
+		final Language l = createLanguageMock(true, true);
+		when(a.canPay(anyInt())).thenReturn(true);
+		toTest.addLanguage(l);
+
+		verify(l).gain(a);
+		verify(a).pay(anyInt());
+		verify(a).add(l);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testAddLanguageAlreadyHasSkill() {
+		final Language l = createLanguageMock(true, true);
+		when(a.hasSkill(l)).thenReturn(true);
+		toTest.addLanguage(l);
+	}
+
+	@Test
+	public void testAddLanguageTooExpensive() {
+		final Language l = createLanguageMock(true, true);
+		when(a.canPay(anyInt())).thenReturn(false);
+
+		toTest.addLanguage(l);
+
+		verify(a, never()).add(l);
+		verify(a, never()).pay(anyInt());
+		verify(l, never()).gain(a);
+	}
+
+	@Test
+	public void testAddLanguageNotAllowed() {
+		final Language l = createLanguageMock(false, true);
+		when(a.canPay(anyInt())).thenReturn(true);
+
+		toTest.addLanguage(l);
+
+		verify(a, never()).add(l);
+		verify(a, never()).pay(anyInt());
+		verify(l, never()).gain(a);
+	}
+
+	@Test
 	public void testRemoveBadProperty() {
 
 		final BadProperty p = createBadPropertyMock(true);
@@ -256,6 +299,20 @@ public class AventurianManagerTest {
 
 		verify(a).remove(p);
 		verify(a).refund(anyInt());
+		verify(p).lose(a);
+	}
+
+	@Test
+	public void testRemoveIncreasedBadProperty() {
+
+		final BadProperty p = createBadPropertyMock(true);
+		when(p.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
+		when(a.hasSkill(p)).thenReturn(true);
+
+		toTest.removeBadProperty(p);
+		verify(p).decrease();
+		verify(a).remove(p);
+		verify(a, times(2)).refund(anyInt());
 		verify(p).lose(a);
 	}
 
@@ -274,6 +331,7 @@ public class AventurianManagerTest {
 		when(l.getLevel()).thenReturn(5);
 		when(l.getLearningCost()).thenReturn(50);
 		when(l.isIncreasable()).thenReturn(isIncreasable);
+		when(l.isDecreasable()).thenReturn(false);
 
 		return l;
 	}
@@ -292,6 +350,49 @@ public class AventurianManagerTest {
 	}
 
 	@Test
+	public void testDecreaseLanguage() {
+		final Language l = createLanguageMock(true, true);
+		when(a.hasSkill(l)).thenReturn(true);
+		when(l.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
+
+		toTest.decreaseLanguage(l);
+
+		verify(l).decrease();
+		verify(a).refund(anyInt());
+		verify(a, never()).remove(l);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testDecreaseLanguageNotOwned() {
+		final Language l = createLanguageMock(true, true);
+		when(l.isDecreasable()).thenReturn(true);
+		when(a.hasSkill(l)).thenReturn(false);
+		toTest.decreaseLanguage(l);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testDecreaseLanguageNotDecreasable() {
+		final Language l = createLanguageMock(true, true);
+		when(a.hasSkill(l)).thenReturn(true);
+
+		toTest.decreaseLanguage(l);
+	}
+
+	@Test
+	public void testRemoveIncreasedLanguage() {
+
+		final Language l = createLanguageMock(true, true);
+		when(a.hasSkill(l)).thenReturn(true);
+		when(l.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
+
+		toTest.removeLanguage(l);
+		verify(l).decrease();
+		verify(a).remove(l);
+		verify(a, times(2)).refund(anyInt());
+		verify(l).lose(a);
+	}
+
+	@Test
 	public void testIncreaseLanguageAllConditionsMet() {
 		final Language l = createLanguageMock(true, true);
 		when(a.hasSkill(l)).thenReturn(true);
@@ -302,7 +403,7 @@ public class AventurianManagerTest {
 		verify(a).pay(anyInt());
 		verify(l).increase();
 	}
-	
+
 	@Test
 	public void testIncreaseLanguageNotAllowed() {
 		final Language l = createLanguageMock(false, true);
@@ -314,7 +415,7 @@ public class AventurianManagerTest {
 		verify(a, never()).pay(anyInt());
 		verify(l, never()).increase();
 	}
-	
+
 	@Test
 	public void testIncreaseLanguageNotIncreasable() {
 		final Language l = createLanguageMock(true, false);
@@ -326,7 +427,7 @@ public class AventurianManagerTest {
 		verify(a, never()).pay(anyInt());
 		verify(l, never()).increase();
 	}
-	
+
 	@Test
 	public void testIncreaseLanguageTooExpensive() {
 		final Language l = createLanguageMock(true, true);
@@ -339,7 +440,7 @@ public class AventurianManagerTest {
 		verify(l, never()).increase();
 	}
 
-	@Test(expected=IllegalStateException.class)
+	@Test(expected = IllegalStateException.class)
 	public void testIncreaseLanguageDoesNotHaveSkill() {
 		final Language l = createLanguageMock(true, true);
 		when(a.hasSkill(l)).thenReturn(false);
@@ -348,4 +449,34 @@ public class AventurianManagerTest {
 		toTest.increaseLanguage(l);
 
 	}
+
+	@Test
+	public void testDecreaseBadProperty() {
+		final BadProperty bp = createBadPropertyMock(true);
+		when(a.hasSkill(bp)).thenReturn(true);
+		when(bp.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
+
+		toTest.decreaseBadProperty(bp);
+
+		verify(bp).decrease();
+		verify(a).refund(anyInt());
+		verify(a, never()).remove(bp);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testDecreaseBadPropertyNotOwned() {
+		final BadProperty bp = createBadPropertyMock(true);
+		when(bp.isDecreasable()).thenReturn(true);
+		when(a.hasSkill(bp)).thenReturn(false);
+		toTest.decreaseBadProperty(bp);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testDecreaseBadPropertyNotDecreasable() {
+		final BadProperty bp = createBadPropertyMock(true);
+		when(a.hasSkill(bp)).thenReturn(true);
+
+		toTest.decreaseBadProperty(bp);
+	}
+
 }
