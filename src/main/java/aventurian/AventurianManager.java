@@ -15,8 +15,8 @@ public class AventurianManager {
 	static final int MAX_POINTS_IN_ADVANTAGES = 2500;
 	static final int MAX_POINTS_OUT_DISADVANTAGES = 2500;
 	static final int MAX_ATTRIBUTES_SUM = 101;
-	private int pointsInAdvantages;
-	private int pointsOutDisadvantages;
+	private final int pointsInAdvantages;
+	private final int pointsOutDisadvantages;
 
 	public AventurianManager(Aventurian aventurian) {
 		this.aventurian = aventurian;
@@ -87,6 +87,8 @@ public class AventurianManager {
 	}
 
 	public void increaseBadProperty(BadProperty p) {
+		if (!aventurian.hasSkill(p))
+			throw new IllegalStateException("cannot increase skill " + p.getName());
 		if (p.isIncreasable() && aventurian.getBadPropertySum() + 1 <= MAX_BAD_PROPERTIES_SUM) {
 			pay(p.getCost());
 			p.increase();
@@ -103,17 +105,17 @@ public class AventurianManager {
 	}
 
 	public void removeProperty(Property p) {
+		if (!aventurian.hasSkill(p))
+			throw new IllegalStateException("cannot remove skill " + p.getName());
 		final int refund = p.getCost();
-		if (aventurian.hasSkill(p)) {
+		if (p.isAdvantage()) {
 			refund(refund);
-			aventurian.remove(p);
-			p.lose(aventurian);
-			if (p.isAdvantage()) {
-				pointsInAdvantages -= refund;
-			} else {
-				pointsOutDisadvantages -= refund * -1;
-			}
+		} else {
+			pay(refund);
 		}
+		aventurian.remove(p);
+		p.lose(aventurian);
+
 	}
 
 	public void increaseLanguage(Language l) {
@@ -137,8 +139,8 @@ public class AventurianManager {
 	}
 
 	public void addLanguage(Language l) {
-		if(aventurian.hasSkill(l))
-			throw new IllegalStateException("has already skill "+l.getName());
+		if (aventurian.hasSkill(l))
+			throw new IllegalStateException("has already skill " + l.getName());
 		final int cost = l.getLearningCost();
 		if (canPay(cost) && l.isAllowed(aventurian)) {
 			pay(cost);
