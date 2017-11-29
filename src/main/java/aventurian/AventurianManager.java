@@ -15,13 +15,9 @@ public class AventurianManager {
 	static final int MAX_POINTS_IN_ADVANTAGES = 2500;
 	static final int MAX_POINTS_OUT_DISADVANTAGES = 2500;
 	static final int MAX_ATTRIBUTES_SUM = 101;
-	private final int pointsInAdvantages;
-	private final int pointsOutDisadvantages;
 
 	public AventurianManager(Aventurian aventurian) {
 		this.aventurian = aventurian;
-		this.pointsInAdvantages = 0;
-		this.pointsOutDisadvantages = 0;
 		this.calculator = new LevelCostCalculator();
 	}
 
@@ -170,5 +166,10 @@ public class AventurianManager {
 
 	private void refund(int refund) {
 		aventurian.refund(refund);
+	}
+
+	public void setName(String name) {
+		aventurian.setName(name);
+
 	}
 }
