@@ -36,7 +36,7 @@
             <Label text="Courage:" />
             <Label fx:id="labelCourage" text="8" GridPane.columnIndex="2" />
             <Button mnemonicParsing="false" text="-" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" onAction="#increaseCourage" text="+" GridPane.columnIndex="3" />
+            <Button fx:id="btnIncreaseCourage" mnemonicParsing="false" onAction="#increaseCourage" text="+" GridPane.columnIndex="3" />
             <Label text="Intuition:" GridPane.rowIndex="1" />
             <Label text="8" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Button mnemonicParsing="false" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
