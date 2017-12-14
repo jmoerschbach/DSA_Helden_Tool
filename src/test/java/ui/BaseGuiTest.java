@@ -1,44 +1,38 @@
 package ui;
 
+import static org.mockito.Mockito.mock;
+
+import org.junit.Before;
+import org.testfx.framework.junit.ApplicationTest;
+
+import aventurian.AventurianManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Hyperlink;
 import javafx.stage.Stage;
-import static org.mockito.Mockito.mock;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.testfx.framework.junit.ApplicationTest;
-
-import aventurian.AventurianManager;
-
-public class SampleTest extends ApplicationTest {
+public class BaseGuiTest extends ApplicationTest {
 
 	private Parent mainNode;
 
-	private Hyperlink languages;
-
 	private MainController mainController;
 
-	private AventurianManager mockedAventurianManager;
+	protected AventurianManager mockedAventurianManager;
 
 	/* This operation comes from ApplicationTest and loads the GUI to test. */
 	@Override
 	public void start(Stage stage) throws Exception {
 		mockedAventurianManager = mock(AventurianManager.class);
-		FXMLLoader l = new FXMLLoader(
-				MainController.class.getResource("/main.fxml"));
+		final FXMLLoader l = new FXMLLoader(MainController.class.getResource("/main.fxml"));
 		mainNode = l.load();
 		mainController = l.getController();
 		mainController.init(mockedAventurianManager);
 		stage.setScene(new Scene(mainNode));
 		stage.show();
 		/*
-		 * Do not forget to put the GUI in front of windows. Otherwise, the
-		 * robots may interact with another window, the one in front of all the
-		 * windows...
+		 * Do not forget to put the GUI in front of windows. Otherwise, the robots may
+		 * interact with another window, the one in front of all the windows...
 		 */
 		stage.toFront();
 	}
@@ -46,19 +40,12 @@ public class SampleTest extends ApplicationTest {
 	@Before
 	public void setUp() {
 		/* Just retrieving the tested widgets from the GUI. */
-		languages = find("#languages");
-	}
-
-	@Test
-	public void testSomething() {
-		clickOn(languages);
 	}
 
 	/* Just a shortcut to retrieve widgets in the GUI. */
 	public <T extends Node> T find(final String query) {
 		/**
-		 * TestFX provides many operations to retrieve elements from the loaded
-		 * GUI.
+		 * TestFX provides many operations to retrieve elements from the loaded GUI.
 		 */
 		return lookup(query).query();
 	}

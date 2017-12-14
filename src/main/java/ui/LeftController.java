@@ -3,7 +3,7 @@ package ui;
 import aventurian.Aventurian;
 import aventurian.AventurianManager;
 
-public class LeftController {
+public class LeftController extends XController {
 
 	enum PAGES {
 		ATTRIBUTES, LANGUAGES
@@ -23,6 +23,7 @@ public class LeftController {
 		this.mainController = mainController;
 	}
 
+	@Override
 	public void update(Aventurian updatedAventurian) {
 		// nothing to do here since we do not display any info about aventurian
 

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox fx:id="languages" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.LanguageController">
+<HBox fx:id="paneLanguages" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.LanguageController">
    <children>
       <TreeView fx:id="allLanguages" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" HBox.hgrow="NEVER">

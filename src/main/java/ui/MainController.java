@@ -40,8 +40,10 @@ public class MainController implements Observer {
 	LeftController leftController;
 
 	@FXML
-	Pane centerPane;
+	RightController rightController;
 
+	@FXML
+	Pane centerPane;
 
 	public void init(AventurianManager manager) {
 		try {
@@ -50,7 +52,10 @@ public class MainController implements Observer {
 
 			leftController.init(manager, this);
 			topController.init(manager);
+			rightController.init(manager);
 			centerControllers.forEach(c -> c.init(manager));
+
+			changeTo(ATTRIBUTES);
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
@@ -69,6 +74,7 @@ public class MainController implements Observer {
 			final Aventurian updatedAventurian = (Aventurian) o;
 			leftController.update(updatedAventurian);
 			topController.update(updatedAventurian);
+			rightController.update(updatedAventurian);
 			centerControllers.forEach(c -> c.update(updatedAventurian));
 		}
 
