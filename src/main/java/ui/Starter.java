@@ -24,6 +24,7 @@ public class Starter extends Application {
 		final Aventurian aventurian = new Aventurian("testAventurian", 16500);
 		mC.init(new AventurianManager(aventurian));
 		aventurian.addObserver(mC);
+		mC.update(aventurian, null);
 
 		final Scene scene = new Scene(root);
 		stage.setScene(scene);

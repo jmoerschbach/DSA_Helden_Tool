@@ -17,6 +17,10 @@ public class AttributesController extends XController {
 	public void increaseCourage() {
 		m.increasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
 	}
+	
+	public void decreaseCourage() {
+		m.decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
+	}
 
 	@Override
 	public void update(Aventurian updatedAventurian) {

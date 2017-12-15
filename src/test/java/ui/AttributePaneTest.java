@@ -36,7 +36,7 @@ public class AttributePaneTest extends BaseGuiTest {
 	public void testDecreaseCourage() {
 		final Button decCourage = find("#btnDecreaseCourage");
 		clickOn(decCourage);
-		verify(mockedAventurianManager).decreasePrimaryAttribut(PRIMARY_ATTRIBUTE.COURAGE);
+		verify(mockedAventurianManager).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
 	}
 
 }

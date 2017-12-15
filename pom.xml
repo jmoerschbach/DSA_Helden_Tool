@@ -38,6 +38,18 @@
 					<excludes>
 						<exclude>**/TestSuite.java</exclude>
 					</excludes>
+					<!-- <forkCount>1</forkCount>
+					<reuseForks>false</reuseForks>
+					<threadCount>1</threadCount>
+					<systemPropertyVariables>
+						<glass.platform>Monocle</glass.platform>
+						<monocle.platform>Headless</monocle.platform>
+						<prism.order>sw</prism.order>
+						<testfx.robot>glass</testfx.robot>
+					</systemPropertyVariables>
+					<additionalClasspathElements>
+						<additionalClasspathElement>${java.home}/lib/ext/jfxrt.jar</additionalClasspathElement>
+					</additionalClasspathElements>  -->
 				</configuration>
 			</plugin>
 		</plugins>
@@ -71,7 +83,14 @@
 			<artifactId>testfx-junit</artifactId> <!-- or testfx-junit5 -->
 			<version>4.0.8-alpha</version>
 			<scope>test</scope>
+		</dependency><!-- https://mvnrepository.com/artifact/org.testfx/openjfx-monocle -->
+		<dependency>
+			<groupId>org.testfx</groupId>
+			<artifactId>openjfx-monocle</artifactId>
+			<version>1.8.0_20</version>
+			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 </project>

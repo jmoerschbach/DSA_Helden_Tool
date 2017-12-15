@@ -20,6 +20,7 @@ public class BaseGuiTest extends ApplicationTest {
 
 	protected AventurianManager mockedAventurianManager;
 
+
 	/* This operation comes from ApplicationTest and loads the GUI to test. */
 	@Override
 	public void start(Stage stage) throws Exception {
