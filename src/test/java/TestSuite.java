@@ -4,6 +4,7 @@ import org.junit.runners.Suite;
 import skills.BadPropertyTest;
 import skills.LanguageTest;
 import skills.PropertyTest;
+import aventurian.AventurianManagerTest;
 import aventurian.AventurianTest;
 import aventurian.LevelCostCalculatorTest;
 import aventurian.PrimaryAttributesTest;
@@ -14,7 +15,7 @@ import aventurian.SecondaryAttributesTest;
 @Suite.SuiteClasses({ PrimaryAttributesTest.class,
 		SecondaryAttributeHelperTest.class, SecondaryAttributesTest.class,
 		AventurianTest.class, LevelCostCalculatorTest.class,
-		LanguageTest.class, BadPropertyTest.class, PropertyTest.class })
+		LanguageTest.class, BadPropertyTest.class, PropertyTest.class, AventurianManagerTest.class })
 public class TestSuite {
 
 }

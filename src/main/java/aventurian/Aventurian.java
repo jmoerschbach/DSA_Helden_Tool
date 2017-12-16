@@ -1,27 +1,26 @@
 package aventurian;
 
-import skills.*;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 import java.util.stream.Stream;
 
-public class Aventurian {
+import skills.BadProperty;
+import skills.Language;
+import skills.Property;
+import skills.Skill;
+
+public class Aventurian extends Observable {
 
 	private String name;
-	private PrimaryAttributes primaryAttributes;
-	private SecondaryAttributes secondaryAttributes;
+	private final PrimaryAttributes primaryAttributes;
+	private final SecondaryAttributes secondaryAttributes;
 	private int adventurePoints;
 
 	private final List<Property> properties;
 	private final List<BadProperty> badProperties;
 	private final List<Language> languages;
-
-	public Aventurian() {
-		this("", 16500, new PrimaryAttributes(), new SecondaryAttributes());
-	}
 
 	public Aventurian(String name, int ap) {
 		this(name, ap, new PrimaryAttributes(), new SecondaryAttributes());
@@ -47,16 +46,18 @@ public class Aventurian {
 	}
 
 	void pay(int cost) {
-		if (canPay(cost) && cost >= 0)
+		if (canPay(cost) && cost >= 0) {
 			adventurePoints -= cost;
-		else
+			notifyObserversAndSetChanged();
+		} else
 			throw new IllegalArgumentException("Cannot pay: " + cost);
 	}
 
 	void refund(int refund) {
-		if (refund >= 0)
+		if (refund >= 0) {
 			adventurePoints += refund;
-		else
+			notifyObserversAndSetChanged();
+		} else
 			throw new IllegalArgumentException(
 					"Cannot refund negative amound: " + refund);
 	}
@@ -67,34 +68,53 @@ public class Aventurian {
 
 	public void setName(String name) {
 		this.name = name;
+		notifyObserversAndSetChanged();
 	}
 
 	void add(Property p) {
 		properties.add(p);
+		notifyObserversAndSetChanged();
 	}
 
 	void remove(Property p) {
 		properties.remove(p);
+		notifyObserversAndSetChanged();
 	}
 
 	void add(BadProperty p) {
 		badProperties.add(p);
+		notifyObserversAndSetChanged();
 	}
 
 	void remove(BadProperty p) {
 		badProperties.remove(p);
+		notifyObserversAndSetChanged();
 	}
 
 	int getBadPropertySum() {
 		return badProperties.stream().mapToInt(BadProperty::getLevel).sum();
 	}
 
+	int getPointsInAdvantages() {
+		return properties.stream().filter((p) -> p.isAdvantage())
+				.mapToInt(Property::getCost).sum();
+	}
+
+	int getPointsOutDisadvantages() {
+		return properties.stream().filter((p) -> p.isDisadvantage())
+				.mapToInt(Property::getCost).sum()
+				+ badProperties.stream()
+						.mapToInt((p) -> p.getCost() * p.getLevel()).sum();
+	}
+
 	void add(Language l) {
 		languages.add(l);
+		notifyObserversAndSetChanged();
 	}
 
 	void remove(Language l) {
 		languages.remove(l);
+		notifyObserversAndSetChanged();
 	}
 
 	boolean hasSkill(Skill skill) {
@@ -118,21 +138,34 @@ public class Aventurian {
 			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.increase(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
+		notifyObserversAndSetChanged();
+	}
+
+	private void notifyObserversAndSetChanged() {
+		setChanged();
+		notifyObservers();
 	}
 
 	public void decrasePrimaryAttribute(
 			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decrease(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
+		notifyObserversAndSetChanged();
 	}
 
 	void increaseMaximumOfPrimaryAttribute(
 			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.increaseMaximum(attribute);
+		notifyObserversAndSetChanged();
 	}
 
 	void decreaseMaximumOfPrimaryAttribute(
 			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decreaseMaximum(attribute);
+		notifyObserversAndSetChanged();
+	}
+
+	public String getName() {
+		return name;
 	}
 }
