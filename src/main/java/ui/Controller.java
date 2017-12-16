@@ -28,7 +28,7 @@ public class Controller implements Observer {
 	}
 	
 	public void decreaseCourage() {
-		manager.decreasePrimaryAttribut(COURAGE);
+		manager.decreasePrimaryAttribute(COURAGE);
 	}
 
 	@Override

@@ -71,7 +71,7 @@ public class AventurianManagerTest {
 	@Test
 	public void testDecreasePrimaryAttributAlreadyAtMinimum() {
 		when(a.getPrimaryAttribute(COURAGE)).thenReturn(PrimaryAttributes.MIN);
-		toTest.decreasePrimaryAttribut(COURAGE);
+		toTest.decreasePrimaryAttribute(COURAGE);
 		verify(a, never()).decrasePrimaryAttribute(COURAGE);
 
 	}
@@ -79,7 +79,7 @@ public class AventurianManagerTest {
 	@Test
 	public void testDecreasePrimaryAttributAllConditionsMet() {
 		when(a.getPrimaryAttribute(COURAGE)).thenReturn(PrimaryAttributes.MIN + 1);
-		toTest.decreasePrimaryAttribut(COURAGE);
+		toTest.decreasePrimaryAttribute(COURAGE);
 		verify(a).decrasePrimaryAttribute(COURAGE);
 		verify(a).refund(anyInt());
 

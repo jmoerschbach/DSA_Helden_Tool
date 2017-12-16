@@ -26,7 +26,8 @@ public class Aventurian extends Observable {
 		this(name, ap, new PrimaryAttributes(), new SecondaryAttributes());
 	}
 
-	Aventurian(String name, int ap, PrimaryAttributes primary, SecondaryAttributes secondary) {
+	Aventurian(String name, int ap, PrimaryAttributes primary,
+			SecondaryAttributes secondary) {
 		this.name = name;
 		this.primaryAttributes = primary;
 		this.secondaryAttributes = secondary;
@@ -45,17 +46,20 @@ public class Aventurian extends Observable {
 	}
 
 	void pay(int cost) {
-		if (canPay(cost) && cost >= 0)
+		if (canPay(cost) && cost >= 0) {
 			adventurePoints -= cost;
-		else
+			notifyObserversAndSetChanged();
+		} else
 			throw new IllegalArgumentException("Cannot pay: " + cost);
 	}
 
 	void refund(int refund) {
-		if (refund >= 0)
+		if (refund >= 0) {
 			adventurePoints += refund;
-		else
-			throw new IllegalArgumentException("Cannot refund negative amound: " + refund);
+			notifyObserversAndSetChanged();
+		} else
+			throw new IllegalArgumentException(
+					"Cannot refund negative amound: " + refund);
 	}
 
 	boolean canPay(int cost) {
@@ -64,22 +68,27 @@ public class Aventurian extends Observable {
 
 	public void setName(String name) {
 		this.name = name;
+		notifyObserversAndSetChanged();
 	}
 
 	void add(Property p) {
 		properties.add(p);
+		notifyObserversAndSetChanged();
 	}
 
 	void remove(Property p) {
 		properties.remove(p);
+		notifyObserversAndSetChanged();
 	}
 
 	void add(BadProperty p) {
 		badProperties.add(p);
+		notifyObserversAndSetChanged();
 	}
 
 	void remove(BadProperty p) {
 		badProperties.remove(p);
+		notifyObserversAndSetChanged();
 	}
 
 	int getBadPropertySum() {
@@ -87,25 +96,30 @@ public class Aventurian extends Observable {
 	}
 
 	int getPointsInAdvantages() {
-		return properties.stream().filter((p) -> p.isAdvantage()).mapToInt(Property::getCost).sum();
+		return properties.stream().filter((p) -> p.isAdvantage())
+				.mapToInt(Property::getCost).sum();
 	}
 
 	int getPointsOutDisadvantages() {
-		return properties.stream().filter((p) -> p.isDisadvantage()).mapToInt(Property::getCost).sum()
-				+ badProperties.stream().mapToInt((p) -> p.getCost() * p.getLevel()).sum();
+		return properties.stream().filter((p) -> p.isDisadvantage())
+				.mapToInt(Property::getCost).sum()
+				+ badProperties.stream()
+						.mapToInt((p) -> p.getCost() * p.getLevel()).sum();
 	}
 
 	void add(Language l) {
 		languages.add(l);
+		notifyObserversAndSetChanged();
 	}
 
 	void remove(Language l) {
 		languages.remove(l);
+		notifyObserversAndSetChanged();
 	}
 
 	boolean hasSkill(Skill skill) {
-		return Stream.of(badProperties, properties, languages).flatMap(Collection::stream)
-				.anyMatch((s) -> s.equals(skill));
+		return Stream.of(badProperties, properties, languages)
+				.flatMap(Collection::stream).anyMatch((s) -> s.equals(skill));
 	}
 
 	int getSumOfPrimaryAttributes() {
@@ -120,29 +134,35 @@ public class Aventurian extends Observable {
 		return primaryAttributes.getMaximumOfPrimaryAttribute(a);
 	}
 
-	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+	public void increasePrimaryAttribute(
+			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.increase(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
 		notifyObserversAndSetChanged();
 	}
 
 	private void notifyObserversAndSetChanged() {
-		notifyObservers();
 		setChanged();
+		notifyObservers();
 	}
 
-	public void decrasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+	public void decrasePrimaryAttribute(
+			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decrease(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
 		notifyObserversAndSetChanged();
 	}
 
-	void increaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+	void increaseMaximumOfPrimaryAttribute(
+			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.increaseMaximum(attribute);
+		notifyObserversAndSetChanged();
 	}
 
-	void decreaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+	void decreaseMaximumOfPrimaryAttribute(
+			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decreaseMaximum(attribute);
+		notifyObserversAndSetChanged();
 	}
 
 	public String getName() {
