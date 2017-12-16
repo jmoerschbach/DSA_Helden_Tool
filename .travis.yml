@@ -2,3 +2,5 @@ language: java
 before_install: # here's a build step block
 - echo "We can put normal shell commands here"
 - echo $JAVA_HOME
+- echo "JDK_HOME:"
+- echo $JDK_HOME
