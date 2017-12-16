@@ -2,5 +2,8 @@ language: java
 before_install: # here's a build step block
 - echo "We can put normal shell commands here"
 - echo $JAVA_HOME
-- echo "JDK_HOME:"
-- echo $JDK_HOME
+
+
+before_script:
+- wget https://github.com/TestFX/Monocle/releases/download/1.8.0_20/openjfx-monocle-1.8.0_20.jar
+- cp openjfx-monocle-1.8.0_20.jar $JAVA_HOME/jre/lib/ext/
