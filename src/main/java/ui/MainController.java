@@ -1,12 +1,8 @@
 package ui;
 
 import static ui.LeftController.PAGES.ATTRIBUTES;
-import static ui.LeftController.PAGES.LANGUAGES;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -14,18 +10,17 @@ import java.util.Observer;
 import aventurian.Aventurian;
 import aventurian.AventurianManager;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import ui.LeftController.PAGES;
 
 public class MainController implements Observer {
 
-	private final List<XController> centerControllers;
+	private final Map<PAGES, XController> centerControllers;
 	private final Map<PAGES, Parent> centerPages;
 
 	public MainController() {
-		centerControllers = new ArrayList<>();
+		centerControllers = new HashMap<>();
 		centerPages = new HashMap<>();
 	}
 
@@ -46,25 +41,17 @@ public class MainController implements Observer {
 	Pane centerPane;
 
 	public void init(AventurianManager manager) {
-		try {
-			loadPage(LANGUAGES, "/languages.fxml");
-			loadPage(ATTRIBUTES, "/attributes.fxml");
+		leftController.init(manager, this);
+		topController.init(manager);
+		rightController.init(manager);
+		centerControllers.values().forEach(c -> c.init(manager));
 
-			leftController.init(manager, this);
-			topController.init(manager);
-			rightController.init(manager);
-			centerControllers.forEach(c -> c.init(manager));
-
-			changeTo(ATTRIBUTES);
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
+		changeTo(ATTRIBUTES);
 	}
 
-	private void loadPage(PAGES p, String fxml) throws IOException {
-		final FXMLLoader l = new FXMLLoader(ui.MainController.class.getResource(fxml));
-		centerPages.put(p, l.load());
-		centerControllers.add(l.getController());
+	void addLoadedPage(PAGES p, XController c, Parent page) {
+		centerPages.put(p, page);
+		centerControllers.put(p, c);
 	}
 
 	@Override
@@ -75,7 +62,7 @@ public class MainController implements Observer {
 			leftController.update(updatedAventurian);
 			topController.update(updatedAventurian);
 			rightController.update(updatedAventurian);
-			centerControllers.forEach(c -> c.update(updatedAventurian));
+			centerControllers.values().forEach(c -> c.update(updatedAventurian));
 		}
 
 	}
@@ -84,6 +71,10 @@ public class MainController implements Observer {
 		centerPane.getChildren().clear();
 		centerPane.getChildren().add(centerPages.get(page));
 
+	}
+
+	XController getControllerOfPage(PAGES p) {
+		return centerControllers.get(p);
 	}
 
 }
