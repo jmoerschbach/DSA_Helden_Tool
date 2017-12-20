@@ -6,6 +6,7 @@ import database.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import skills.Language;
 
@@ -15,17 +16,25 @@ public class LanguageController extends XController {
 	public ListView<Language> allLanguages;
 
 	@FXML
+	public Button btnAssignLanguage;
+
+	@FXML
 	public ListView<Language> assignedLanguages;
-	
+
+	@Override
 	public void init(AventurianManager manager) {
 		super.init(manager);
-		Database database = Database.getInstance();
-		ObservableList<Language> l = FXCollections.observableArrayList(database.getLanguages());
+		final Database database = Database.getInstance();
+		final ObservableList<Language> l = FXCollections.observableArrayList(database.getLanguages());
 		allLanguages.setItems(l);
+
+		allLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			this.setButtonDisabled(newValue == null);
+		});
 	}
 
 	public void assignLanguage() {
-		Language language = allLanguages.getSelectionModel().getSelectedItem();
+		final Language language = allLanguages.getSelectionModel().getSelectedItem();
 		m.addLanguage(language);
 	}
 
@@ -33,10 +42,14 @@ public class LanguageController extends XController {
 		System.out.println("<- pressed");
 	}
 
+	private void setButtonDisabled(boolean b) {
+		btnAssignLanguage.setDisable(b);
+	}
+
 	@Override
 	void update(Aventurian updatedAventurian) {
-		System.out.println("Treeview must be updated");
-		
+		final ObservableList<Language> l = FXCollections.observableArrayList(updatedAventurian.getLanguages());
+		assignedLanguages.setItems(l);
 	}
 
 }

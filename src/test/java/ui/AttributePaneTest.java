@@ -7,9 +7,7 @@ import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import javafx.scene.control.Button;
@@ -17,13 +15,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import ui.LeftController.PAGES;
 
-@RunWith(MockitoJUnitRunner.class)
 // @RunWith(JfxRunner.class)
 public class AttributePaneTest extends BaseGuiTest {
-
-	public AttributePaneTest() {
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
 	@Before
@@ -47,6 +40,7 @@ public class AttributePaneTest extends BaseGuiTest {
 		verify(mockedAventurianManager).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
 	}
 
+	
 	@Test
 	public void testUpdate() {
 		// Platform.runLater(() -> {
