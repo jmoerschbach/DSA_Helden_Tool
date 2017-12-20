@@ -19,7 +19,7 @@ public class LeftController extends XController {
 		mainController.changeTo(PAGES.ATTRIBUTES);
 	}
 
-	public void init(AventurianManager manager, MainController mainController) {
+	public void init(MainController mainController) {
 		this.mainController = mainController;
 	}
 

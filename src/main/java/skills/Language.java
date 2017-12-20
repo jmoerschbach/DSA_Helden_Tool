@@ -65,4 +65,6 @@ public class Language extends Skill {
     public boolean isDecreasable() {
         return level > 1;
     }
+    
+    
 }

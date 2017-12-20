@@ -6,11 +6,14 @@ import static ui.LeftController.PAGES.LANGUAGES;
 import java.io.IOException;
 
 import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.testfx.framework.junit.ApplicationTest;
 
 import aventurian.Aventurian;
 import aventurian.AventurianManager;
+import database.Database;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -18,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ui.LeftController.PAGES;
 
+@RunWith(MockitoJUnitRunner.class)
 public class BaseGuiTest extends ApplicationTest {
 
 	private MainController mainController;
@@ -30,6 +34,7 @@ public class BaseGuiTest extends ApplicationTest {
 	/* This operation comes from ApplicationTest and loads the GUI to test. */
 	@Override
 	public void start(Stage stage) throws Exception {
+		Database.getInstance().initialize();
 		// mockedAventurianManager = mock(AventurianManager.class);
 		// mockedAventurian = mock(Aventurian.class);
 

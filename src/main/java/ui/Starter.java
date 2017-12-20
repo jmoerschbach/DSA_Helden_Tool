@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import aventurian.Aventurian;
 import aventurian.AventurianManager;
+import database.Database;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +25,7 @@ public class Starter extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		Database.getInstance().initialize();
 		final Parent root = loadMainPane();
 
 		loadPage(LANGUAGES, "/languages.fxml");

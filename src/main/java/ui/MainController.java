@@ -14,7 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import ui.LeftController.PAGES;
 
-public class MainController implements Observer {
+public class MainController extends XController implements Observer {
 
 	private final Map<PAGES, XController> centerControllers;
 	private final Map<PAGES, Parent> centerPages;
@@ -41,7 +41,8 @@ public class MainController implements Observer {
 	Pane centerPane;
 
 	public void init(AventurianManager manager) {
-		leftController.init(manager, this);
+		this.m = manager;
+		leftController.init(this);
 		topController.init(manager);
 		rightController.init(manager);
 		centerControllers.values().forEach(c -> c.init(manager));
@@ -58,11 +59,7 @@ public class MainController implements Observer {
 	public void update(Observable o, Object arg) {
 		if (o instanceof Aventurian) {
 			System.out.println("updating...");
-			final Aventurian updatedAventurian = (Aventurian) o;
-			leftController.update(updatedAventurian);
-			topController.update(updatedAventurian);
-			rightController.update(updatedAventurian);
-			centerControllers.values().forEach(c -> c.update(updatedAventurian));
+			update((Aventurian) o);
 		}
 
 	}
@@ -75,6 +72,15 @@ public class MainController implements Observer {
 
 	XController getControllerOfPage(PAGES p) {
 		return centerControllers.get(p);
+	}
+
+	@Override
+	void update(Aventurian updatedAventurian) {
+		leftController.update(updatedAventurian);
+		topController.update(updatedAventurian);
+		rightController.update(updatedAventurian);
+		centerControllers.values().forEach(c -> c.update(updatedAventurian));
+		
 	}
 
 }
