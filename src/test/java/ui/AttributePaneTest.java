@@ -7,7 +7,9 @@ import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import javafx.scene.control.Button;
@@ -15,7 +17,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import ui.LeftController.PAGES;
 
-// @RunWith(JfxRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class AttributePaneTest extends BaseGuiTest {
 
 	@Override

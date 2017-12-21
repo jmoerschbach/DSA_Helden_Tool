@@ -17,7 +17,8 @@ public class LanguageController extends XController {
 
 	@FXML
 	public Button btnAssignLanguage;
-
+	@FXML
+	public Button btnUnAssignLanguage;
 	@FXML
 	public ListView<Language> assignedLanguages;
 
@@ -29,7 +30,10 @@ public class LanguageController extends XController {
 		allLanguages.setItems(l);
 
 		allLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			this.setButtonDisabled(newValue == null);
+			btnAssignLanguage.setDisable(newValue == null);
+		});
+		assignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			btnUnAssignLanguage.setDisable(newValue == null);
 		});
 	}
 
@@ -40,10 +44,6 @@ public class LanguageController extends XController {
 
 	public void unassignLanguage() {
 		System.out.println("<- pressed");
-	}
-
-	private void setButtonDisabled(boolean b) {
-		btnAssignLanguage.setDisable(b);
 	}
 
 	@Override
