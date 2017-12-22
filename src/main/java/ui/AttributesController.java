@@ -10,21 +10,22 @@ public class AttributesController extends XController {
 	@FXML
 	Label labelCourage;
 
-	public AttributesController() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public void increaseCourage() {
 		m.increasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
 	}
-	
+
 	public void decreaseCourage() {
 		m.decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
 	}
 
 	@Override
 	public void update(Aventurian updatedAventurian) {
-		labelCourage.setText(updatedAventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE) + "");
+		labelCourage.setText(String.valueOf(updatedAventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE)));
 
+	}
+
+	@Override
+	void initControllerSpecificStuff() {
+		// TODO nothing to do here!?
 	}
 }

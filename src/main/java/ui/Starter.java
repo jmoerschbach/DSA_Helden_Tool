@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import aventurian.Aventurian;
 import aventurian.AventurianManager;
+import database.Database;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,7 +31,7 @@ public class Starter extends Application {
 		loadPage(ATTRIBUTES, "/attributes.fxml");
 
 		final Aventurian aventurian = new Aventurian("testAventurian", 16500);
-		mC.init(new AventurianManager(aventurian));
+		mC.init(new AventurianManager(aventurian), new Database());
 		aventurian.addObserver(mC);
 		mC.update(aventurian, null);
 

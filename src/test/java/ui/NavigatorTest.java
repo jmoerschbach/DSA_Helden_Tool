@@ -25,4 +25,8 @@ public class NavigatorTest extends BaseGuiTest {
 		clickOn(attributes);
 		verifyThat("#paneAttributes", isVisible());
 	}
+
+	@Override
+	void setUpMocks() {
+	}
 }

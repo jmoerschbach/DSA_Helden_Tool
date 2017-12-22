@@ -1,8 +1,6 @@
 package ui;
 
 import aventurian.Aventurian;
-import aventurian.AventurianManager;
-import database.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,21 +20,6 @@ public class LanguageController extends XController {
 	@FXML
 	public ListView<Language> assignedLanguages;
 
-	@Override
-	public void init(AventurianManager manager) {
-		super.init(manager);
-		final Database database = Database.getInstance();
-		final ObservableList<Language> l = FXCollections.observableArrayList(database.getLanguages());
-		allLanguages.setItems(l);
-
-		allLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			btnAssignLanguage.setDisable(newValue == null);
-		});
-		assignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			btnUnAssignLanguage.setDisable(newValue == null);
-		});
-	}
-
 	public void assignLanguage() {
 		final Language language = allLanguages.getSelectionModel().getSelectedItem();
 		m.addLanguage(language);
@@ -50,6 +33,19 @@ public class LanguageController extends XController {
 	void update(Aventurian updatedAventurian) {
 		final ObservableList<Language> l = FXCollections.observableArrayList(updatedAventurian.getLanguages());
 		assignedLanguages.setItems(l);
+	}
+
+	@Override
+	void initControllerSpecificStuff() {
+		final ObservableList<Language> l = FXCollections.observableArrayList(db.getLanguages());
+		allLanguages.setItems(l);
+
+		allLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			btnAssignLanguage.setDisable(newValue == null);
+		});
+		assignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			btnUnAssignLanguage.setDisable(newValue == null);
+		});
 	}
 
 }

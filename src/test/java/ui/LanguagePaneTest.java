@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
@@ -21,13 +22,12 @@ import org.testfx.matcher.base.NodeMatchers;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
 import skills.Language;
-import ui.LeftController.PAGES;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LanguagePaneTest extends BaseGuiTest {
 
-	@Override
 	@Before
 	public void setUp() {
 		final Hyperlink languages = find("#hyperlinkLanguages");
@@ -37,7 +37,6 @@ public class LanguagePaneTest extends BaseGuiTest {
 
 	@Test
 	public void testAssignLanguage() {
-		// hmmm, ggf. sehr instabil...
 		verifyThat("Garethi", NodeMatchers.isNotNull());
 		clickOn("Garethi");
 		final Button assignLanguage = find("#btnAssignLanguage");
@@ -54,8 +53,19 @@ public class LanguagePaneTest extends BaseGuiTest {
 	}
 
 	@Test
+	public void testToggleAssignButtonEnabledDisabled() {
+		testAssignLanguageButtonIsDisabled();
+		testAssignLanguageButtonIsEnabled();
+		press(KeyCode.CONTROL);
+		clickOn("Garethi");
+		release(KeyCode.CONTROL);
+		final Button assignLanguage = find("#btnAssignLanguage");
+		assertTrue(assignLanguage.isDisable());
+
+	}
+
+	@Test
 	public void testAssignLanguageButtonIsEnabled() {
-		// hmmm, ggf. sehr instabil...
 		verifyThat("Garethi", NodeMatchers.isNotNull());
 		clickOn("Garethi");
 		final ListView<Language> allLanguages = find("#allLanguages");
@@ -66,13 +76,22 @@ public class LanguagePaneTest extends BaseGuiTest {
 
 	@Test
 	public void testUpdate() {
-		// Platform.runLater(() -> {
-		final List<Language> l = Arrays.asList(mock(Language.class), mock(Language.class), mock(Language.class));
-		Mockito.when(mockedAventurian.getLanguages()).thenReturn(l);
-		getControllerOfPage(PAGES.LANGUAGES).update(mockedAventurian);
 		final ListView<Language> lv = find("#assignedLanguages");
 		assertEquals(3, lv.getItems().size());
-		// });
+	}
+
+	@Override
+	void setUpMocks() {
+		// Database
+		final Language l1 = mock(Language.class);
+		when(l1.toString()).thenReturn("Garethi");
+		final Language l2 = mock(Language.class);
+		when(l2.toString()).thenReturn("blablub");
+		when(mockedDatabase.getLanguages()).thenReturn(Arrays.asList(l1, l2));
+
+		// Aventurian
+		final List<Language> l = Arrays.asList(mock(Language.class), mock(Language.class), mock(Language.class));
+		when(mockedAventurian.getLanguages()).thenReturn(l);
 	}
 
 }
