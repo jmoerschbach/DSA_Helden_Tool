@@ -56,12 +56,9 @@ public class LanguagePaneTest extends BaseGuiTest {
 	public void testToggleAssignButtonEnabledDisabled() {
 		testAssignLanguageButtonIsDisabled();
 		testAssignLanguageButtonIsEnabled();
-		press(KeyCode.CONTROL);
-		clickOn("Garethi");
-		release(KeyCode.CONTROL);
+		press(KeyCode.CONTROL).clickOn("Garethi").release(KeyCode.CONTROL);
 		final Button assignLanguage = find("#btnAssignLanguage");
 		assertTrue(assignLanguage.isDisable());
-
 	}
 
 	@Test
