@@ -22,7 +22,7 @@ import ui.LeftController.PAGES;
  * This is the base class for UI Unit Tests. Every testcase must extend it. This
  * class starts up the actual GUI and provides mocks that can be configured and
  * used by actual ui tests. <br>
- * Have a look at {@link LanguagePaneTest} or {@link AttributePaneTest}
+ * Have a look at {@link LanguagePaneTest} or {@link AttributePaneTest}.
  * 
  * @author Jonas
  *
@@ -40,12 +40,12 @@ public abstract class BaseGuiTest extends ApplicationTest {
 	protected Database mockedDatabase;
 
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void init() {
 		setUpMocks();
-		startGui(stage);
 	}
 
-	private void startGui(Stage stage) throws IOException {
+	@Override
+	public void start(Stage stage) throws Exception {
 		final Parent root = loadMainPane();
 
 		loadPage(LANGUAGES, "/languages.fxml");

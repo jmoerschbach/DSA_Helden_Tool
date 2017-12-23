@@ -13,15 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.testfx.matcher.base.NodeMatchers;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import skills.Language;
@@ -31,17 +30,14 @@ public class LanguagePaneTest extends BaseGuiTest {
 
 	@Before
 	public void setUp() {
-		final Hyperlink languages = find("#hyperlinkLanguages");
-		clickOn(languages);
+		clickOn("#hyperlinkLanguages");
 		verifyThat("#paneLanguages", isVisible());
 	}
 
 	@Test
 	public void testAssignLanguage() {
 		verifyThat("Garethi", NodeMatchers.isNotNull());
-		clickOn("Garethi");
-		final Button assignLanguage = find("#btnAssignLanguage");
-		clickOn(assignLanguage);
+		clickOn("Garethi").clickOn("#btnAssignLanguage");
 		verify(mockedAventurianManager).addLanguage(Mockito.any(Language.class));
 	}
 
@@ -49,20 +45,16 @@ public class LanguagePaneTest extends BaseGuiTest {
 	public void testAssignLanguageButtonIsDisabled() {
 		final ListView<Language> allLanguages = find("#allLanguages");
 		assertTrue(allLanguages.getSelectionModel().isEmpty());
-		final Button assignLanguage = find("#btnAssignLanguage");
-		assertTrue(assignLanguage.isDisable());
+		verifyThat("#btnAssignLanguage", (Button b) -> b.isDisable());
 	}
 
-	@Ignore
+	@Category(CannotRunHeadless.class)
 	@Test
 	public void testToggleAssignButtonEnabledDisabled() {
 		testAssignLanguageButtonIsDisabled();
 		testAssignLanguageButtonIsEnabled();
-		press(KeyCode.CONTROL);
-		clickOn("Garethi");
-		release(KeyCode.CONTROL);
-		final Button assignLanguage = find("#btnAssignLanguage");
-		assertTrue(assignLanguage.isDisable());
+		press(KeyCode.CONTROL).clickOn("Garethi").release(KeyCode.CONTROL);
+		verifyThat("#btnAssignLanguage", (Button b) -> b.isDisable());
 	}
 
 	@Test
@@ -71,8 +63,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 		clickOn("Garethi");
 		final ListView<Language> allLanguages = find("#allLanguages");
 		assertFalse(allLanguages.getSelectionModel().isEmpty());
-		final Button assignLanguage = find("#btnAssignLanguage");
-		assertFalse(assignLanguage.isDisable());
+		verifyThat("#btnAssignLanguage", (Button b) -> !b.isDisable());
 	}
 
 	@Test
