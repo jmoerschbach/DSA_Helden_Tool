@@ -1,5 +1,9 @@
 package ui;
 
+import static java.util.stream.Collectors.toList;
+
+import java.util.List;
+
 import aventurian.Aventurian;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,17 +15,17 @@ import skills.Language;
 public class LanguageController extends XController {
 
 	@FXML
-	public ListView<Language> allLanguages;
+	public ListView<Language> lvUnAssignedLanguages;
 
 	@FXML
 	public Button btnAssignLanguage;
 	@FXML
 	public Button btnUnAssignLanguage;
 	@FXML
-	public ListView<Language> assignedLanguages;
+	public ListView<Language> lvAssignedLanguages;
 
 	public void assignLanguage() {
-		final Language language = allLanguages.getSelectionModel().getSelectedItem();
+		final Language language = lvUnAssignedLanguages.getSelectionModel().getSelectedItem();
 		m.addLanguage(language);
 	}
 
@@ -31,19 +35,23 @@ public class LanguageController extends XController {
 
 	@Override
 	void update(Aventurian updatedAventurian) {
-		final ObservableList<Language> l = FXCollections.observableArrayList(updatedAventurian.getLanguages());
-		assignedLanguages.setItems(l);
+		final List<Language> assignedLanguages = updatedAventurian.getLanguages();
+		lvAssignedLanguages.setItems(FXCollections.observableArrayList(assignedLanguages));
+
+		final List<Language> unassignedLanguages = db.getLanguages().stream()
+				.filter(l -> !assignedLanguages.contains(l)).collect(toList());
+		lvUnAssignedLanguages.setItems(FXCollections.observableArrayList(unassignedLanguages));
 	}
 
 	@Override
 	void initControllerSpecificStuff() {
 		final ObservableList<Language> l = FXCollections.observableArrayList(db.getLanguages());
-		allLanguages.setItems(l);
+		lvUnAssignedLanguages.setItems(l);
 
-		allLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+		lvUnAssignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			btnAssignLanguage.setDisable(newValue == null);
 		});
-		assignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+		lvAssignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			btnUnAssignLanguage.setDisable(newValue == null);
 		});
 	}
