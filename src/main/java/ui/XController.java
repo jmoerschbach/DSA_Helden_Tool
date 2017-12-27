@@ -11,7 +11,7 @@ public abstract class XController {
 		// TODO Auto-generated constructor stub
 	}
 
-	final void init(AventurianManager manager) {
+	void init(AventurianManager manager) {
 		m = manager;
 	}
 

@@ -1,21 +1,23 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import skills.BadPropertyTest;
-import skills.LanguageTest;
-import skills.PropertyTest;
 import aventurian.AventurianManagerTest;
 import aventurian.AventurianTest;
 import aventurian.LevelCostCalculatorTest;
 import aventurian.PrimaryAttributesTest;
 import aventurian.SecondaryAttributeHelperTest;
 import aventurian.SecondaryAttributesTest;
+import skills.BadPropertyTest;
+import skills.LanguageTest;
+import skills.PropertyTest;
+import ui.AttributePaneTest;
+import ui.NavigatorTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ PrimaryAttributesTest.class,
 		SecondaryAttributeHelperTest.class, SecondaryAttributesTest.class,
 		AventurianTest.class, LevelCostCalculatorTest.class,
-		LanguageTest.class, BadPropertyTest.class, PropertyTest.class, AventurianManagerTest.class })
+		LanguageTest.class, BadPropertyTest.class, PropertyTest.class, AventurianManagerTest.class, AttributePaneTest.class, NavigatorTest.class })
 public class TestSuite {
 
 }
