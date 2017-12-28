@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import skills.Language;
 
 public class LanguageController extends XController {
@@ -49,12 +50,28 @@ public class LanguageController extends XController {
 		final ObservableList<Language> l = FXCollections.observableArrayList(db.getLanguages());
 		lvUnAssignedLanguages.setItems(l);
 
-		lvUnAssignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			btnAssignLanguage.setDisable(newValue == null);
-		});
+		lvUnAssignedLanguages.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> {
+					btnAssignLanguage.setDisable(newValue == null);
+				});
 		lvAssignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			btnUnAssignLanguage.setDisable(newValue == null);
 		});
+
+		lvUnAssignedLanguages.setOnMouseClicked((MouseEvent click) -> {
+			if (click.getClickCount() == 2 && !lvUnAssignedLanguages.getSelectionModel().isEmpty()) {
+				final Language language = lvUnAssignedLanguages.getSelectionModel().getSelectedItem();
+				m.addLanguage(language);
+			}
+		});
+
+		lvAssignedLanguages.setOnMouseClicked((MouseEvent click) -> {
+			if (click.getClickCount() == 2 && !lvAssignedLanguages.getSelectionModel().isEmpty()) {
+				final Language language = lvAssignedLanguages.getSelectionModel().getSelectedItem();
+				m.removeLanguage(language);
+			}
+		});
+
 	}
 
 }

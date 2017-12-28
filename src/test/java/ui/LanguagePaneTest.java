@@ -23,6 +23,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import skills.Language;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -51,9 +52,23 @@ public class LanguagePaneTest extends BaseGuiTest {
 	}
 
 	@Test
+	public void testAssignLanguageViaDoubleClick() {
+		verifyThat(LANGUAGE_NAME_GARETHI, NodeMatchers.isNotNull());
+		doubleClickOn(LANGUAGE_NAME_GARETHI, MouseButton.PRIMARY);
+		verify(mockedAventurianManager).addLanguage(Mockito.any(Language.class));
+	}
+
+	@Test
 	public void testUnAssignLanguage() {
 		verifyThat(LANGUAGE_NAME_BLABLA, NodeMatchers.isNotNull());
 		clickOn(LANGUAGE_NAME_BLABLA).clickOn(ID_BTN_UN_ASSIGN_LANGUAGE);
+		verify(mockedAventurianManager).removeLanguage(Mockito.any(Language.class));
+	}
+
+	@Test
+	public void testUnAssignLanguageViaDoubleClick() {
+		verifyThat(LANGUAGE_NAME_BLABLA, NodeMatchers.isNotNull());
+		doubleClickOn(LANGUAGE_NAME_BLABLA);
 		verify(mockedAventurianManager).removeLanguage(Mockito.any(Language.class));
 	}
 

@@ -30,6 +30,7 @@ public class Database {
 
 		languages.add(new Language("Garethi", "wichtigste Sprache",
 				(Aventurian a) -> a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE) >= 13, 5, 50));
+		languages.add(new Language("BlaBla", "sinnlose Sprache", (Aventurian a) -> true, 5, 50));
 
 	}
 }
