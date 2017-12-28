@@ -51,6 +51,13 @@ public class LanguagePaneTest extends BaseGuiTest {
 	}
 
 	@Test
+	public void testUnAssignLanguage() {
+		verifyThat(LANGUAGE_NAME_BLABLA, NodeMatchers.isNotNull());
+		clickOn(LANGUAGE_NAME_BLABLA).clickOn(ID_BTN_UN_ASSIGN_LANGUAGE);
+		verify(mockedAventurianManager).removeLanguage(Mockito.any(Language.class));
+	}
+
+	@Test
 	public void testAssignLanguageButtonIsDisabled() {
 		final ListView<Language> allLanguages = find(ID_LV_UN_ASSIGNED_LANGUAGES);
 		assertTrue(allLanguages.getSelectionModel().isEmpty());
@@ -106,7 +113,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 		final ListView<Language> lvUnAssigned = find(ID_LV_UN_ASSIGNED_LANGUAGES);
 		final ObservableList<Language> assignedLanguages = lvAssigned.getItems();
 		final ObservableList<Language> unAssignedLanguages = lvUnAssigned.getItems();
-		
+
 		assertTrue(assignedLanguages.stream().noneMatch(l -> unAssignedLanguages.contains(l)));
 		assertTrue(unAssignedLanguages.stream().noneMatch(l -> assignedLanguages.contains(l)));
 	}

@@ -30,7 +30,8 @@ public class LanguageController extends XController {
 	}
 
 	public void unassignLanguage() {
-		System.out.println("<- pressed");
+		final Language language = lvAssignedLanguages.getSelectionModel().getSelectedItem();
+		m.removeLanguage(language);
 	}
 
 	@Override
