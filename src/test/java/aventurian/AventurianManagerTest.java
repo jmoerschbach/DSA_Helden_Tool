@@ -421,16 +421,13 @@ public class AventurianManagerTest {
 		verify(l, never()).increase();
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testIncreaseLanguageNotIncreasable() {
 		final Language l = createLanguageMock(true, false);
 		when(a.hasSkill(l)).thenReturn(true);
 		when(a.canPay(anyInt())).thenReturn(true);
 
 		toTest.increaseLanguage(l);
-
-		verify(a, never()).pay(anyInt());
-		verify(l, never()).increase();
 	}
 
 	@Test
@@ -516,15 +513,15 @@ public class AventurianManagerTest {
 		verify(bp, never()).increase();
 		verify(a, never()).pay(anyInt());
 	}
-	
-	@Test(expected=IllegalStateException.class)
+
+	@Test(expected = IllegalStateException.class)
 	public void testIncreaseBadPropertyNotOwned() {
 		final BadProperty bp = createBadPropertyMock(true, true);
 		when(a.hasSkill(bp)).thenReturn(false);
-		
+
 		toTest.increaseBadProperty(bp);
 	}
-	
+
 	@Test
 	public void testRemovePropertyAdvantageAllConditionsMet() {
 
@@ -537,8 +534,8 @@ public class AventurianManagerTest {
 		verify(a).refund(anyInt());
 		verify(p).lose(a);
 	}
-	
-	@Test(expected=IllegalStateException.class)
+
+	@Test(expected = IllegalStateException.class)
 	public void testRemovePropertyNotOwned() {
 
 		final Property p = createPropertyMock(true, true);
@@ -546,7 +543,7 @@ public class AventurianManagerTest {
 
 		toTest.removeProperty(p);
 	}
-	
+
 	@Test
 	public void testRemovePropertyDisadvantageAllConditionsMet() {
 
