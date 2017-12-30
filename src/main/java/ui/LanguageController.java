@@ -14,11 +14,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import skills.Language;
+import skills.Skill;
 
 public class LanguageController extends XController {
 
@@ -56,6 +58,12 @@ public class LanguageController extends XController {
 
 	@Override
 	void initControllerSpecificStuff() {
+		prepareUnAssignedListView();
+		prepareAssignedListView();
+
+	}
+
+	private void prepareUnAssignedListView() {
 		final ObservableList<Language> l = FXCollections.observableArrayList(db.getLanguages());
 		lvUnAssignedLanguages.setItems(l);
 
@@ -63,9 +71,6 @@ public class LanguageController extends XController {
 				.addListener((observable, oldValue, newValue) -> {
 					btnAssignLanguage.setDisable(newValue == null);
 				});
-		lvAssignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			btnUnAssignLanguage.setDisable(newValue == null);
-		});
 
 		lvUnAssignedLanguages.setOnMouseClicked((MouseEvent click) -> {
 			if (click.getClickCount() == 2 && !lvUnAssignedLanguages.getSelectionModel().isEmpty()) {
@@ -73,18 +78,39 @@ public class LanguageController extends XController {
 				m.addLanguage(language);
 			}
 		});
+		lvUnAssignedLanguages.setCellFactory((ListView<Language> list) -> new ToolTipCell<>());
+	}
 
+	// TODO: as soon as tool tips are required in other lists (meaning for other
+	// skills like property and so on) make this class a normal/outer class
+	private static class ToolTipCell<T extends Skill> extends ListCell<T> {
+		@Override
+		protected void updateItem(T item, boolean empty) {
+			super.updateItem(item, empty);
+			if (empty || item == null) {
+				setGraphic(null);
+				setText(null);
+			} else {
+				setTooltip(new Tooltip(item.getDescription()));
+				setText(item.getName());
+			}
+		}
+	}
+
+	private void prepareAssignedListView() {
+		lvAssignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			btnUnAssignLanguage.setDisable(newValue == null);
+		});
 		lvAssignedLanguages.setOnMouseClicked((MouseEvent click) -> {
 			if (click.getClickCount() == 2 && !lvAssignedLanguages.getSelectionModel().isEmpty()) {
 				final Language language = lvAssignedLanguages.getSelectionModel().getSelectedItem();
 				m.removeLanguage(language);
 			}
 		});
-		lvAssignedLanguages.setCellFactory((ListView<Language> list) -> new XCell());
-
+		lvAssignedLanguages.setCellFactory((ListView<Language> list) -> new AssignedLanguageCell());
 	}
 
-	private class XCell extends ListCell<Language> {
+	private class AssignedLanguageCell extends ListCell<Language> {
 		HBox hbox = new HBox();
 		Label nameLabel = new Label("(empty)");
 		Label levelLabel = new Label("1");
@@ -92,7 +118,7 @@ public class LanguageController extends XController {
 		Button increaseButton = new Button("+");
 		Button decreaseButton = new Button("-");
 
-		public XCell() {
+		public AssignedLanguageCell() {
 			hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
 			hbox.setSpacing(5);
 			hbox.setAlignment(Pos.CENTER);
@@ -105,11 +131,14 @@ public class LanguageController extends XController {
 		protected void updateItem(Language item, boolean empty) {
 			super.updateItem(item, empty);
 			setText(null); // No text in label of super class
-			if (empty) {
+			if (empty || item == null) {
 				setGraphic(null);
 			} else {
-				nameLabel.setText(item != null ? item.getName() : "<null>");
-				levelLabel.setText(item != null ? item.getLevel() + "" : "<null>");
+				nameLabel.setText(item.getName());
+				levelLabel.setText(String.valueOf(item.getLevel()));
+				increaseButton.setDisable(!item.isIncreasable());
+				decreaseButton.setDisable(!item.isDecreasable());
+				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(hbox);
 			}
 		}
