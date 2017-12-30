@@ -1,7 +1,6 @@
 package ui;
 
 import aventurian.Aventurian;
-import aventurian.AventurianManager;
 
 public class LeftController extends XController {
 
@@ -27,5 +26,10 @@ public class LeftController extends XController {
 	public void update(Aventurian updatedAventurian) {
 		// nothing to do here since we do not display any info about aventurian
 
+	}
+
+	@Override
+	void initControllerSpecificStuff() {
+		// nothing to here
 	}
 }

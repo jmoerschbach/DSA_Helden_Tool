@@ -22,12 +22,13 @@ import skills.Property;
 public class AventurianTest {
 
 	public static final int AP = 16500;
+	public static final String AVENTURIAN_NAME = "testAventurian";
 	private Aventurian toTest;
 	private Observer mockedObserver;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Aventurian("test", AP);
+		toTest = new Aventurian(AVENTURIAN_NAME, AP);
 		mockedObserver = mock(Observer.class);
 		toTest.addObserver(mockedObserver);
 	}
@@ -40,8 +41,8 @@ public class AventurianTest {
 	@Test
 	public void payValid() throws Exception {
 		toTest.pay(1000);
-		int expected = AP - 1000;
-		int actual = toTest.getAdventurePoints();
+		final int expected = AP - 1000;
+		final int actual = toTest.getAdventurePoints();
 		assertEquals(expected, actual);
 		verify(mockedObserver).update(toTest, null);
 	}
@@ -59,8 +60,8 @@ public class AventurianTest {
 	@Test
 	public void refundValid() throws Exception {
 		toTest.refund(500);
-		int expected = AP + 500;
-		int actual = toTest.getAdventurePoints();
+		final int expected = AP + 500;
+		final int actual = toTest.getAdventurePoints();
 		assertEquals(expected, actual);
 		verify(mockedObserver).update(toTest, null);
 	}
@@ -68,8 +69,8 @@ public class AventurianTest {
 	@Test
 	public void refundMuch() throws Exception {
 		toTest.refund(20000);
-		int expected = AP + 20000;
-		int actual = toTest.getAdventurePoints();
+		final int expected = AP + 20000;
+		final int actual = toTest.getAdventurePoints();
 		assertEquals(expected, actual);
 		verify(mockedObserver).update(toTest, null);
 	}
@@ -81,12 +82,12 @@ public class AventurianTest {
 
 	@Test
 	public void canPay() throws Exception {
-		assertFalse(toTest.canPay(20000));
+		assertFalse(toTest.canPay(AP+1));
 	}
 
 	@Test
 	public void addProperty() throws Exception {
-		Property testProp = mock(Property.class);
+		final Property testProp = mock(Property.class);
 		when(testProp.getName()).thenReturn("test");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
@@ -95,7 +96,7 @@ public class AventurianTest {
 
 	@Test
 	public void removeProperty() throws Exception {
-		Property testProp = mock(Property.class);
+		final Property testProp = mock(Property.class);
 		when(testProp.getName()).thenReturn("test");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
@@ -107,7 +108,7 @@ public class AventurianTest {
 
 	@Test
 	public void addBadProperty() throws Exception {
-		BadProperty testProp = mock(BadProperty.class);
+		final BadProperty testProp = mock(BadProperty.class);
 		when(testProp.getName()).thenReturn("test");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
@@ -116,7 +117,7 @@ public class AventurianTest {
 
 	@Test
 	public void removeBadProperty() throws Exception {
-		BadProperty testProp = mock(BadProperty.class);
+		final BadProperty testProp = mock(BadProperty.class);
 		when(testProp.getName()).thenReturn("test");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
@@ -129,12 +130,12 @@ public class AventurianTest {
 	@Test
 	public void getBadPropertySum() throws Exception {
 		assertEquals(0, toTest.getBadPropertySum());
-		BadProperty bP1 = mock(BadProperty.class);
+		final BadProperty bP1 = mock(BadProperty.class);
 		when(bP1.getLevel()).thenReturn(7);
 		toTest.add(bP1);
 		assertEquals(7, toTest.getBadPropertySum());
 
-		BadProperty bP2 = mock(BadProperty.class);
+		final BadProperty bP2 = mock(BadProperty.class);
 		when(bP2.getLevel()).thenReturn(5);
 		toTest.add(bP2);
 		assertEquals(7 + 5, toTest.getBadPropertySum());
@@ -142,7 +143,7 @@ public class AventurianTest {
 
 	@Test
 	public void addLanguage() throws Exception {
-		Language testLanguage = mock(Language.class);
+		final Language testLanguage = mock(Language.class);
 		when(testLanguage.getName()).thenReturn("test");
 		toTest.add(testLanguage);
 		assertTrue(toTest.hasSkill(testLanguage));
@@ -151,7 +152,7 @@ public class AventurianTest {
 
 	@Test
 	public void removeLanguage() throws Exception {
-		Language testLanguage = mock(Language.class);
+		final Language testLanguage = mock(Language.class);
 		when(testLanguage.getName()).thenReturn("test");
 		toTest.add(testLanguage);
 		assertTrue(toTest.hasSkill(testLanguage));
@@ -164,17 +165,17 @@ public class AventurianTest {
 
 	@Test
 	public void hasSkill() throws Exception {
-		Property p = mock(Property.class);
+		final Property p = mock(Property.class);
 		assertFalse(toTest.hasSkill(p));
 		toTest.add(p);
 		assertTrue(toTest.hasSkill(p));
 
-		BadProperty bP = mock(BadProperty.class);
+		final BadProperty bP = mock(BadProperty.class);
 		assertFalse(toTest.hasSkill(bP));
 		toTest.add(bP);
 		assertTrue(toTest.hasSkill(bP));
 
-		Language l = mock(Language.class);
+		final Language l = mock(Language.class);
 		assertFalse(toTest.hasSkill(l));
 		toTest.add(l);
 		assertTrue(toTest.hasSkill(l));
@@ -201,8 +202,8 @@ public class AventurianTest {
 
 	@Test
 	public void increasePrimaryAttribute() throws Exception {
-		PrimaryAttributes pri = mock(PrimaryAttributes.class);
-		SecondaryAttributes second = mock(SecondaryAttributes.class);
+		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
+		final SecondaryAttributes second = mock(SecondaryAttributes.class);
 		toTest = new Aventurian("", 100, pri, second);
 		toTest.addObserver(mockedObserver);
 		toTest.increasePrimaryAttribute(COURAGE);
@@ -213,8 +214,8 @@ public class AventurianTest {
 
 	@Test
 	public void decrasePrimaryAttribute() throws Exception {
-		PrimaryAttributes pri = mock(PrimaryAttributes.class);
-		SecondaryAttributes second = mock(SecondaryAttributes.class);
+		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
+		final SecondaryAttributes second = mock(SecondaryAttributes.class);
 		toTest = new Aventurian("", 100, pri, second);
 		toTest.addObserver(mockedObserver);
 		toTest.decrasePrimaryAttribute(COURAGE);
@@ -225,7 +226,7 @@ public class AventurianTest {
 
 	@Test
 	public void increaseMaximumOfPrimaryAttribute() throws Exception {
-		PrimaryAttributes pri = mock(PrimaryAttributes.class);
+		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
 		toTest = new Aventurian("", 100, pri, null);
 		toTest.addObserver(mockedObserver);
 		toTest.increaseMaximumOfPrimaryAttribute(COURAGE);
@@ -235,7 +236,7 @@ public class AventurianTest {
 
 	@Test
 	public void decreaseMaximumOfPrimaryAttribute() throws Exception {
-		PrimaryAttributes pri = mock(PrimaryAttributes.class);
+		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
 		toTest = new Aventurian("", 100, pri, null);
 		toTest.addObserver(mockedObserver);
 		toTest.decreaseMaximumOfPrimaryAttribute(COURAGE);
@@ -246,12 +247,12 @@ public class AventurianTest {
 	@Test
 	public void testGetPointsInAdvantagesValid() throws Exception {
 		assertEquals(0, toTest.getPointsInAdvantages());
-		Property p = mock(Property.class);
+		final Property p = mock(Property.class);
 		when(p.getCost()).thenReturn(200);
 		when(p.isAdvantage()).thenReturn(true);
 		toTest.add(p);
 		assertEquals(200, toTest.getPointsInAdvantages());
-		Property p2 = mock(Property.class);
+		final Property p2 = mock(Property.class);
 		when(p2.getCost()).thenReturn(300);
 		when(p2.isAdvantage()).thenReturn(true);
 		toTest.add(p2);
@@ -261,19 +262,26 @@ public class AventurianTest {
 	@Test
 	public void testGetPointsOutDisadvantagesValid() throws Exception {
 		assertEquals(0, toTest.getPointsOutDisadvantages());
-		Property p = mock(Property.class);
+		final Property p = mock(Property.class);
 		when(p.getCost()).thenReturn(200);
 		when(p.isDisadvantage()).thenReturn(true);
 		toTest.add(p);
 		assertEquals(200, toTest.getPointsOutDisadvantages());
 
-		BadProperty bp = mock(BadProperty.class);
+		final BadProperty bp = mock(BadProperty.class);
 		when(bp.getCost()).thenReturn(50);
 		when(bp.getLevel()).thenReturn(5);
 		when(bp.isDisadvantage()).thenReturn(true);
 
 		toTest.add(bp);
 		assertEquals(450, toTest.getPointsOutDisadvantages());
-
+	}
+	
+	@Test
+	public void testSetName() {
+		assertEquals(AVENTURIAN_NAME, toTest.getName());
+		toTest.setName("newName");
+		assertEquals("newName", toTest.getName());
+		verify(mockedObserver).update(toTest, null);
 	}
 }

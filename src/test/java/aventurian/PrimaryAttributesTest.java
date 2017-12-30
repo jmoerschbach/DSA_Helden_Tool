@@ -1,10 +1,12 @@
 package aventurian;
 
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.*;
-import static org.junit.Assert.*;
 
 public class PrimaryAttributesTest {
 
@@ -17,31 +19,31 @@ public class PrimaryAttributesTest {
 
     @Test
     public void testGetSumDefault() throws Exception {
-        int expected = 8 * 8;
-        int actual = toTest.getSum();
+        final int expected = 8 * 8;
+        final int actual = toTest.getSum();
         assertEquals(actual, expected);
     }
 
     @Test
     public void testGetSum() throws Exception {
         toTest.increase(COURAGE);
-        int expected = 8 * 8 + 1;
-        int actual = toTest.getSum();
+        final int expected = 8 * 8 + 1;
+        final int actual = toTest.getSum();
         assertEquals(actual, expected);
     }
 
     @Test
     public void testGetPrimaryAttribute() throws Exception {
-        int expected = 8;
-        int actual = toTest.getPrimaryAttribute(COURAGE);
+        final int expected = 8;
+        final int actual = toTest.getPrimaryAttribute(COURAGE);
         assertEquals(expected, actual);
     }
 
     @Test
     public void testIncrease() throws Exception {
-        int expected = toTest.getPrimaryAttribute(COURAGE) + 1;
+        final int expected = toTest.getPrimaryAttribute(COURAGE) + 1;
         toTest.increase(COURAGE);
-        int actual = toTest.getPrimaryAttribute(COURAGE);
+        final int actual = toTest.getPrimaryAttribute(COURAGE);
         assertEquals(expected, actual);
     }
 
@@ -67,10 +69,10 @@ public class PrimaryAttributesTest {
     @Test
     public void testDecrease() throws Exception {
         // Attributes start on minimum. -> increase first in order to be able to decrease again.
-        int expected = toTest.getPrimaryAttribute(COURAGE);
+        final int expected = toTest.getPrimaryAttribute(COURAGE);
         toTest.increase(COURAGE);
         toTest.decrease(COURAGE);
-        int actual = toTest.getPrimaryAttribute(COURAGE);
+        final int actual = toTest.getPrimaryAttribute(COURAGE);
         assertEquals(expected, actual);
     }
 
@@ -81,9 +83,9 @@ public class PrimaryAttributesTest {
 
     @Test
     public void testIncreaseMaximum() throws Exception {
-        int expected = toTest.getMaximumOfPrimaryAttribute(COURAGE) + 1;
+        final int expected = toTest.getMaximumOfPrimaryAttribute(COURAGE) + 1;
         toTest.increaseMaximum(COURAGE);
-        int actual = toTest.getMaximumOfPrimaryAttribute(COURAGE);
+        final int actual = toTest.getMaximumOfPrimaryAttribute(COURAGE);
         assertEquals(expected, actual);
     }
 
@@ -102,28 +104,28 @@ public class PrimaryAttributesTest {
 
     @Test
     public void testGetMaximumOfPrimaryAttribute() throws Exception {
-        int expected = 14;
-        int actual = toTest.getMaximumOfPrimaryAttribute(COURAGE);
+        final int expected = 14;
+        final int actual = toTest.getMaximumOfPrimaryAttribute(COURAGE);
         assertEquals(expected, actual);
     }
     
-//    @Test
-//    public void testIsIncreasable() throws Exception {
-//    	assertTrue(toTest.isIncreasable(COURAGE));
-//    	toTest.increase(COURAGE);
-//    	toTest.increase(COURAGE);
-//    	toTest.increase(COURAGE);
-//    	toTest.increase(COURAGE);
-//    	toTest.increase(COURAGE);
-//    	toTest.increase(COURAGE);
-//    	assertFalse(toTest.isIncreasable(COURAGE));
-//    }
-//    
-//    @Test
-//    public void testIsDecreasable() throws Exception{
-//    	assertFalse(toTest.isDecreasable(COURAGE));
-//    	toTest.increase(COURAGE);
-//    	assertTrue(toTest.isDecreasable(COURAGE));
-//    }
+    @Test
+    public void testIsIncreasable() throws Exception {
+    	assertTrue(toTest.isIncreasable(COURAGE));
+    	toTest.increase(COURAGE);
+    	toTest.increase(COURAGE);
+    	toTest.increase(COURAGE);
+    	toTest.increase(COURAGE);
+    	toTest.increase(COURAGE);
+    	toTest.increase(COURAGE);
+    	assertFalse(toTest.isIncreasable(COURAGE));
+    }
+    
+    @Test
+    public void testIsDecreasable() throws Exception{
+    	assertFalse(toTest.isDecreasable(COURAGE));
+    	toTest.increase(COURAGE);
+    	assertTrue(toTest.isDecreasable(COURAGE));
+    }
 
 }

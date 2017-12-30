@@ -9,6 +9,7 @@ import java.util.Observer;
 
 import aventurian.Aventurian;
 import aventurian.AventurianManager;
+import database.Database;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
@@ -40,12 +41,13 @@ public class MainController extends XController implements Observer {
 	@FXML
 	Pane centerPane;
 
-	public void init(AventurianManager manager) {
+	@Override
+	public void init(AventurianManager manager, Database db) {
 		this.m = manager;
 		leftController.init(this);
-		topController.init(manager);
-		rightController.init(manager);
-		centerControllers.values().forEach(c -> c.init(manager));
+		topController.init(manager, db);
+		rightController.init(manager, db);
+		centerControllers.values().forEach(c -> c.init(manager, db));
 
 		changeTo(ATTRIBUTES);
 	}
@@ -58,7 +60,6 @@ public class MainController extends XController implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (o instanceof Aventurian) {
-			System.out.println("updating...");
 			update((Aventurian) o);
 		}
 
@@ -80,7 +81,13 @@ public class MainController extends XController implements Observer {
 		topController.update(updatedAventurian);
 		rightController.update(updatedAventurian);
 		centerControllers.values().forEach(c -> c.update(updatedAventurian));
-		
+
+	}
+
+	@Override
+	void initControllerSpecificStuff() {
+		// TODO Auto-generated method stub
+
 	}
 
 }
