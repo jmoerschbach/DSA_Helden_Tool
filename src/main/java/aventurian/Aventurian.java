@@ -6,28 +6,46 @@ import java.util.List;
 import java.util.Observable;
 import java.util.stream.Stream;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import skills.BadProperty;
 import skills.Language;
 import skills.Property;
 import skills.Skill;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Aventurian extends Observable {
 
-	private String name;
+	@XmlAttribute
+	private String nameOfAventurian;
+	@XmlAttribute
+	private int adventurePoints;
 	private final PrimaryAttributes primaryAttributes;
 	private final SecondaryAttributes secondaryAttributes;
-	private int adventurePoints;
 
 	private final List<Property> properties;
 	private final List<BadProperty> badProperties;
+	@XmlElement(name = "language")
+	@XmlElementWrapper(name = "languages")
 	private final List<Language> languages;
+
+	private Aventurian() {
+		// only needed for JAXB
+		this(0);
+	}
 
 	public Aventurian(String name, int ap) {
 		this(name, ap, new PrimaryAttributes(), new SecondaryAttributes());
 	}
 
 	Aventurian(String name, int ap, PrimaryAttributes primary, SecondaryAttributes secondary) {
-		this.name = name;
+		this.nameOfAventurian = name;
 		this.primaryAttributes = primary;
 		this.secondaryAttributes = secondary;
 		this.adventurePoints = ap;
@@ -65,7 +83,7 @@ public class Aventurian extends Observable {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.nameOfAventurian = name;
 		notifyObserversAndSetChanged();
 	}
 
@@ -135,7 +153,7 @@ public class Aventurian extends Observable {
 		notifyObserversAndSetChanged();
 	}
 
-	private void notifyObserversAndSetChanged() {
+	void notifyObserversAndSetChanged() {
 		setChanged();
 		notifyObservers();
 	}
@@ -157,7 +175,7 @@ public class Aventurian extends Observable {
 	}
 
 	public String getName() {
-		return name;
+		return nameOfAventurian;
 	}
 
 	public List<Language> getLanguages() {

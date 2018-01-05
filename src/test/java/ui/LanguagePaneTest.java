@@ -2,6 +2,7 @@ package ui;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -14,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.testfx.matcher.base.NodeMatchers;
 
@@ -48,28 +48,28 @@ public class LanguagePaneTest extends BaseGuiTest {
 	public void testAssignLanguage() {
 		verifyThat(LANGUAGE_NAME_GARETHI, NodeMatchers.isNotNull());
 		clickOn(LANGUAGE_NAME_GARETHI).clickOn(ID_BTN_ASSIGN_LANGUAGE);
-		verify(mockedAventurianManager).addLanguage(Mockito.any(Language.class));
+		verify(mockedAventurianManager).addLanguage(any(Language.class));
 	}
 
 	@Test
 	public void testAssignLanguageViaDoubleClick() {
 		verifyThat(LANGUAGE_NAME_GARETHI, NodeMatchers.isNotNull());
 		doubleClickOn(LANGUAGE_NAME_GARETHI, MouseButton.PRIMARY);
-		verify(mockedAventurianManager).addLanguage(Mockito.any(Language.class));
+		verify(mockedAventurianManager).addLanguage(any(Language.class));
 	}
 
 	@Test
 	public void testUnAssignLanguage() {
 		verifyThat(LANGUAGE_NAME_BLABLA, NodeMatchers.isNotNull());
 		clickOn(LANGUAGE_NAME_BLABLA).clickOn(ID_BTN_UN_ASSIGN_LANGUAGE);
-		verify(mockedAventurianManager).removeLanguage(Mockito.any(Language.class));
+		verify(mockedAventurianManager).removeLanguage(any(Language.class));
 	}
 
 	@Test
 	public void testUnAssignLanguageViaDoubleClick() {
 		verifyThat(LANGUAGE_NAME_BLABLA, NodeMatchers.isNotNull());
 		doubleClickOn(LANGUAGE_NAME_BLABLA);
-		verify(mockedAventurianManager).removeLanguage(Mockito.any(Language.class));
+		verify(mockedAventurianManager).removeLanguage(any(Language.class));
 	}
 
 	@Test
@@ -120,6 +120,15 @@ public class LanguagePaneTest extends BaseGuiTest {
 		final ListView<Language> allLanguages = find(ID_LV_UN_ASSIGNED_LANGUAGES);
 		assertFalse(allLanguages.getSelectionModel().isEmpty());
 		verifyThat(ID_BTN_ASSIGN_LANGUAGE, (Button b) -> !b.isDisable());
+	}
+
+	@Test
+	public void testIncreaseLanguageLevel() {
+		verifyThat(LANGUAGE_NAME_BLABLA, NodeMatchers.isNotNull());
+		final Button btn = find("+");
+		assertFalse(btn.isDisable());
+		clickOn(btn);
+		verify(mockedAventurianManager).increaseLanguage(any(Language.class));
 	}
 
 	@Test

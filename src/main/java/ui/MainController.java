@@ -48,6 +48,7 @@ public class MainController extends XController implements Observer {
 		topController.init(manager, db);
 		rightController.init(manager, db);
 		centerControllers.values().forEach(c -> c.init(manager, db));
+		m.registerObserver(this);
 
 		changeTo(ATTRIBUTES);
 	}
@@ -73,6 +74,10 @@ public class MainController extends XController implements Observer {
 
 	XController getControllerOfPage(PAGES p) {
 		return centerControllers.get(p);
+	}
+
+	public void open() {
+		m.loadAventurian();
 	}
 
 	@Override
