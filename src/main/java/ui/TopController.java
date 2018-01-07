@@ -19,4 +19,9 @@ public class TopController extends XController {
 		m.setName(name.getText());
 	}
 
+	@Override
+	void initControllerSpecificStuff() {
+		// TODO Auto-generated method stub
+	}
+
 }

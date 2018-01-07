@@ -18,23 +18,32 @@ import ui.LeftController.PAGES;
 public class Starter extends Application {
 	private MainController mC;
 
+	private Database db;
+	private Aventurian av;
+	private AventurianManager avm;
+
 	public static void main(String[] args) {
 		launch(args);
 
 	}
 
 	@Override
+	public void init() {
+		av = new Aventurian("testAventurian", 16500);
+		avm = new AventurianManager(av);
+		db = new Database();
+	}
+
+	@Override
 	public void start(Stage stage) throws Exception {
-		Database.getInstance().initialize();
 		final Parent root = loadMainPane();
 
 		loadPage(LANGUAGES, "/languages.fxml");
 		loadPage(ATTRIBUTES, "/attributes.fxml");
 
-		final Aventurian aventurian = new Aventurian("testAventurian", 16500);
-		mC.init(new AventurianManager(aventurian));
-		aventurian.addObserver(mC);
-		mC.update(aventurian, null);
+		mC.init(avm, db);
+		av.addObserver(mC);
+		mC.update(av, null);
 
 		final Scene scene = new Scene(root);
 		stage.setScene(scene);
@@ -51,9 +60,9 @@ public class Starter extends Application {
 
 	private void loadPage(PAGES p, String fxml) throws IOException {
 		final FXMLLoader l = new FXMLLoader(ui.MainController.class.getResource(fxml));
-		final Parent bla = l.load();
-		final XController blub = l.getController();
-		mC.addLoadedPage(p, blub, bla);
+		final Parent pane = l.load();
+		final XController controller = l.getController();
+		mC.addLoadedPage(p, controller, pane);
 	}
 
 }

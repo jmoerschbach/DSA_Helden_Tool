@@ -11,13 +11,14 @@ import skills.BadPropertyTest;
 import skills.LanguageTest;
 import skills.PropertyTest;
 import ui.AttributePaneTest;
+import ui.LanguagePaneTest;
 import ui.NavigatorTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ PrimaryAttributesTest.class,
-		SecondaryAttributeHelperTest.class, SecondaryAttributesTest.class,
-		AventurianTest.class, LevelCostCalculatorTest.class,
-		LanguageTest.class, BadPropertyTest.class, PropertyTest.class, AventurianManagerTest.class, AttributePaneTest.class, NavigatorTest.class })
+@Suite.SuiteClasses({ PrimaryAttributesTest.class, SecondaryAttributeHelperTest.class, SecondaryAttributesTest.class,
+		AventurianTest.class, LevelCostCalculatorTest.class, LanguageTest.class, BadPropertyTest.class,
+		PropertyTest.class, AventurianManagerTest.class, AttributePaneTest.class, NavigatorTest.class,
+		LanguagePaneTest.class })
 public class TestSuite {
 
 }

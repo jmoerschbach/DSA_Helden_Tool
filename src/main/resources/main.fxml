@@ -49,18 +49,18 @@
 				</Menu>
 			</menus>
 		</MenuBar>
-		<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+		<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
 			<top>
 				<fx:include fx:id="top" source="top.fxml" />
 			</top>
 			<left>
-				<fx:include fx:id="left" source="left.fxml" />
+				<fx:include fx:id="left" prefWidth="100.0" source="left.fxml" />
 			</left>
 			<right>
 				<fx:include fx:id="right" source="right.fxml" />
 			</right>
 			<center>
-				<VBox fx:id="centerPane" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" style="-fx-border-style: solid inside;" BorderPane.alignment="CENTER">
+				<VBox fx:id="centerPane" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-style: solid inside;" BorderPane.alignment="CENTER">
 					<children>
                   <Label text="only placeholder, is changed during runtime" />
 					</children>

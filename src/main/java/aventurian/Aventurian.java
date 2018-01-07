@@ -26,8 +26,7 @@ public class Aventurian extends Observable {
 		this(name, ap, new PrimaryAttributes(), new SecondaryAttributes());
 	}
 
-	Aventurian(String name, int ap, PrimaryAttributes primary,
-			SecondaryAttributes secondary) {
+	Aventurian(String name, int ap, PrimaryAttributes primary, SecondaryAttributes secondary) {
 		this.name = name;
 		this.primaryAttributes = primary;
 		this.secondaryAttributes = secondary;
@@ -58,8 +57,7 @@ public class Aventurian extends Observable {
 			adventurePoints += refund;
 			notifyObserversAndSetChanged();
 		} else
-			throw new IllegalArgumentException(
-					"Cannot refund negative amound: " + refund);
+			throw new IllegalArgumentException("Cannot refund negative amound: " + refund);
 	}
 
 	boolean canPay(int cost) {
@@ -96,15 +94,12 @@ public class Aventurian extends Observable {
 	}
 
 	int getPointsInAdvantages() {
-		return properties.stream().filter((p) -> p.isAdvantage())
-				.mapToInt(Property::getCost).sum();
+		return properties.stream().filter((p) -> p.isAdvantage()).mapToInt(Property::getCost).sum();
 	}
 
 	int getPointsOutDisadvantages() {
-		return properties.stream().filter((p) -> p.isDisadvantage())
-				.mapToInt(Property::getCost).sum()
-				+ badProperties.stream()
-						.mapToInt((p) -> p.getCost() * p.getLevel()).sum();
+		return properties.stream().filter((p) -> p.isDisadvantage()).mapToInt(Property::getCost).sum()
+				+ badProperties.stream().mapToInt((p) -> p.getCost() * p.getLevel()).sum();
 	}
 
 	void add(Language l) {
@@ -118,8 +113,8 @@ public class Aventurian extends Observable {
 	}
 
 	boolean hasSkill(Skill skill) {
-		return Stream.of(badProperties, properties, languages)
-				.flatMap(Collection::stream).anyMatch((s) -> s.equals(skill));
+		return Stream.of(badProperties, properties, languages).flatMap(Collection::stream)
+				.anyMatch((s) -> s.equals(skill));
 	}
 
 	int getSumOfPrimaryAttributes() {
@@ -134,8 +129,7 @@ public class Aventurian extends Observable {
 		return primaryAttributes.getMaximumOfPrimaryAttribute(a);
 	}
 
-	public void increasePrimaryAttribute(
-			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.increase(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
 		notifyObserversAndSetChanged();
@@ -146,26 +140,27 @@ public class Aventurian extends Observable {
 		notifyObservers();
 	}
 
-	public void decrasePrimaryAttribute(
-			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+	public void decrasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decrease(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
 		notifyObserversAndSetChanged();
 	}
 
-	void increaseMaximumOfPrimaryAttribute(
-			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+	void increaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.increaseMaximum(attribute);
 		notifyObserversAndSetChanged();
 	}
 
-	void decreaseMaximumOfPrimaryAttribute(
-			PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
+	void decreaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decreaseMaximum(attribute);
 		notifyObserversAndSetChanged();
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public List<Language> getLanguages() {
+		return new ArrayList<>(languages);
 	}
 }
