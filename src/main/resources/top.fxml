@@ -28,7 +28,7 @@
          </children>
       </HBox>
       <Separator orientation="VERTICAL" prefHeight="200.0" HBox.hgrow="ALWAYS" />
-      <Button mnemonicParsing="false" text="Save" onAction="#savePersonDataToFile" HBox.hgrow="ALWAYS" />
+      <Button mnemonicParsing="false" text="Save" HBox.hgrow="ALWAYS" />
    </children>
    <opaqueInsets>
       <Insets />

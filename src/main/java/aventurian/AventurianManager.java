@@ -198,13 +198,14 @@ public class AventurianManager {
 
 	}
 
-	public void saveAventurian() throws JAXBException {
+	public void saveAventurian(File f) throws JAXBException {
 		final JAXBContext context = JAXBContext.newInstance(Aventurian.class);
 		final Marshaller m = context.createMarshaller();
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		// Marshalling and saving XML to the file.
 		m.marshal(aventurian, System.out);
-		m.marshal(aventurian, new File("aventurian.xml"));
+		// m.marshal(aventurian, new File("aventurian.xml"));
+		m.marshal(aventurian, f);
 	}
 
 	public void registerObserver(Observer o) {
@@ -218,13 +219,13 @@ public class AventurianManager {
 		aventurian.notifyObserversAndSetChanged();
 	}
 
-	public void loadAventurian() {
+	public void loadAventurian(File f) {
 		try {
 			final JAXBContext context = JAXBContext.newInstance(Aventurian.class);
 			final Unmarshaller um = context.createUnmarshaller();
 
 			// Reading XML from the file and unmarshalling.
-			this.aventurian = (Aventurian) um.unmarshal(new File("aventurian.xml"));
+			this.aventurian = (Aventurian) um.unmarshal(f);
 			addObserversToAventurian();
 		} catch (final Exception e) { // catches ANY exception
 			e.printStackTrace();

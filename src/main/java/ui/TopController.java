@@ -1,7 +1,5 @@
 package ui;
 
-import javax.xml.bind.JAXBException;
-
 import aventurian.Aventurian;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -26,13 +24,6 @@ public class TopController extends XController {
 		// TODO Auto-generated method stub
 	}
 
-	public void savePersonDataToFile() {
-		try {
-			m.saveAventurian();
-		} catch (final JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 
 }
