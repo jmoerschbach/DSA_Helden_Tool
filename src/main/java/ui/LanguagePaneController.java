@@ -124,7 +124,6 @@ public class LanguagePaneController extends PaneController {
 			hbox.setSpacing(5);
 			hbox.setAlignment(Pos.CENTER);
 			HBox.setHgrow(pane, Priority.ALWAYS);
-			nameLabel.setTextFill(Color.web("#0000FF"));
 			decreaseButton.setPrefWidth(25);
 			increaseButton.setPrefWidth(25);
 			decreaseButton.setOnAction((ActionEvent e) -> m.decreaseLanguage(getItem()));
@@ -142,6 +141,8 @@ public class LanguagePaneController extends PaneController {
 				levelLabel.setText(String.valueOf(item.getLevel()));
 				increaseButton.setDisable(!item.isIncreasable());
 				decreaseButton.setDisable(!item.isDecreasable());
+				if (getItem().isNativeTongue()) 
+					nameLabel.setTextFill(Color.web("#0000FF"));
 				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(hbox);
 			}

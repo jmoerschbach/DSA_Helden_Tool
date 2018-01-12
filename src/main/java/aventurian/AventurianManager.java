@@ -170,15 +170,46 @@ public class AventurianManager {
 		}
 	}
 
+	public void addLanguageAsNativeTongue(Language l) {
+		if (aventurian.hasSkill(l))
+			throw new IllegalStateException("has already skill " + l.getName());
+		if (l.isNativeTongue()) 
+			throw new IllegalStateException("language is already native tongue" + l.getName());
+		if (l.isAllowed(aventurian)) {
+			while (l.isIncreasable() && l.getLevel() < 4)
+				l.increase();
+			aventurian.add(l);
+			l.gain(aventurian);
+			l.setNativeTongue(true);
+		}
+
+	}
+
 	public void removeLanguage(Language l) {
 		if (!aventurian.hasSkill(l))
 			throw new IllegalStateException("cannot remove skill " + l.getName());
-		while (l.isDecreasable()) {
-			decreaseLanguage(l);
+		if (l.isNativeTongue()) {
+			decreaseLanguageWithoutRefund(l);
+			l.setNativeTongue(false);
+		} else {
+			decreaseLanguageWithRefund(l);
 		}
 		l.lose(aventurian);
 		aventurian.remove(l);
+	}
+
+	private void decreaseLanguageWithRefund(Language l) {
+		while (l.isDecreasable()) {
+			decreaseLanguage(l);
+		}
 		refund(l.getLearningCost());
+	}
+
+	private void decreaseLanguageWithoutRefund(Language l) {
+		while (l.getLevel() > 4)
+			decreaseLanguage(l);
+		while (l.isDecreasable())
+			l.decrease();
 	}
 
 	private boolean canPay(int cost) {
