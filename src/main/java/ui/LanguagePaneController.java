@@ -19,10 +19,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
 import skills.Language;
 import skills.Skill;
 
-public class LanguageController extends XController {
+public class LanguagePaneController extends PaneController {
 
 	@FXML
 	public ListView<Language> lvUnAssignedLanguages;
@@ -123,6 +124,9 @@ public class LanguageController extends XController {
 			hbox.setSpacing(5);
 			hbox.setAlignment(Pos.CENTER);
 			HBox.setHgrow(pane, Priority.ALWAYS);
+			nameLabel.setTextFill(Color.web("#0000FF"));
+			decreaseButton.setPrefWidth(25);
+			increaseButton.setPrefWidth(25);
 			decreaseButton.setOnAction((ActionEvent e) -> m.decreaseLanguage(getItem()));
 			increaseButton.setOnAction((ActionEvent e) -> m.increaseLanguage(getItem()));
 		}

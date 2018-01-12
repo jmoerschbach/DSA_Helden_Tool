@@ -4,12 +4,12 @@ import aventurian.Aventurian;
 import aventurian.AventurianManager;
 import database.Database;
 
-public abstract class XController {
+public abstract class PaneController {
 
 	protected AventurianManager m;
 	protected Database db;
 
-	public XController() {
+	public PaneController() {
 		// TODO Auto-generated constructor stub
 	}
 

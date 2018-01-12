@@ -1,7 +1,7 @@
 package ui;
 
-import static ui.LeftController.PAGES.ATTRIBUTES;
-import static ui.LeftController.PAGES.LANGUAGES;
+import static ui.NavigationPaneController.PAGES.ATTRIBUTES;
+import static ui.NavigationPaneController.PAGES.LANGUAGES;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ui.LeftController.PAGES;
+import ui.NavigationPaneController.PAGES;
 
 /**
  * This is the base class for UI Unit Tests. Every testcase must extend it. This
@@ -74,7 +74,7 @@ public abstract class BaseGuiTest extends ApplicationTest {
 	private void loadPage(PAGES p, String fxml) throws IOException {
 		final FXMLLoader l = new FXMLLoader(ui.MainController.class.getResource(fxml));
 		final Parent bla = l.load();
-		final XController blub = l.getController();
+		final PaneController blub = l.getController();
 		mainController.addLoadedPage(p, blub, bla);
 	}
 

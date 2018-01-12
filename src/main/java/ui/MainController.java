@@ -1,6 +1,6 @@
 package ui;
 
-import static ui.LeftController.PAGES.ATTRIBUTES;
+import static ui.NavigationPaneController.PAGES.ATTRIBUTES;
 
 import java.io.File;
 import java.util.HashMap;
@@ -19,11 +19,11 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import ui.LeftController.PAGES;
+import ui.NavigationPaneController.PAGES;
 
-public class MainController extends XController implements Observer {
+public class MainController extends PaneController implements Observer {
 
-	private final Map<PAGES, XController> centerControllers;
+	private final Map<PAGES, PaneController> centerControllers;
 	private final Map<PAGES, Parent> centerPages;
 
 	public MainController() {
@@ -36,13 +36,13 @@ public class MainController extends XController implements Observer {
 	@FXML
 	TopController topController;
 
+	//@FXML
+	//Parent left;
 	@FXML
-	Parent left;
-	@FXML
-	LeftController leftController;
+	NavigationPaneController navigationPaneController;
 
 	@FXML
-	RightController rightController;
+	OverviewPaneController overviewPaneController;
 
 	@FXML
 	Pane centerPane;
@@ -50,16 +50,16 @@ public class MainController extends XController implements Observer {
 	@Override
 	public void init(AventurianManager manager, Database db) {
 		this.m = manager;
-		leftController.init(this);
+		navigationPaneController.init(this);
 		topController.init(manager, db);
-		rightController.init(manager, db);
+		overviewPaneController.init(manager, db);
 		centerControllers.values().forEach(c -> c.init(manager, db));
 		m.registerObserver(this);
 
 		changeTo(ATTRIBUTES);
 	}
 
-	void addLoadedPage(PAGES p, XController c, Parent page) {
+	void addLoadedPage(PAGES p, PaneController c, Parent page) {
 		centerPages.put(p, page);
 		centerControllers.put(p, c);
 	}
@@ -78,15 +78,15 @@ public class MainController extends XController implements Observer {
 
 	}
 
-	XController getControllerOfPage(PAGES p) {
+	PaneController getControllerOfPage(PAGES p) {
 		return centerControllers.get(p);
 	}
 
 	@Override
 	void update(Aventurian updatedAventurian) {
-		leftController.update(updatedAventurian);
+		navigationPaneController.update(updatedAventurian);
 		topController.update(updatedAventurian);
-		rightController.update(updatedAventurian);
+		overviewPaneController.update(updatedAventurian);
 		centerControllers.values().forEach(c -> c.update(updatedAventurian));
 
 	}

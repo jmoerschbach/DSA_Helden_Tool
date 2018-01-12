@@ -2,7 +2,7 @@ package ui;
 
 import aventurian.Aventurian;
 
-public class LeftController extends XController {
+public class NavigationPaneController extends PaneController {
 
 	enum PAGES {
 		ATTRIBUTES, LANGUAGES

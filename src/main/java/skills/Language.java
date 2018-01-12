@@ -22,7 +22,7 @@ public class Language extends Skill {
 	@XmlAttribute
 	private boolean isNativeTongue;
 
-	Language() {
+	private Language() {
 		this("", "", (Aventurian a) -> true, 0, 0);
 	}
 

@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,7 +30,6 @@ public class Aventurian extends Observable {
 
 	private final List<Property> properties;
 	private final List<BadProperty> badProperties;
-	@XmlElement(name = "language")
 	@XmlElementWrapper(name = "languages")
 	private final List<Language> languages;
 

@@ -1,7 +1,7 @@
 package ui;
 
-import static ui.LeftController.PAGES.ATTRIBUTES;
-import static ui.LeftController.PAGES.LANGUAGES;
+import static ui.NavigationPaneController.PAGES.ATTRIBUTES;
+import static ui.NavigationPaneController.PAGES.LANGUAGES;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ui.LeftController.PAGES;
+import ui.NavigationPaneController.PAGES;
 
 public class Starter extends Application {
 	private MainController mainController;
@@ -56,7 +56,7 @@ public class Starter extends Application {
 	private void loadPage(PAGES p, String fxml) throws IOException {
 		final FXMLLoader l = new FXMLLoader(ui.MainController.class.getResource(fxml));
 		final Parent pane = l.load();
-		final XController controller = l.getController();
+		final PaneController controller = l.getController();
 		mainController.addLoadedPage(p, controller, pane);
 	}
 

@@ -57,10 +57,10 @@
 				<fx:include fx:id="top" source="top.fxml" />
 			</top>
 			<left>
-				<fx:include fx:id="left" prefWidth="100.0" source="left.fxml" />
+				<fx:include fx:id="navigationPane" prefWidth="100.0" source="navigationPane.fxml" />
 			</left>
 			<right>
-				<fx:include fx:id="right" source="right.fxml" />
+				<fx:include fx:id="overviewPane" source="overviewPane.fxml" />
 			</right>
 			<center>
 				<VBox fx:id="centerPane" alignment="CENTER" maxHeight="1.7976931348623157E308"
