@@ -176,11 +176,11 @@ public class AventurianManager {
 		if (l.isNativeTongue()) 
 			throw new IllegalStateException("language is already native tongue" + l.getName());
 		if (l.isAllowed(aventurian)) {
-			while (l.isIncreasable() && l.getLevel() < 4)
+			while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
 				l.increase();
-			aventurian.add(l);
-			l.gain(aventurian);
 			l.setNativeTongue(true);
+			l.gain(aventurian);
+			aventurian.add(l);
 		}
 
 	}
@@ -189,8 +189,8 @@ public class AventurianManager {
 		if (!aventurian.hasSkill(l))
 			throw new IllegalStateException("cannot remove skill " + l.getName());
 		if (l.isNativeTongue()) {
-			decreaseLanguageWithoutRefund(l);
 			l.setNativeTongue(false);
+			decreaseLanguageWithoutRefund(l);
 		} else {
 			decreaseLanguageWithRefund(l);
 		}
@@ -206,7 +206,7 @@ public class AventurianManager {
 	}
 
 	private void decreaseLanguageWithoutRefund(Language l) {
-		while (l.getLevel() > 4)
+		while (l.getLevel() > Language.NATIVE_TONGUE_LEVEL)
 			decreaseLanguage(l);
 		while (l.isDecreasable())
 			l.decrease();

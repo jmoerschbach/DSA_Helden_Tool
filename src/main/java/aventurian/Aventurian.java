@@ -179,4 +179,8 @@ public class Aventurian extends Observable {
 	public List<Language> getLanguages() {
 		return new ArrayList<>(languages);
 	}
+	
+	public boolean hasNativeTongue() {
+		return languages.stream().anyMatch((Language l) -> l.isNativeTongue());
+	}
 }

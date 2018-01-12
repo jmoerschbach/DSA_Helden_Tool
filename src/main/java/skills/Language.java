@@ -13,6 +13,7 @@ import aventurian.Aventurian;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Language extends Skill {
+	public static final int NATIVE_TONGUE_LEVEL = 4;
 	@XmlAttribute
 	private int level;
 	@XmlAttribute
@@ -79,6 +80,8 @@ public class Language extends Skill {
 	}
 
 	public boolean isDecreasable() {
+		if (isNativeTongue())
+			return level > NATIVE_TONGUE_LEVEL;
 		return level > 1;
 	}
 

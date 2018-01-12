@@ -29,7 +29,7 @@ import ui.NavigationPaneController.PAGES;
  */
 public abstract class BaseGuiTest extends ApplicationTest {
 
-	private MainController mainController;
+	protected MainController mainController;
 	@Mock
 	protected AventurianManager mockedAventurianManager;
 

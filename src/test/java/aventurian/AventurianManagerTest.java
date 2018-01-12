@@ -386,7 +386,7 @@ public class AventurianManagerTest {
 	}
 	
 	@Test
-	public void removeLanguageNativeTongue() {
+	public void testRemoveLanguageNativeTongue() {
 		final Language l = createLanguageMock(true, true);
 		when(l.isNativeTongue()).thenReturn(true);
 		when(l.getLevel()).thenReturn(5).thenReturn(4).thenReturn(3).thenReturn(2).thenReturn(1);
@@ -396,8 +396,8 @@ public class AventurianManagerTest {
 		
 		verify(a, times(1)).refund(anyInt());
 		verify(a).remove(l);
-		verify(l).setNativeTongue(false);
 		verify(l, times(4)).decrease();
+		verify(l).setNativeTongue(false);
 	}
 
 	@Test
