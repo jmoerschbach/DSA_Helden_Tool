@@ -293,6 +293,50 @@ public class AventurianManagerTest {
 		verify(a, never()).pay(anyInt());
 		verify(l, never()).gain(a);
 	}
+	
+	@Test
+	public void testAddLanguageAsNativeTongue() {
+		final Language l = createLanguageMock(true, true);
+		when(l.getLevel()).thenReturn(1).thenReturn(2).thenReturn(3).thenReturn(4).thenReturn(5);
+		toTest.addLanguageAsNativeTongue(l);
+		
+		verify(a, never()).pay(anyInt());
+		verify(l, times(3)).increase();
+		verify(l).setNativeTongue(true);
+		verify(a).add(l);
+	}
+	
+	@Test
+	public void testAddLanguageAsNativeTongueNotAllowed() {
+		final Language l = createLanguageMock(false, true);
+		toTest.addLanguageAsNativeTongue(l);
+		
+		verify(a, never()).add(l);
+		verify(l, never()).increase();
+		verify(l, never()).setNativeTongue(true);
+	}
+	
+	@Test
+	public void testAddLanguageAsNativeTongueNotIncreasable() {
+		final Language l = createLanguageMock(true, true);
+		when(l.getLevel()).thenReturn(1).thenReturn(2).thenReturn(3);
+		when(l.isIncreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
+		toTest.addLanguageAsNativeTongue(l);
+		
+		verify(a).add(l);
+		verify(l, times(2)).increase();
+		verify(l).setNativeTongue(true);
+	}
+	
+	
+	
+	
+	@Test (expected = IllegalStateException.class)
+	public void testAddLanguageAsNativeTongueAlreadyNativeTongue() {
+		final Language l = createLanguageMock(true, true);
+		when(l.isNativeTongue()).thenReturn(true);
+		toTest.addLanguageAsNativeTongue(l);
+	}
 
 	@Test
 	public void testRemoveBadProperty() {
@@ -339,6 +383,21 @@ public class AventurianManagerTest {
 		when(l.isDecreasable()).thenReturn(false);
 
 		return l;
+	}
+	
+	@Test
+	public void testRemoveLanguageNativeTongue() {
+		final Language l = createLanguageMock(true, true);
+		when(l.isNativeTongue()).thenReturn(true);
+		when(l.getLevel()).thenReturn(5).thenReturn(4).thenReturn(3).thenReturn(2).thenReturn(1);
+		when(l.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(true).thenReturn(true).thenReturn(false);
+		when(a.hasSkill(l)).thenReturn(true);
+		toTest.removeLanguage(l);
+		
+		verify(a, times(1)).refund(anyInt());
+		verify(a).remove(l);
+		verify(l, times(4)).decrease();
+		verify(l).setNativeTongue(false);
 	}
 
 	@Test

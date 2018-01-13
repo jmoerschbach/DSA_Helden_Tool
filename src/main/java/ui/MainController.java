@@ -1,11 +1,16 @@
 package ui;
 
-import static ui.LeftController.PAGES.ATTRIBUTES;
+import static ui.NavigationPaneController.PAGES.ATTRIBUTES;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
+import java.util.prefs.Preferences;
+
+import javax.xml.bind.JAXBException;
 
 import aventurian.Aventurian;
 import aventurian.AventurianManager;
@@ -13,11 +18,12 @@ import database.Database;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
-import ui.LeftController.PAGES;
+import javafx.stage.FileChooser;
+import ui.NavigationPaneController.PAGES;
 
-public class MainController extends XController implements Observer {
+public class MainController extends PaneController implements Observer {
 
-	private final Map<PAGES, XController> centerControllers;
+	private final Map<PAGES, PaneController> centerControllers;
 	private final Map<PAGES, Parent> centerPages;
 
 	public MainController() {
@@ -30,13 +36,13 @@ public class MainController extends XController implements Observer {
 	@FXML
 	TopController topController;
 
+	//@FXML
+	//Parent left;
 	@FXML
-	Parent left;
-	@FXML
-	LeftController leftController;
+	NavigationPaneController navigationPaneController;
 
 	@FXML
-	RightController rightController;
+	OverviewPaneController overviewPaneController;
 
 	@FXML
 	Pane centerPane;
@@ -44,15 +50,16 @@ public class MainController extends XController implements Observer {
 	@Override
 	public void init(AventurianManager manager, Database db) {
 		this.m = manager;
-		leftController.init(this);
+		navigationPaneController.init(this);
 		topController.init(manager, db);
-		rightController.init(manager, db);
+		overviewPaneController.init(manager, db);
 		centerControllers.values().forEach(c -> c.init(manager, db));
+		m.registerObserver(this);
 
 		changeTo(ATTRIBUTES);
 	}
 
-	void addLoadedPage(PAGES p, XController c, Parent page) {
+	void addLoadedPage(PAGES p, PaneController c, Parent page) {
 		centerPages.put(p, page);
 		centerControllers.put(p, c);
 	}
@@ -71,15 +78,15 @@ public class MainController extends XController implements Observer {
 
 	}
 
-	XController getControllerOfPage(PAGES p) {
+	PaneController getControllerOfPage(PAGES p) {
 		return centerControllers.get(p);
 	}
 
 	@Override
 	void update(Aventurian updatedAventurian) {
-		leftController.update(updatedAventurian);
+		navigationPaneController.update(updatedAventurian);
 		topController.update(updatedAventurian);
-		rightController.update(updatedAventurian);
+		overviewPaneController.update(updatedAventurian);
 		centerControllers.values().forEach(c -> c.update(updatedAventurian));
 
 	}
@@ -90,4 +97,59 @@ public class MainController extends XController implements Observer {
 
 	}
 
+	public void open() {
+		final FileChooser fileChooser = new FileChooser();
+
+		final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		final File file = fileChooser.showOpenDialog(top.getScene().getWindow());
+
+		if (file != null) {
+			m.loadAventurian(file);
+		}
+	}
+
+	public void save() {
+		if (getFilePath().isPresent())
+			try {
+				m.saveAventurian(getFilePath().map(File::new).get());
+			} catch (final JAXBException e) {
+				e.printStackTrace();
+			}
+		else
+			saveAs();
+	}
+
+	public void saveAs() {
+		try {
+			final FileChooser fileChooser = new FileChooser();
+
+			final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+			fileChooser.getExtensionFilters().add(extFilter);
+
+			File file = fileChooser.showSaveDialog(top.getScene().getWindow());
+
+			if (file != null) {
+				if (!file.getPath().endsWith(".xml")) {
+					file = new File(file.getPath() + ".xml");
+				}
+				m.saveAventurian(file);
+				saveFilePath(file);
+			}
+		} catch (final JAXBException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private Optional<String> getFilePath() {
+		final Preferences prefs = Preferences.userNodeForPackage(MainController.class);
+		return Optional.ofNullable(prefs.get("filePath", null));
+	}
+
+	private void saveFilePath(File file) {
+		final Preferences prefs = Preferences.userNodeForPackage(MainController.class);
+		prefs.put("filePath", file.getPath());
+
+	}
 }

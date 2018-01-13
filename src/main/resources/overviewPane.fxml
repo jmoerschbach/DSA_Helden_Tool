@@ -2,14 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="right" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.RightController">
+<VBox fx:id="overviewPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.OverviewPaneController">
    <children>
       <Label text="Actionpoints">
          <font>
@@ -21,7 +20,6 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextArea prefHeight="100.0" prefWidth="80.0" />
       <Label text="Sum">
          <font>
             <Font size="24.0" />

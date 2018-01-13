@@ -284,4 +284,13 @@ public class AventurianTest {
 		assertEquals("newName", toTest.getName());
 		verify(mockedObserver).update(toTest, null);
 	}
+	
+	@Test
+	public void testHasNativeTongue() {
+		assertFalse(toTest.hasNativeTongue());
+		final Language l = mock(Language.class);
+		when(l.isNativeTongue()).thenReturn(true);
+		toTest.add(l);
+		assertTrue(toTest.hasNativeTongue());
+	}
 }
