@@ -4,7 +4,7 @@ import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.CHARISMA;
 import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.CONSTITUTION;
 import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE;
 import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.DEXTERITY;
-import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.FINESSE;
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.AGILITY;
 import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.INTELLIGENCE;
 import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.INTUITION;
 import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.STRENGTH;
@@ -30,7 +30,7 @@ public class PrimaryAttributes {
         INTUITION,
         CHARISMA,
         DEXTERITY,
-        FINESSE,
+        AGILITY,
         CONSTITUTION,
         STRENGTH
     }
@@ -42,7 +42,7 @@ public class PrimaryAttributes {
         currentAttributes.put(INTUITION, MIN);
         currentAttributes.put(CHARISMA, MIN);
         currentAttributes.put(DEXTERITY, MIN);
-        currentAttributes.put(FINESSE, MIN);
+        currentAttributes.put(AGILITY, MIN);
         currentAttributes.put(CONSTITUTION, MIN);
         currentAttributes.put(STRENGTH, MIN);
         this.maxAttributes = new HashMap<>();
@@ -51,7 +51,7 @@ public class PrimaryAttributes {
         maxAttributes.put(INTUITION, MAX);
         maxAttributes.put(CHARISMA, MAX);
         maxAttributes.put(DEXTERITY, MAX);
-        maxAttributes.put(FINESSE, MAX);
+        maxAttributes.put(AGILITY, MAX);
         maxAttributes.put(CONSTITUTION, MAX);
         maxAttributes.put(STRENGTH, MAX);
         this.minAttributes = new HashMap<>();
@@ -60,13 +60,13 @@ public class PrimaryAttributes {
         minAttributes.put(INTUITION, MIN);
         minAttributes.put(CHARISMA, MIN);
         minAttributes.put(DEXTERITY, MIN);
-        minAttributes.put(FINESSE, MIN);
+        minAttributes.put(AGILITY, MIN);
         minAttributes.put(CONSTITUTION, MIN);
         minAttributes.put(STRENGTH, MIN);
     }
 
     int getSum() {
-        return getPrimaryAttribute(COURAGE) + getPrimaryAttribute(INTELLIGENCE) + getPrimaryAttribute(INTUITION) + getPrimaryAttribute(CHARISMA) + getPrimaryAttribute(DEXTERITY) + getPrimaryAttribute(FINESSE) + getPrimaryAttribute(CONSTITUTION) + getPrimaryAttribute(STRENGTH);
+        return getPrimaryAttribute(COURAGE) + getPrimaryAttribute(INTELLIGENCE) + getPrimaryAttribute(INTUITION) + getPrimaryAttribute(CHARISMA) + getPrimaryAttribute(DEXTERITY) + getPrimaryAttribute(AGILITY) + getPrimaryAttribute(CONSTITUTION) + getPrimaryAttribute(STRENGTH);
     }
 
     int getPrimaryAttribute(PRIMARY_ATTRIBUTE a) {

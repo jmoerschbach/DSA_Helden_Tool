@@ -59,14 +59,14 @@ public class SecondaryAttributes {
 
     private void calculateDefendValue(PrimaryAttributes a) {
         int intuition = a.getPrimaryAttribute(INTUITION);
-        int finesse = a.getPrimaryAttribute(FINESSE);
+        int finesse = a.getPrimaryAttribute(AGILITY);
         int strength = a.getPrimaryAttribute(STRENGTH);
         get(DEFENDVALUE).setBasis(round((intuition + finesse + strength) / 5.0));
     }
 
     private void calculateAttackValue(PrimaryAttributes a) {
         int courage = a.getPrimaryAttribute(COURAGE);
-        int finesse = a.getPrimaryAttribute(FINESSE);
+        int finesse = a.getPrimaryAttribute(AGILITY);
         int strength = a.getPrimaryAttribute(STRENGTH);
         get(ATTACKVALUE).setBasis(round((courage + finesse + strength) / 5.0));
     }
@@ -74,7 +74,7 @@ public class SecondaryAttributes {
     private void calculateInitiativeValue(PrimaryAttributes a) {
         int courage = a.getPrimaryAttribute(COURAGE);
         int intuition = a.getPrimaryAttribute(INTUITION);
-        int finesse = a.getPrimaryAttribute(FINESSE);
+        int finesse = a.getPrimaryAttribute(AGILITY);
         get(INITIATIVEVALUE).setBasis(round((courage * 2 + intuition + finesse) / 5.0));
     }
 

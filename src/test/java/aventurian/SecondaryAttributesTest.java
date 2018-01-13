@@ -56,7 +56,7 @@ public class SecondaryAttributesTest {
             attributes.increase(INTUITION);
             attributes.increase(CHARISMA);
             attributes.increase(DEXTERITY);
-            attributes.increase(FINESSE);
+            attributes.increase(AGILITY);
             attributes.increase(CONSTITUTION);
             attributes.increase(STRENGTH);
         }
