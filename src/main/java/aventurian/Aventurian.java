@@ -33,6 +33,8 @@ public class Aventurian extends Observable {
 	@XmlElementWrapper(name = "languages")
 	private final List<Language> languages;
 
+	static final int MAX_ATTRIBUTES_SUM = 101;
+	
 	private Aventurian() {
 		// only needed for JAXB
 		this(0);
@@ -136,6 +138,14 @@ public class Aventurian extends Observable {
 	int getSumOfPrimaryAttributes() {
 		return primaryAttributes.getSum();
 	}
+	
+	public boolean isPrimaryAttributeIncreasable(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
+		return primaryAttributes.isIncreasable(a);
+	}
+	
+	public boolean isPrimaryAttributeDecreasable(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
+		return primaryAttributes.isDecreasable(a);
+	}
 
 	public int getPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		return primaryAttributes.getPrimaryAttribute(a);
@@ -182,5 +192,9 @@ public class Aventurian extends Observable {
 	
 	public boolean hasNativeTongue() {
 		return languages.stream().anyMatch((Language l) -> l.isNativeTongue());
+	}
+	
+	public boolean isPrimaryAttributesLowerThanThreshhold() {
+		return getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM;
 	}
 }

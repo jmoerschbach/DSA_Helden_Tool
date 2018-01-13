@@ -37,11 +37,12 @@ public class AventurianManagerTest {
 	private void setUpMockForPrimaryAttributesTest(boolean canPay, boolean currentSmallerThanMax,
 			boolean sumSmallerThanMax) {
 		when(a.canPay(anyInt())).thenReturn(canPay);
-		when(a.getSumOfPrimaryAttributes()).thenReturn(
-				sumSmallerThanMax ? AventurianManager.MAX_ATTRIBUTES_SUM - 1 : AventurianManager.MAX_ATTRIBUTES_SUM);
+		when(a.isPrimaryAttributesLowerThanThreshhold()).thenReturn(sumSmallerThanMax);
+		// when(a.getSumOfPrimaryAttributes()).thenReturn(
+		// sumSmallerThanMax ? Aventurian.MAX_ATTRIBUTES_SUM - 1 :
+		// Aventurian.MAX_ATTRIBUTES_SUM);
 		when(a.getMaxOfPrimaryAttribute(COURAGE)).thenReturn(PrimaryAttributes.MAX);
-		when(a.getPrimaryAttribute(COURAGE))
-				.thenReturn(currentSmallerThanMax ? PrimaryAttributes.MIN : PrimaryAttributes.MAX);
+		when(a.isPrimaryAttributeIncreasable(COURAGE)).thenReturn(currentSmallerThanMax);
 	}
 
 	@Test
@@ -79,6 +80,7 @@ public class AventurianManagerTest {
 	@Test
 	public void testDecreasePrimaryAttributAllConditionsMet() {
 		when(a.getPrimaryAttribute(COURAGE)).thenReturn(PrimaryAttributes.MIN + 1);
+		when(a.isPrimaryAttributeDecreasable(COURAGE)).thenReturn(true);
 		toTest.decreasePrimaryAttribute(COURAGE);
 		verify(a).decrasePrimaryAttribute(COURAGE);
 		verify(a).refund(anyInt());
@@ -293,45 +295,42 @@ public class AventurianManagerTest {
 		verify(a, never()).pay(anyInt());
 		verify(l, never()).gain(a);
 	}
-	
+
 	@Test
 	public void testAddLanguageAsNativeTongue() {
 		final Language l = createLanguageMock(true, true);
 		when(l.getLevel()).thenReturn(1).thenReturn(2).thenReturn(3).thenReturn(4).thenReturn(5);
 		toTest.addLanguageAsNativeTongue(l);
-		
+
 		verify(a, never()).pay(anyInt());
 		verify(l, times(3)).increase();
 		verify(l).setNativeTongue(true);
 		verify(a).add(l);
 	}
-	
+
 	@Test
 	public void testAddLanguageAsNativeTongueNotAllowed() {
 		final Language l = createLanguageMock(false, true);
 		toTest.addLanguageAsNativeTongue(l);
-		
+
 		verify(a, never()).add(l);
 		verify(l, never()).increase();
 		verify(l, never()).setNativeTongue(true);
 	}
-	
+
 	@Test
 	public void testAddLanguageAsNativeTongueNotIncreasable() {
 		final Language l = createLanguageMock(true, true);
 		when(l.getLevel()).thenReturn(1).thenReturn(2).thenReturn(3);
 		when(l.isIncreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
 		toTest.addLanguageAsNativeTongue(l);
-		
+
 		verify(a).add(l);
 		verify(l, times(2)).increase();
 		verify(l).setNativeTongue(true);
 	}
-	
-	
-	
-	
-	@Test (expected = IllegalStateException.class)
+
+	@Test(expected = IllegalStateException.class)
 	public void testAddLanguageAsNativeTongueAlreadyNativeTongue() {
 		final Language l = createLanguageMock(true, true);
 		when(l.isNativeTongue()).thenReturn(true);
@@ -384,7 +383,7 @@ public class AventurianManagerTest {
 
 		return l;
 	}
-	
+
 	@Test
 	public void testRemoveLanguageNativeTongue() {
 		final Language l = createLanguageMock(true, true);
@@ -393,7 +392,7 @@ public class AventurianManagerTest {
 		when(l.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(true).thenReturn(true).thenReturn(false);
 		when(a.hasSkill(l)).thenReturn(true);
 		toTest.removeLanguage(l);
-		
+
 		verify(a, times(1)).refund(anyInt());
 		verify(a).remove(l);
 		verify(l, times(4)).decrease();

@@ -25,7 +25,6 @@ public class AventurianManager {
 	static final int MAX_BAD_PROPERTIES_SUM = 25;
 	static final int MAX_POINTS_IN_ADVANTAGES = 2500;
 	static final int MAX_POINTS_OUT_DISADVANTAGES = 2500;
-	static final int MAX_ATTRIBUTES_SUM = 101;
 
 	/**
 	 * Do not use in production code! Use only for testing purposes
@@ -47,8 +46,8 @@ public class AventurianManager {
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		final int cost = calculator.getCost(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a) + 1,
 				H);
-		if (canPay(cost) && aventurian.getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM
-				&& aventurian.getPrimaryAttribute(a) < aventurian.getMaxOfPrimaryAttribute(a)) {
+		if (canPay(cost) && aventurian.isPrimaryAttributesLowerThanThreshhold()
+				&& aventurian.isPrimaryAttributeIncreasable(a)) {
 			aventurian.increasePrimaryAttribute(a);
 			pay(cost);
 		}
@@ -57,7 +56,7 @@ public class AventurianManager {
 	public void decreasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		final int cost = calculator.getRefund(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a) - 1,
 				H);
-		if (aventurian.getPrimaryAttribute(a) > PrimaryAttributes.MIN) {
+		if (aventurian.isPrimaryAttributeDecreasable(a)) {
 			aventurian.decrasePrimaryAttribute(a);
 			refund(cost);
 		}
@@ -173,7 +172,7 @@ public class AventurianManager {
 	public void addLanguageAsNativeTongue(Language l) {
 		if (aventurian.hasSkill(l))
 			throw new IllegalStateException("has already skill " + l.getName());
-		if (l.isNativeTongue()) 
+		if (l.isNativeTongue())
 			throw new IllegalStateException("language is already native tongue" + l.getName());
 		if (l.isAllowed(aventurian)) {
 			while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)

@@ -99,11 +99,11 @@ public class PrimaryAttributes {
         return maxAttributes.get(a);
     }
     
-    boolean isIncreasable(PRIMARY_ATTRIBUTE a) {
+    public boolean isIncreasable(PRIMARY_ATTRIBUTE a) {
     	return currentAttributes.get(a) < maxAttributes.get(a);
     }
     
-    boolean isDecreasable(PRIMARY_ATTRIBUTE a) {
+    public boolean isDecreasable(PRIMARY_ATTRIBUTE a) {
     	return currentAttributes.get(a) > minAttributes.get(a);
     }
 }
