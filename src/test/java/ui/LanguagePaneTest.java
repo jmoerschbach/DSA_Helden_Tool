@@ -2,6 +2,7 @@ package ui;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -14,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.testfx.matcher.base.NodeMatchers;
 
@@ -37,7 +37,8 @@ public class LanguagePaneTest extends BaseGuiTest {
 	private static final String LANGUAGE_NAME_BLABLA = "blabla";
 	private static final String LANGUAGE_NAME_BLABLUB = "blablub";
 	private static final String LANGUAGE_NAME_GARETHI = "Garethi";
-
+	private static final String LANGUAGE_NAME_NATIVETONGUE = "Native Tongue";
+	
 	@Before
 	public void setUp() {
 		clickOn("#hyperlinkLanguages");
@@ -48,28 +49,42 @@ public class LanguagePaneTest extends BaseGuiTest {
 	public void testAssignLanguage() {
 		verifyThat(LANGUAGE_NAME_GARETHI, NodeMatchers.isNotNull());
 		clickOn(LANGUAGE_NAME_GARETHI).clickOn(ID_BTN_ASSIGN_LANGUAGE);
-		verify(mockedAventurianManager).addLanguage(Mockito.any(Language.class));
+		verify(mockedAventurianManager).addLanguage(any(Language.class));
+	}
+	
+	@Test
+	public void testAssignLanguageAsNativeTongou() {
+		verifyThat(LANGUAGE_NAME_GARETHI, NodeMatchers.isNotNull());
+		final Button btn = find("Muttersprache");
+		assertFalse(btn.isDisable());
+		clickOn(btn);
+		verify(mockedAventurianManager).addLanguageAsNativeTongue(any(Language.class));
+		
+		/*
+		when(mockedAventurian.hasNativeTongue()).thenReturn(true);
+		mainController.update(mockedAventurian);
+		assertTrue(btn.isDisable()); */
 	}
 
 	@Test
 	public void testAssignLanguageViaDoubleClick() {
 		verifyThat(LANGUAGE_NAME_GARETHI, NodeMatchers.isNotNull());
 		doubleClickOn(LANGUAGE_NAME_GARETHI, MouseButton.PRIMARY);
-		verify(mockedAventurianManager).addLanguage(Mockito.any(Language.class));
+		verify(mockedAventurianManager).addLanguage(any(Language.class));
 	}
 
 	@Test
 	public void testUnAssignLanguage() {
 		verifyThat(LANGUAGE_NAME_BLABLA, NodeMatchers.isNotNull());
 		clickOn(LANGUAGE_NAME_BLABLA).clickOn(ID_BTN_UN_ASSIGN_LANGUAGE);
-		verify(mockedAventurianManager).removeLanguage(Mockito.any(Language.class));
+		verify(mockedAventurianManager).removeLanguage(any(Language.class));
 	}
 
 	@Test
 	public void testUnAssignLanguageViaDoubleClick() {
 		verifyThat(LANGUAGE_NAME_BLABLA, NodeMatchers.isNotNull());
 		doubleClickOn(LANGUAGE_NAME_BLABLA);
-		verify(mockedAventurianManager).removeLanguage(Mockito.any(Language.class));
+		verify(mockedAventurianManager).removeLanguage(any(Language.class));
 	}
 
 	@Test
@@ -123,6 +138,15 @@ public class LanguagePaneTest extends BaseGuiTest {
 	}
 
 	@Test
+	public void testIncreaseLanguageLevel() {
+		verifyThat(LANGUAGE_NAME_BLABLA, NodeMatchers.isNotNull());
+		final Button btn = find("+");
+		assertFalse(btn.isDisable());
+		clickOn(btn);
+		verify(mockedAventurianManager).increaseLanguage(any(Language.class));
+	}
+
+	@Test
 	public void testUpdate() {
 		final ListView<Language> lvAssigned = find(ID_LV_ASSIGNED_LANGUAGES);
 		final ListView<Language> lvUnAssigned = find(ID_LV_UN_ASSIGNED_LANGUAGES);
@@ -143,7 +167,9 @@ public class LanguagePaneTest extends BaseGuiTest {
 
 		// Aventurian
 		final Language l4 = createLanguage(LANGUAGE_NAME_BLABLA);
-		final List<Language> l = Arrays.asList(l4);
+		final Language l5 = createLanguage(LANGUAGE_NAME_NATIVETONGUE);
+		l5.setNativeTongue(true);
+		final List<Language> l = Arrays.asList(l4, l5);
 		when(mockedAventurian.getLanguages()).thenReturn(l);
 	}
 

@@ -4,7 +4,7 @@ import aventurian.Aventurian;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
-public class TopController extends XController {
+public class TopController extends PaneController {
 
 	@FXML
 	public TextField name;
@@ -23,5 +23,7 @@ public class TopController extends XController {
 	void initControllerSpecificStuff() {
 		// TODO Auto-generated method stub
 	}
+
+	
 
 }

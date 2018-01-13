@@ -19,10 +19,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
 import skills.Language;
-import skills.Skill;
 
-public class LanguageController extends XController {
+public class LanguagePaneController extends PaneController {
 
 	@FXML
 	public ListView<Language> lvUnAssignedLanguages;
@@ -33,6 +33,8 @@ public class LanguageController extends XController {
 	public Button btnUnAssignLanguage;
 	@FXML
 	public ListView<Language> lvAssignedLanguages;
+	
+	private boolean hasNativeTongue;
 
 	public void assignLanguage() {
 		final Language language = lvUnAssignedLanguages.getSelectionModel().getSelectedItem();
@@ -46,18 +48,20 @@ public class LanguageController extends XController {
 
 	@Override
 	void update(Aventurian updatedAventurian) {
-		final List<Language> assignedLanguages = updatedAventurian.getLanguages();
+		hasNativeTongue = updatedAventurian.hasNativeTongue();
 		lvAssignedLanguages.setItems(null); // forces listview to re-render all cells
+		lvUnAssignedLanguages.setItems(null); // forces listview to re-render all cells
+		final List<Language> assignedLanguages = updatedAventurian.getLanguages();
 		lvAssignedLanguages.setItems(FXCollections.observableArrayList(assignedLanguages));
 
 		final List<Language> unassignedLanguages = db.getLanguages().stream()
 				.filter(l -> !assignedLanguages.contains(l)).collect(toList());
-		lvUnAssignedLanguages.setItems(null); // forces listview to re-render all cells
 		lvUnAssignedLanguages.setItems(FXCollections.observableArrayList(unassignedLanguages));
 	}
 
 	@Override
 	void initControllerSpecificStuff() {
+		hasNativeTongue = false;
 		prepareUnAssignedListView();
 		prepareAssignedListView();
 
@@ -78,23 +82,7 @@ public class LanguageController extends XController {
 				m.addLanguage(language);
 			}
 		});
-		lvUnAssignedLanguages.setCellFactory((ListView<Language> list) -> new ToolTipCell<>());
-	}
-
-	// TODO: as soon as tool tips are required in other lists (meaning for other
-	// skills like property and so on) make this class a normal/outer class
-	private static class ToolTipCell<T extends Skill> extends ListCell<T> {
-		@Override
-		protected void updateItem(T item, boolean empty) {
-			super.updateItem(item, empty);
-			if (empty || item == null) {
-				setGraphic(null);
-				setText(null);
-			} else {
-				setTooltip(new Tooltip(item.getDescription()));
-				setText(item.getName());
-			}
-		}
+		lvUnAssignedLanguages.setCellFactory((ListView<Language> list) -> new UnassignedLanguageCell());
 	}
 
 	private void prepareAssignedListView() {
@@ -108,6 +96,35 @@ public class LanguageController extends XController {
 			}
 		});
 		lvAssignedLanguages.setCellFactory((ListView<Language> list) -> new AssignedLanguageCell());
+	}
+	
+	private class UnassignedLanguageCell extends ListCell<Language> {
+		HBox hbox = new HBox();
+		Label nameLabel = new Label("(empty)");
+		Pane pane = new Pane();
+		Button nativeTongueButton = new Button("Muttersprache");
+
+		public UnassignedLanguageCell() {
+			hbox.getChildren().addAll(nameLabel, pane, nativeTongueButton);
+			hbox.setSpacing(5);
+			hbox.setAlignment(Pos.CENTER);
+			HBox.setHgrow(pane, Priority.ALWAYS);
+			nativeTongueButton.setOnAction((ActionEvent e) -> m.addLanguageAsNativeTongue(getItem()));
+		}
+
+		@Override
+		protected void updateItem(Language item, boolean empty) {
+			super.updateItem(item, empty);
+			setText(null); // No text in label of super class
+			if (empty || item == null) {
+				setGraphic(null);
+			} else {
+				nameLabel.setText(item.getName());
+				nativeTongueButton.setDisable(hasNativeTongue);
+				setTooltip(new Tooltip(item.getDescription()));
+				setGraphic(hbox);
+			}
+		}
 	}
 
 	private class AssignedLanguageCell extends ListCell<Language> {
@@ -123,6 +140,8 @@ public class LanguageController extends XController {
 			hbox.setSpacing(5);
 			hbox.setAlignment(Pos.CENTER);
 			HBox.setHgrow(pane, Priority.ALWAYS);
+			decreaseButton.setPrefWidth(25);
+			increaseButton.setPrefWidth(25);
 			decreaseButton.setOnAction((ActionEvent e) -> m.decreaseLanguage(getItem()));
 			increaseButton.setOnAction((ActionEvent e) -> m.increaseLanguage(getItem()));
 		}
@@ -138,6 +157,7 @@ public class LanguageController extends XController {
 				levelLabel.setText(String.valueOf(item.getLevel()));
 				increaseButton.setDisable(!item.isIncreasable());
 				decreaseButton.setDisable(!item.isDecreasable());
+				nameLabel.setTextFill(getItem().isNativeTongue() ? Color.BLUE : Color.BLACK);
 				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(hbox);
 			}

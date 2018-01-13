@@ -1,6 +1,8 @@
 package skills;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.function.Predicate;
 
@@ -11,7 +13,7 @@ import aventurian.Aventurian;
 
 public class LanguageTest {
 	private Language toTest;
-	private Predicate<Aventurian> requirement = (Aventurian a) -> {
+	private final Predicate<Aventurian> requirement = (Aventurian a) -> {
 		return true;
 	};
 
@@ -149,6 +151,19 @@ public class LanguageTest {
 		toTest.increase();
 
 		assertTrue(toTest.isDecreasable());
+	}
+	
+	@Test
+	public void testIsDecreasableNativeTongue() {
+		toTest.setNativeTongue(true);
+		for (int i = 0; i < 4; i++) {
+			toTest.increase();
+		}
+		assertTrue(toTest.isDecreasable());
+		
+		toTest.decrease();
+		
+		assertFalse(toTest.isDecreasable());
 	}
 
 }

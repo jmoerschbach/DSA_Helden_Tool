@@ -5,7 +5,7 @@ import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class AttributesController extends XController {
+public class AttributesPaneController extends PaneController {
 
 	@FXML
 	Label labelCourage;

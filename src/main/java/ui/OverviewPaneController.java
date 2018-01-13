@@ -4,7 +4,7 @@ import aventurian.Aventurian;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class RightController extends XController {
+public class OverviewPaneController extends PaneController {
 	@FXML
 	public Label labelRemainingActionPoints;
 

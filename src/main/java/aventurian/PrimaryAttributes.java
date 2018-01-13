@@ -1,17 +1,28 @@
 package aventurian;
 
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.CHARISMA;
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.CONSTITUTION;
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE;
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.DEXTERITY;
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.FINESSE;
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.INTELLIGENCE;
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.INTUITION;
+import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.STRENGTH;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class PrimaryAttributes {
 
     static final int MAX = 14;
 	static final int MIN = 8;
-	private Map<PRIMARY_ATTRIBUTE, Integer> currentAttributes;
-    private Map<PRIMARY_ATTRIBUTE, Integer> maxAttributes;
-    private Map<PRIMARY_ATTRIBUTE, Integer> minAttributes;
+	private final Map<PRIMARY_ATTRIBUTE, Integer> currentAttributes;
+    private final Map<PRIMARY_ATTRIBUTE, Integer> maxAttributes;
+    private final Map<PRIMARY_ATTRIBUTE, Integer> minAttributes;
 
     public enum PRIMARY_ATTRIBUTE {
         COURAGE,

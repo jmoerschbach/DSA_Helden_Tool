@@ -2,9 +2,15 @@ package aventurian;
 
 import static aventurian.LevelCostCalculator.COLUMN.H;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observer;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import skills.BadProperty;
 import skills.Language;
@@ -12,17 +18,30 @@ import skills.Property;
 
 public class AventurianManager {
 
-	private final Aventurian aventurian;
+	private Aventurian aventurian;
 	private final LevelCostCalculator calculator;
+	private final List<Observer> observers;
 
 	static final int MAX_BAD_PROPERTIES_SUM = 25;
 	static final int MAX_POINTS_IN_ADVANTAGES = 2500;
 	static final int MAX_POINTS_OUT_DISADVANTAGES = 2500;
 	static final int MAX_ATTRIBUTES_SUM = 101;
 
-	public AventurianManager(Aventurian aventurian) {
-		this.aventurian = aventurian;
+	/**
+	 * Do not use in production code! Use only for testing purposes
+	 * 
+	 * @param a
+	 *            the (mock of an) aventurian
+	 */
+	AventurianManager(Aventurian a) {
 		this.calculator = new LevelCostCalculator();
+		this.observers = new ArrayList<>();
+		this.aventurian = a;
+
+	}
+
+	public AventurianManager() {
+		this(new Aventurian("testAventurian", 16500));
 	}
 
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
@@ -151,15 +170,46 @@ public class AventurianManager {
 		}
 	}
 
+	public void addLanguageAsNativeTongue(Language l) {
+		if (aventurian.hasSkill(l))
+			throw new IllegalStateException("has already skill " + l.getName());
+		if (l.isNativeTongue()) 
+			throw new IllegalStateException("language is already native tongue" + l.getName());
+		if (l.isAllowed(aventurian)) {
+			while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
+				l.increase();
+			l.setNativeTongue(true);
+			l.gain(aventurian);
+			aventurian.add(l);
+		}
+
+	}
+
 	public void removeLanguage(Language l) {
 		if (!aventurian.hasSkill(l))
 			throw new IllegalStateException("cannot remove skill " + l.getName());
-		while (l.isDecreasable()) {
-			decreaseLanguage(l);
+		if (l.isNativeTongue()) {
+			l.setNativeTongue(false);
+			decreaseLanguageWithoutRefund(l);
+		} else {
+			decreaseLanguageWithRefund(l);
 		}
 		l.lose(aventurian);
 		aventurian.remove(l);
+	}
+
+	private void decreaseLanguageWithRefund(Language l) {
+		while (l.isDecreasable()) {
+			decreaseLanguage(l);
+		}
 		refund(l.getLearningCost());
+	}
+
+	private void decreaseLanguageWithoutRefund(Language l) {
+		while (l.getLevel() > Language.NATIVE_TONGUE_LEVEL)
+			decreaseLanguage(l);
+		while (l.isDecreasable())
+			l.decrease();
 	}
 
 	private boolean canPay(int cost) {
@@ -179,12 +229,39 @@ public class AventurianManager {
 
 	}
 
-	public void savePersonDataToFile() throws JAXBException {
+	public void saveAventurian(File f) throws JAXBException {
 		final JAXBContext context = JAXBContext.newInstance(Aventurian.class);
 		final Marshaller m = context.createMarshaller();
 		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
 		// Marshalling and saving XML to the file.
 		m.marshal(aventurian, System.out);
+		// m.marshal(aventurian, new File("aventurian.xml"));
+		m.marshal(aventurian, f);
 	}
+
+	public void registerObserver(Observer o) {
+		this.observers.add(o);
+		addObserversToAventurian();
+	}
+
+	private void addObserversToAventurian() {
+		aventurian.deleteObservers();
+		observers.forEach(aventurian::addObserver);
+		aventurian.notifyObserversAndSetChanged();
+	}
+
+	public void loadAventurian(File f) {
+		try {
+			final JAXBContext context = JAXBContext.newInstance(Aventurian.class);
+			final Unmarshaller um = context.createUnmarshaller();
+
+			// Reading XML from the file and unmarshalling.
+			this.aventurian = (Aventurian) um.unmarshal(f);
+			addObserversToAventurian();
+		} catch (final Exception e) { // catches ANY exception
+			e.printStackTrace();
+		}
+
+	}
+
 }
